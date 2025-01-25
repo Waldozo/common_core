@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 09:31:48 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/16 12:29:34 by wlarbi-a         ###   ########.fr       */
+/*   Created: 2024/12/04 11:16:56 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2024/12/07 12:01:12 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 char	*read_file(int fd, char *str)
 {
@@ -33,10 +32,10 @@ char	*read_file(int fd, char *str)
 		}
 		buffer[byte] = 0;
 		str = ft_strjoin(str, buffer);
-		free(buffer);
 		if (ft_strchr(str, '\n'))
 			break ;
 	}
+	free(buffer);
 	return (str);
 }
 
@@ -65,7 +64,6 @@ char	*ft_line(char *buffer)
 		i++;
 	}
 	line[i] = '\0';
-	// free(buffer);
 	return (line);
 }
 
@@ -86,10 +84,7 @@ char	*ft_next(char *buffer)
 	}
 	line = (char *)malloc((ft_strlen(buffer) - i + 1) * sizeof(char));
 	if (!line)
-	{
-		free(line);
 		return (NULL);
-	}
 	i++;
 	while (buffer[i])
 		line[j++] = buffer[i++];
@@ -100,45 +95,15 @@ char	*ft_next(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = read_file(fd, buffer);
-	if (!buffer)
-	{
-		free(buffer);
+	buffer[fd] = read_file(fd, buffer[fd]);
+	if (!buffer[fd])
 		return (NULL);
-	}
-	line = ft_line(buffer);
-	buffer = ft_next(buffer);
+	line = ft_line(buffer[fd]);
+	buffer[fd] = ft_next(buffer[fd]);
 	return (line);
 }
-#include <fcntl.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-	fd = open("get.txt", O_RDONLY);
-	if (fd < 0)
-		return (1);
-	i = 1;
-	while (i)
-	{
-		line = get_next_line(fd);
-		if (!line)
-		{
-			i = 0;
-			free(line);
-			break ;
-		}
-		printf("Line: %s", line);
-		free(line);
-	}
-	return (0);
-}
-
