@@ -6,13 +6,13 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 09:38:13 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2024/12/09 14:13:39 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:16:20 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ftr_strjoin(char *s1, char *s2)
 {
 	size_t	len1;
 	size_t	len2;
@@ -25,46 +25,46 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ftr_strlen(s1);
+	len2 = ftr_strlen(s2);
 	dst = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!dst)
 		return (NULL);
-	ft_strlcpy(dst, s1, len1 + 1);
-	ft_strlcat(dst, s2, len1 + len2 + 1);
+	ftr_strlcpy(dst, s1, len1 + 1);
+	ftr_strlcat(dst, s2, len1 + len2 + 1);
 	free(s1);
 	return (dst);
 }
 
-size_t	ft_strlcat(char *dst, char *src, size_t size)
+size_t	ftr_strlcat(char *dst, char *src, size_t size)
 {
 	size_t	i;
 	size_t	len;
 
 	if (size == 0)
 	{
-		return (ft_strlen(src));
+		return (ftr_strlen(src));
 	}
-	len = ft_strlen(dst);
+	len = ftr_strlen(dst);
 	i = 0;
 	if (size <= len)
-		return (ft_strlen(src) + size);
+		return (ftr_strlen(src) + size);
 	while (src[i] != '\0' && len + i + 1 < size)
 	{
 		dst[len + i] = src[i];
 		i++;
 	}
 	dst[len + i] = '\0';
-	return (len + ft_strlen(src));
+	return (len + ftr_strlen(src));
 }
 
-size_t	ft_strlcpy(char *dst, char *src, size_t size)
+size_t	ftr_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t	i;
 
 	i = 0;
 	if (size == 0)
-		return (ft_strlen(src));
+		return (ftr_strlen(src));
 	while (src[i] != '\0' && (size - 1) > 0)
 	{
 		dst[i] = src[i];
@@ -79,7 +79,7 @@ size_t	ft_strlcpy(char *dst, char *src, size_t size)
 	return (i);
 }
 
-size_t	ft_strlen(const char *c)
+size_t	ftr_strlen(const char *c)
 {
 	int	i;
 
@@ -93,7 +93,7 @@ size_t	ft_strlen(const char *c)
 	return (i);
 }
 
-char	*ft_strchr(const char *str, int n)
+char	*ftr_strchr(const char *str, int n)
 {
 	size_t	i;
 

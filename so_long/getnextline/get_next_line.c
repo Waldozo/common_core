@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 09:31:48 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/16 12:29:34 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:17:40 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ char	*read_file(int fd, char *str)
 			return (NULL);
 		}
 		buffer[byte] = 0;
-		str = ft_strjoin(str, buffer);
+		str = ftr_strjoin(str, buffer);
 		free(buffer);
-		if (ft_strchr(str, '\n'))
+		if (ftr_strchr(str, '\n'))
 			break ;
 	}
 	return (str);
@@ -84,7 +84,7 @@ char	*ft_next(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = (char *)malloc((ft_strlen(buffer) - i + 1) * sizeof(char));
+	line = (char *)malloc((ftr_strlen(buffer) - i + 1) * sizeof(char));
 	if (!line)
 	{
 		free(line);
@@ -117,28 +117,28 @@ char	*get_next_line(int fd)
 }
 #include <fcntl.h>
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		i;
 
-	fd = open("get.txt", O_RDONLY);
-	if (fd < 0)
-		return (1);
-	i = 1;
-	while (i)
-	{
-		line = get_next_line(fd);
-		if (!line)
-		{
-			i = 0;
-			free(line);
-			break ;
-		}
-		printf("Line: %s", line);
-		free(line);
-	}
-	return (0);
-}
+// 	fd = open("get.txt", O_RDONLY);
+// 	if (fd < 0)
+// 		return (1);
+// 	i = 1;
+// 	while (i)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (!line)
+// 		{
+// 			i = 0;
+// 			free(line);
+// 			break ;
+// 		}
+// 		printf("Line: %s", line);
+// 		free(line);
+// 	}
+// 	return (0);
+// }
 

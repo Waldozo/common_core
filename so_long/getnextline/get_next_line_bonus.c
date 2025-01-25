@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:16:56 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2024/12/07 12:01:12 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:18:01 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ char	*read_file(int fd, char *str)
 			return (NULL);
 		}
 		buffer[byte] = 0;
-		str = ft_strjoin(str, buffer);
-		if (ft_strchr(str, '\n'))
+		str = ftr_strjoin(str, buffer);
+		if (ftr_strchr(str, '\n'))
 			break ;
 	}
 	free(buffer);
@@ -82,7 +82,7 @@ char	*ft_next(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = (char *)malloc((ft_strlen(buffer) - i + 1) * sizeof(char));
+	line = (char *)malloc((ftr_strlen(buffer) - i + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
 	i++;
@@ -103,7 +103,7 @@ char	*get_next_line(int fd)
 	buffer[fd] = read_file(fd, buffer[fd]);
 	if (!buffer[fd])
 		return (NULL);
-	line = ft_line(buffer[fd]);
-	buffer[fd] = ft_next(buffer[fd]);
+	line = ftr_line(buffer[fd]);
+	buffer[fd] = ftr_next(buffer[fd]);
 	return (line);
 }
