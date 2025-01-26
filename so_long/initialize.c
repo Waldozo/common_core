@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:47:01 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/25 16:22:21 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/26 15:01:25 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,132 @@ char	*gnl_img(char *str)
 	}
 	return(map);
 }
+
+int	map_error_top_bottom(char **map)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while(map[0][j] != '\0')
+	{
+		if(map[0][j] != '1')
+		{
+			printf("%s", "error, map has to be surrounded by walls");
+			return(0);
+		}
+		j++;
+	}
+	while(map[i])
+	{
+		if(map[i][0] != '1')
+		{
+			printf("%s", "error, map has to be surrounded by walls");
+			return(0);
+		}
+		i++;
+	}
+	return(1);
+}
+int	map_error_sides(char **map)
+{
+	static	int	i = 0;
+	static	int	j = 0;
+
+	while(map[i])
+		i++;
+	while(map[i-1][j] != '\0')
+	{
+		if(map[i-1][j] != '1')
+		{
+			printf("%s", "error, map has to be surrounded by walls");
+			return(0);
+		}
+		j++;
+	}
+	i = 0;
+	while(map[i])
+	{
+		if(map[i][j-1] != '1')
+		{
+			printf("%s", "error, map has to be surrounded by walls");
+			return(0);
+		}
+		i++;
+	}
+	return(1);
+}
+int	map_size(char **map)
+{
+	int	i;
+	int	j;
+	int	size;
+	
+	size = 0;
+	i = 0;
+	j = 0;
+	while(map[0][size] != '\0')
+		size++;
+	i = 1;
+	while(map[i] != NULL)
+	{
+		j = 0;
+		while(map[i][j] != '\0')
+			j++;
+		if(j != size)
+		{
+			printf("%s", "error, map has to be a rectangle");
+			return(0);
+		}
+		i++;		
+	}
+	return(1);
+}
+int	map_count(char **map, char obj)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while(map[i] != NULL)
+	{
+		j = 0;
+		while(map[i][j] != '\0')
+		{
+			if(map[i][j] == obj)
+				count++;
+			j++;
+		}
+		i++;		
+	}
+	return(count);
+}
+int	map_things(char **map)
+{
+	int	exit;
+	int	item;
+	int	start;
+
+	start = map_count(map, 'P');
+	item = map_count(map, 'C');
+	exit = map_count(map, 'E');
+	
+	if(start != 1 || exit != 1)
+	{
+		printf("%s", "Error\nThere has to be only one exit and one starting position");
+		return(0);
+	}
+	if(item < 1)
+	{
+		printf("%s", "Error\nThere has to be at least one item collectible");
+		return(0);
+	}
+	return(1);
+}
+
 void    print_table_of_table(char **table)
 {
     int    i;
@@ -105,10 +231,13 @@ int main(int argc, char **argv)
 		char **split;
 		char *str;
 		str = gnl_img(argv[1]);
-		// printf("%s", str);
 		split = ft_split((const char *)str, c);
+		if((map_size(split)) == 1 && (map_things(split)) == 1 && (map_error_top_bottom(split)) == 1 && (map_error_sides(split)) == 1)
+		{
+			// printf("%s", str);
+			print_table_of_table(split);
+		}
 		// printf("%s", split[0]);
-	print_table_of_table(split);
 	}
 	
 	// printf("error, 2 arguments needed");
