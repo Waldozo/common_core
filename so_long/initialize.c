@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:47:01 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/26 15:01:25 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:11:00 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ typedef struct s_data
 	void *mlx_ptr;
 	void *win_ptr;
 	void	*mlx;
-	void	*img;
+	void	*img[256];
+	char	*img_wall;
+	char	*img_floor;
+	char	*img_perso;
+	char	*img_coin;
+	char	*img_exit;
 	int		img_width;
 	int		img_height;
 } t_data;
@@ -208,6 +213,70 @@ int	map_things(char **map)
 	return(1);
 }
 
+void	init_img(t_data data)
+{
+	int	i;
+	char *img_wall;
+	char	*img_floor;
+	char	*img_perso;
+	char	*img_coin;
+	char	*img_exit;
+	
+	i = 0;
+	img_floor = "./pics/floor_texture.xpm";
+	img_perso = "./pics/perso_tetxure.xpm";
+	img_coin =  "./pics/coin_texture.xpm";
+	img_exit = "./pics/exit_texture.xpm";
+	img_wall = "./pics/wall_texture.xpm";
+	
+	data.img[0] =  "./pics/floor_texture.xpm";
+	data.img[1] = "./pics/perso_tetxure.xpm";
+	data.img[2] =  "./pics/coin_texture.xpm";
+	data.img[3] =   "./pics/exit_texture.xpm";
+	data.img[4] =  "./pics/wall_texture.xpm";
+}
+void	print_elements(t_data data, char **map)
+{
+	int	i;
+	int	j;
+	char *img_wall;
+	char	*img_floor;
+	char	*img_perso;
+	char	*img_coin;
+	char	*img_exit;
+	
+	img_floor = "./pics/floor_texture.xpm";
+	img_perso = "./pics/perso_tetxure.xpm";
+	img_coin =  "./pics/coin_texture.xpm";
+	img_exit = "./pics/exit_texture.xpm";
+	img_wall = "./pics/wall_texture.xpm";
+	i = -1;
+	j = -1;
+	data.img[0] = mlx_xpm_file_to_image(data.mlx_ptr, "./pics/floor_texture.xpm", &data.img_width, &data.img_height);
+	data.img[1] = mlx_xpm_file_to_image(data.mlx_ptr, "./pics/perso_texture.xpm", &data.img_width, &data.img_height);
+	data.img[2] = mlx_xpm_file_to_image(data.mlx_ptr, "./pics/coin_texture.xpm", &data.img_width, &data.img_height);
+	data.img[3] = mlx_xpm_file_to_image(data.mlx_ptr, "./pics/exit_texture.xpm", &data.img_width, &data.img_height);
+	data.img[4] = mlx_xpm_file_to_image(data.mlx_ptr, "./pics/wall_texture.xpm", &data.img_width, &data.img_height);
+	
+	while(map[++i])
+	{
+		while (map[i][++j])
+		{
+			if(map[i][j] == 'P')
+				mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img[1], j * 32, i * 32);
+			else if(map[i][j] == 'C')
+				mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img[2], j * 32, i * 32);	
+			else if(map[i][j] == 'E')
+				mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img[3], j * 32, i * 32);
+			else if(map[i][j] == '1')
+				mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img[4], j * 32, i * 32);
+			else if(map[i][j] == '0')
+				mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img[0], j * 32, i * 32);
+		}
+		j = -1;
+	}
+	
+}
 void    print_table_of_table(char **table)
 {
     int    i;
@@ -220,55 +289,35 @@ void    print_table_of_table(char **table)
 int main(int argc, char **argv)
 {
 	int	i;
+	char **split = NULL;
+	char *str = NULL;
 	
-	
+	(void)argc;
 	i = 0;
-
-	if(argc == 2)
-	{
-		char c;
-		c = '\n';
-		char **split;
-		char *str;
-		str = gnl_img(argv[1]);
-		split = ft_split((const char *)str, c);
-		if((map_size(split)) == 1 && (map_things(split)) == 1 && (map_error_top_bottom(split)) == 1 && (map_error_sides(split)) == 1)
-		{
-			// printf("%s", str);
-			print_table_of_table(split);
-		}
-		// printf("%s", split[0]);
-	}
+	str = gnl_img(argv[1]);
+	split = ft_split((const char *)str, '\n');
+	if((map_size(split)) == 1 && (map_things(split)) == 1 && (map_error_top_bottom(split)) == 1 && (map_error_sides(split)) == 1)
+		print_table_of_table(split);
 	
 	// printf("error, 2 arguments needed");
 	
-	// t_data data;
-	// // char	*img_wall = "./pics/wall_texture.xpm";
-	// // char	*img_floor = "./pics/floor_texture.xpm";
+	t_data data;
 	
-	// data.mlx = mlx_init();
-	// data.mlx = mlx_init();
-	// // if(&gnl_img == 1)
-	// // {
-	// // 	data.img = mlx_xpm_file_to_image(data.mlx, img_wall , &data.img_width, &data.img_height);
-	// // }
-	// // else if(&gnl_img == 0)
-	// // {
-	// // 	data.img = mlx_xpm_file_to_image(data.mlx, img_floor , &data.img_width, &data.img_height);
-	// // }
-	// mlx_put_image_to_window(data.mlx, data.win_ptr, data.img, 0, 0);
-	// data.mlx_ptr = mlx_init();
-	// if (!data.mlx_ptr)
-	// 	return (1);
-	// data.win_ptr = mlx_new_window(data.mlx_ptr, 600, 400, "hi :)");
-	// if (!data.win_ptr)
-	// 	return (free(data.mlx_ptr), 1);
-	// // Register key release hook
-	// mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
-	// mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &data);
-	// // Register destroy hook
+	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		return (1);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, 1920, 1080, "hi");
+	if (!data.win_ptr)
+		return (free(data.mlx_ptr), 1);
+	data.img_height = 32;
+	data.img_width = 32;
+	print_elements(data, split);
+	// Register key release hook
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
+	mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &data);
+	// Register destroy hook
 	
-	// // Loop over the MLX pointer
-	// mlx_loop(data.mlx_ptr);
-	// return (0);
+	// Loop over the MLX pointer
+	mlx_loop(data.mlx_ptr);
+	return (0);
 }

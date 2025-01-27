@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 09:29:39 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/25 14:14:28 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:12:01 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1000000000
 # endif
 
 char	*ftr_strdup(const char *src);
