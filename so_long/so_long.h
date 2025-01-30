@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/30 14:39:19 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:18:40 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ typedef struct s_data
 	int		img_width;
 	int		img_height;
 	char	**map;
+	t_player	pos_flag;
 	int	count;
 	int	nbr_c;
 	t_player	player;
 } t_data;
 
-
+int	map_error(char **map);
 void	coordinates(t_data *data, char **map);
 int	map_error_sides(char **map);
 int	map_size(char **map);

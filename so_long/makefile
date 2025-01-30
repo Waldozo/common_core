@@ -6,14 +6,14 @@
 #    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 10:29:13 by wlarbi-a          #+#    #+#              #
-#    Updated: 2025/01/30 14:59:40 by wlarbi-a         ###   ########.fr        #
+#    Updated: 2025/01/30 18:19:03 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SOURCE = initialize.c init_image.c map_error.c key_press.c ./getnextline/get_next_line_utils.c ./getnextline/get_next_line.c 
+SOURCE = initialize.c init_image.c map_error.c key_press.c utils.c ./getnextline/get_next_line_utils.c ./getnextline/get_next_line.c 
 OBJ = ${SOURCE:.c=.o}
 NAME = so_long
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 
 all : $(NAME)

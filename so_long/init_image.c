@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:15:33 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/30 14:42:59 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:55:27 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	init_img(t_data *data)
 }
 void	print_elements(t_data *data, char **map)
 {
-	int	i;
+	int		i;
 	int	j;
 	char *img_wall;
 	char	*img_floor;
@@ -77,8 +77,9 @@ void	print_elements(t_data *data, char **map)
 	data->img[0] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/floor_texture.xpm", &data->img_width, &data->img_height);
 	data->img[1] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/perso_texture.xpm", &data->img_width, &data->img_height);
 	data->img[2] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/coin_texture.xpm", &data->img_width, &data->img_height);
-	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/exit_texture.xpm", &data->img_width, &data->img_height);
+	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/exit_texture_blocked.xpm", &data->img_width, &data->img_height);
 	data->img[4] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/wall_texture.xpm", &data->img_width, &data->img_height);
+	data->img[5] = mlx_xpm_file_to_image(data->mlx_ptr, "./pics/exit_texture.xpm", &data->img_width, &data->img_height);
 	
 	while(map[++i])
 	{
@@ -134,6 +135,8 @@ int	ft_collection(t_data *data)
 }
 void ft_exit(t_data *data, int keysym)
 {
+	if (map_count(data, 'C') == ft_collection(data))
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img[5], data->pos_flag.x * 32, data->pos_flag.y * 32);
 	if(map_count(data, 'C') == ft_collection(data) && keysym == W && data->map[data->player.x-1][data->player.y] == 'E' )
 		on_destroy(data);
 	if(map_count(data, 'C') == ft_collection(data) && keysym == S && data->map[data->player.x+1][data->player.y] == 'E' )

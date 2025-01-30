@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 13:46:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/30 14:43:25 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:22:43 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	map_error_top_bottom(char **map)
 	{
 		if(map[0][j] != '1')
 		{
-			ft_printf("%s", "error, map has to be surrounded by walls");
+			ft_printf("%s", "Error, map has to be surrounded by walls");
 			return(0);
 		}
 		j++;
@@ -31,8 +31,32 @@ int	map_error_top_bottom(char **map)
 	{
 		if(map[i][0] != '1')
 		{
-			ft_printf("%s", "error, map has to be surrounded by walls");
+			ft_printf("%s", "Error, map has to be surrounded by walls");
 			return(0);
+		}
+		i++;
+	}
+	return(1);
+}
+
+int	map_error(char **map)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while(map[i] != NULL)
+	{
+		j = 0;
+		while(map[i][j] != '\0')
+		{
+			if(map[i][j] != '1' && map[i][j] != 'P' && map[i][j] != 'E' && map[i][j] != 'C' && map[i][j] != '0')
+			{
+				ft_printf("%s", "Error, map has to include only an exit, a character, at least a coin, floors and walls");
+				return(0);
+			}
+			j++;
 		}
 		i++;
 	}
@@ -49,7 +73,7 @@ int	map_error_sides(char **map)
 	{
 		if(map[i-1][j] != '1')
 		{
-			ft_printf("%s", "error, map has to be surrounded by walls");
+			ft_printf("%s", "Error, map has to be surrounded by walls");
 			return(0);
 		}
 		j++;
@@ -59,7 +83,7 @@ int	map_error_sides(char **map)
 	{
 		if(map[i][j-1] != '1')
 		{
-			ft_printf("%s", "error, map has to be surrounded by walls");
+			ft_printf("%s", "Error, map has to be surrounded by walls");
 			return(0);
 		}
 		i++;
@@ -85,7 +109,7 @@ int	map_size(char **map)
 			j++;
 		if(j != size)
 		{
-			ft_printf("%s", "error, map has to be a rectangle");
+			ft_printf("%s", "Error, map has to be a rectangle");
 			return(0);
 		}
 		i++;		
@@ -106,7 +130,14 @@ int	map_count(t_data *data, char obj)
 		while(data->map[i][j] != '\0')
 		{
 			if(data->map[i][j] == obj)
+			{
 				data->count++;
+			}
+			if(data->map[i][j] == 'E')
+			{
+				data->pos_flag.x = j;
+				data->pos_flag.y = i;
+			}
 			j++;
 		}
 		i++;
