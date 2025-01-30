@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wlarbi-a <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 09:59:44 by wlarbi-a          #+#    #+#              #
-#    Updated: 2024/11/19 12:03:46 by wlarbi-a         ###   ########.fr        #
+#    Updated: 2025/01/30 14:57:57 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,13 +29,16 @@ CFLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 $(NAME) : $(OBJECT)
-	ar rcs $(NAME) $(OBJECT)
+	@ar rcs $(NAME) $(OBJECT)
+	@echo libft compiled
+%.o:%.c 
+	@$(CC) $(CFLAGS) -c $< -o $@
 clean : 
-	rm -f $(OBJECT) $(OBJECT2)
+	@rm -f $(OBJECT) $(OBJECT2)
 fclean : clean
-	rm -f $(NAME) $(OBJECT2)
+	@rm -f $(NAME) $(OBJECT2)
 re : fclean all
 bonus : $(OBJECT) $(OBJECT2)
-	ar rcs  $(NAME) $(OBJECT2) $(OBJECT)
+	@ar rcs  $(NAME) $(OBJECT2) $(OBJECT)
 
 .PHONY: clean fclean re all
