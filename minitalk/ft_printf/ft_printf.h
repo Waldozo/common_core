@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   printf.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walid <walid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wlarbi-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 14:52:13 by walid             #+#    #+#             */
-/*   Updated: 2025/01/31 14:52:16 by walid            ###   ########.fr       */
+/*   Created: 2024/11/21 09:20:30 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2024/11/23 14:40:39 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-
-#ifndef MINITALK_H
-# define MINITALK_H
-
-# include <bits/types/siginfo_t.h>
-# include <errno.h>
-# include <limits.h>
-# include <signal.h>
-# include <stdbool.h>
+# include <stdarg.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <unistd.h>
-#include "ft_printf/ft_printf.h"
-void	handler(int sig);
+
+int	ft_printf(const char *format, ...);
+int	ft_putnbrbase(long n, int base);
+int	ft_putnbrbase_maj(long n, int base);
+int	print_format(char sp, va_list ap);
+int	ft_putchar(char c);
+int	ft_putstr(char *s);
+int	ft_pointer(size_t n, int base);
 
 #endif

@@ -1,22 +1,44 @@
-SERVER = server
-CLIENT = client
-SOURCE_SERVER = server.c
-SOURCE_CLIENT = client.c
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: walid <walid@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/31 14:05:28 by walid             #+#    #+#              #
+#    Updated: 2025/01/31 14:57:36 by walid            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+
+SOURCES = server.c client.c ft_atoi.c
+OBJECTS = $(SOURCES:.c=.o)
+
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-OBJ_SERVER = $(SOURCE_SERVER:.c=.o)
-OBJ_CLIENT = $(SOURCE_CLIENT:.c=.o)
 
-all : $(SERVER) $(CLIENT)
+all: server client
 
-$(SERVER) : $(OBJ_SERVER)
-	ar -rcs $(OBJ_SERVER)
-$(CLIENT) : $(OBJ_CLIENT)
-	ar -rcs $(OBJ_CLIENT)
-clean :
-	rm -f $(OBJ_CLIENT) $(OBJ_SERVER)
-fclean : clean
-	rm -f $(CLIENT) $(SERVER)
-re : fclean all
+%.o: %.c
+	$(CC) -c $(CFLAGS)
 
-.PHONY: clean fclean re all
+server: server.o
+	make -C ft_printf
+	$(CC) -o $@ $<  
+	$(CC) $(OBJECTS) server ./ft_printf/libftprintf.a
+
+client: client.o
+	make -C ft_printf
+	$(CC) -o $@ $<  
+	$(CC) $(OBJECTS) client ./ft_printf/libftprintf.a
+	
+clean:
+	rm -f $(OBJECTS)
+fclean: clean
+	rm -f server client ft_printf/libftprintf.a
+	
+
+re: fclean all
+
+.PHONY: all clean fclean re
