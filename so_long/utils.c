@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 18:16:58 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/30 18:19:28 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/01 11:55:04 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*gnl_img(char *str)
 		free(map_line);
 		map_line = get_next_line(fd);
 	}
+	free(map_line);
 	return(map);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walid <walid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:52:13 by walid             #+#    #+#             */
-/*   Updated: 2025/01/31 14:52:16 by walid            ###   ########.fr       */
+/*   Updated: 2025/02/01 13:54:23 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-#include "ft_printf/ft_printf.h"
+# include "ft_printf/ft_printf.h"
+
+int	ft_isdigit(int c);
+int	ft_atoi(const char *str);
 void	handler(int sig);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbrbase.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:38:07 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2024/11/27 10:17:37 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/01 13:47:33 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_pointer(size_t n, int base)
 		ft_putstr("(nil)");
 		return (5);
 	}
-	else if (n < base)
+	else if (n < (size_t)base)
 	{
 		ft_putstr("0x");
 		ft_putchar(symbols[n]);
@@ -78,8 +78,8 @@ int	ft_pointer(size_t n, int base)
 	}
 	else
 	{
-		count = ft_pointer(n / base, base);
-		ft_putchar(symbols[n % base]);
+		count = ft_pointer(n /(size_t)base, base);
+		ft_putchar(symbols[n % (size_t)base]);
 		count += 1;
 		return (count);
 	}

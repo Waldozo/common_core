@@ -5,110 +5,106 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 09:38:13 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/25 14:16:20 by wlarbi-a         ###   ########.fr       */
+/*   Created: 2025/02/01 11:21:12 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2025/02/01 11:53:08 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ftr_strjoin(char *s1, char *s2)
+size_t	ft_strlen(const char *s)
 {
-	size_t	len1;
-	size_t	len2;
-	char	*dst;
+	int	i;
 
-	if (!s1)
-	{
-		s1 = (char *)malloc(1 * sizeof(char));
-		s1[0] = 0;
-	}
-	if (!s1 || !s2)
-		return (NULL);
-	len1 = ftr_strlen(s1);
-	len2 = ftr_strlen(s2);
-	dst = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!dst)
-		return (NULL);
-	ftr_strlcpy(dst, s1, len1 + 1);
-	ftr_strlcat(dst, s2, len1 + len2 + 1);
-	free(s1);
-	return (dst);
-}
-
-size_t	ftr_strlcat(char *dst, char *src, size_t size)
-{
-	size_t	i;
-	size_t	len;
-
-	if (size == 0)
-	{
-		return (ftr_strlen(src));
-	}
-	len = ftr_strlen(dst);
+	if (!s)
+		return (0);
 	i = 0;
-	if (size <= len)
-		return (ftr_strlen(src) + size);
-	while (src[i] != '\0' && len + i + 1 < size)
-	{
-		dst[len + i] = src[i];
+	while (s[i])
 		i++;
-	}
-	dst[len + i] = '\0';
-	return (len + ftr_strlen(src));
-}
-
-size_t	ftr_strlcpy(char *dst, char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size == 0)
-		return (ftr_strlen(src));
-	while (src[i] != '\0' && (size - 1) > 0)
-	{
-		dst[i] = src[i];
-		i++;
-		size--;
-	}
-	dst[i] = '\0';
-	while (src[i] != '\0')
-	{
-		i++;
-	}
 	return (i);
 }
 
-size_t	ftr_strlen(const char *c)
+char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	if (!c)
-		return (0);
-	while (c[i] != '\0')
-	{
+	while (s[i] && s[i] != (unsigned char)c)
 		i++;
-	}
-	return (i);
-}
-
-char	*ftr_strchr(const char *str, int n)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if ((char)n == str[i])
-		{
-			return ((char *)str + i);
-		}
-		i++;
-	}
-	if ((char)n == '\0')
-	{
-		return ((char *)str + i);
-	}
+	if (s[i] == (unsigned char)c)
+		return ((char *)s + i);
 	return (NULL);
 }
+
+char	*ft_strdup(const char *s)
+{
+	char	*dest;
+	int		len_s;
+	int		i;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	len_s = ft_strlen(s);
+	dest = malloc(len_s * sizeof(char) + 1);
+	if (dest == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	char	*join;
+	int		len_s1_s2;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	len_s1_s2 = ft_strlen(s1) + ft_strlen(s2);
+	join = malloc((len_s1_s2 + 1) * sizeof(char));
+	if (!join)
+		return (NULL);
+	while (s1[i])
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		join[i++] = s2[j++];
+	join[i] = '\0';
+	return (join);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*sub_s;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	sub_s = malloc((len + 1) * sizeof(char));
+	if (!sub_s)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		sub_s[i] = s[start + i];
+		i++;
+	}
+	sub_s[i] = '\0';
+    return (sub_s);
+}
+	

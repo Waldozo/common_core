@@ -3,39 +3,44 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: walid <walid@student.42.fr>                +#+  +:+       +#+         #
+#    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/31 14:05:28 by walid             #+#    #+#              #
-#    Updated: 2025/01/31 14:57:36 by walid            ###   ########.fr        #
+#    Updated: 2025/02/01 13:58:16 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-
-SOURCES = server.c client.c ft_atoi.c
+SOURCES = server.c client.c ft_atoi.c ft_isdigit.o
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+PRINTF_PATH = ft_printf
+PRINTF = $(PRINTF_PATH)/libftprintf.a
 
 all: server client
 
-%.o: %.c
-	$(CC) -c $(CFLAGS)
 
-server: server.o
-	make -C ft_printf
-	$(CC) -o $@ $<  
-	$(CC) $(OBJECTS) server ./ft_printf/libftprintf.a
+server: $(OBJECTS) $(PRINTF)
+#	$(CC) -o $@ $<
+	$(CC) $(CFALGS) server.o ft_atoi.o ft_isdigit.o -o server $(PRINTF)
 
-client: client.o
-	make -C ft_printf
-	$(CC) -o $@ $<  
-	$(CC) $(OBJECTS) client ./ft_printf/libftprintf.a
+client: $(OBJECTS) $(PRINTF)
+#	$(CC) -o $@ $<
+	$(CC) $(CFLAGS) client.o ft_atoi.o ft_isdigit.o -o client $(PRINTF)
 	
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(PRINTF) :
+	make -C $(PRINTF_PATH) all
+
 clean:
+	make -C ft_printf clean
 	rm -f $(OBJECTS)
+
 fclean: clean
+	
 	rm -f server client ft_printf/libftprintf.a
 	
 

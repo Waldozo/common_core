@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walid <walid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:05:36 by walid             #+#    #+#             */
-/*   Updated: 2025/01/31 14:40:16 by walid            ###   ########.fr       */
+/*   Updated: 2025/02/01 14:01:19 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_send_bits(int pid, char i)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(10);
 		bit++;
 	}
 }
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (argc == 3)
 	{
-		pid = ft_atoi(argv[1]);
+		pid = atoi(argv[1]);
 		while (argv[2][i] != '\0')
 		{
 			ft_send_bits(pid, argv[2][i]);
@@ -46,8 +46,8 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("\033[91mError: wrong format.\033[0m\n");
-		ft_printf("\033[33mTry: ./client <PID> <MESSAGE>\033[0m\n");
+		ft_printf("Error: wrong format.\n");
+		ft_printf("Try: ./client <PID> <MESSAGE>\n");
 		return (1);
 	}
 	return (0);

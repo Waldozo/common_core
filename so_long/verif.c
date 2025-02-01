@@ -1,38 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   verif.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 09:18:18 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 13:54:54 by wlarbi-a         ###   ########.fr       */
+/*   Created: 2025/02/01 18:35:54 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2025/02/01 18:43:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "so_long.h"
 
-int	ft_atoi(const char *str)
+int	ft_verif(t_data data, char **copy_map)
 {
-	int	i;
-	int	signe;
-	int	res;
-
-	res = 0;
-	signe = 1;
-	i = 0;
-	while (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && str[i] != '\0')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			signe *= -1;
-		i++;
-	}
-	while (str[i] != '\0' && ft_isdigit(str[i]))
-	{
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	return (res * signe);
+	if (map_size(data.map) == 1 && map_things(&data) == 1
+		&& map_error_top_bottom(data.map) == 1 && map_error_sides(data.map) == 1
+		&& map_error(data.map) == verif_path(copy_map))
+		return (1);
+	return (0);
 }

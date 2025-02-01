@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walid <walid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:05:42 by walid             #+#    #+#             */
-/*   Updated: 2025/01/31 14:40:40 by walid            ###   ########.fr       */
+/*   Updated: 2025/02/01 14:06:54 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,17 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 1)
 	{
-		ft_printf("\033[91mError: wrong format.\033[0m\n");
-		ft_printf("\033[33mTry: ./server\033[0m\n");
+		ft_printf("Error: wrong format.\n");
+		ft_printf("Try: ./server\n");
 		return (0);
 	}
 	pid = getpid();
-	ft_printf("\033[94mPID\033[0m \033[96m->\033[0m %d\n", pid);
-	ft_printf("\033[90mWaiting for a message...\033[0m\n");
+	ft_printf("PID %d\n", pid);
+	ft_printf("Waiting for a message...\n");
 	while (argc == 1)
 	{
 		signal(SIGUSR1, ft_handler);
 		signal(SIGUSR2, ft_handler);
-		pause ();
 	}
 	return (0);
 }

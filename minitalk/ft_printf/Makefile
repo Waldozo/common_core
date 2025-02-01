@@ -6,14 +6,14 @@
 #    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/23 15:15:27 by wlarbi-a          #+#    #+#              #
-#    Updated: 2025/01/30 14:58:00 by wlarbi-a         ###   ########.fr        #
+#    Updated: 2025/02/01 13:38:43 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SOURCE = ft_putnbrbase.c ft_putstr.c ft_putchar.c ft_printf.c
 OBJECT = ${SOURCE:.c=.o}
 CC = gcc
-CFALGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = libftprintf.a
 
 all : $(NAME)
