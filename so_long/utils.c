@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 18:16:58 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 11:55:04 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:47:56 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*gnl_img(char *str)
 	char	*tmp;
 	int	fd;
 	
-	fd = open(str ,O_RDONLY);
+	fd = open(str , O_RDONLY);
 	if(fd < 0)
 		return(NULL);
 	map_line = get_next_line(fd);

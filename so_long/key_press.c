@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:22:07 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 16:38:53 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/01 20:00:11 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	on_destroy(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
 	exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:47:01 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 15:02:32 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/01 20:01:58 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@
 // 		&& map_error_top_bottom(data.map) == 1 && map_error_sides(data.map) == 1
 // 		&& map_error(data.map) == 1)
 // 		print_table_of_table(data.map);
-// 	// t_player player;
-// 	// player.x = 0;
-// 	// player.y = 0;
 // 	data.move = 0;
 // 	data.mlx_ptr = mlx_init();
 // 	if (!data.mlx_ptr)
@@ -38,8 +35,6 @@
 // 	data.win_ptr = mlx_new_window(data.mlx_ptr, 1920, 1080, "hi");
 // 	if (!data.win_ptr)
 // 		return (free(data.mlx_ptr), 1);
-// 	// data.img_height = 32;
-// 	// data.img_width = 32;
 // 	print_elements(&data, data.map);
 // 	coordinates(&data, data.map);
 // 	// Register key release hook

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 18:37:59 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:52:28 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int				ft_collection(t_data *data);
 void			init_img(t_data *data);
 int				flood_fill(t_data *data, int x, int y, char **copy_map);
 int				verif_path(char **copy_map);
-int				ft_verif(t_data data, char **copy_map);
+int				ft_verif(t_data data, char **copy_map, char *str);
+int				verif_file_name(char *str);
 
 # define W 119
 # define S 115
