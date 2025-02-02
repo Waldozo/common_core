@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 13:46:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 16:07:40 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:17:49 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	map_error_top_bottom(char **map)
 		}
 		j++;
 	}
-	while (map[i])
+	while (map[i] != NULL)
 	{
 		if (map[i][0] != '1')
 		{
@@ -55,8 +55,8 @@ int	map_error(char **map)
 			if (map[i][j] != '1' && map[i][j] != 'P' && map[i][j] != 'E'
 				&& map[i][j] != 'C' && map[i][j] != '0')
 			{
-				ft_printf("%s", "Error, map has to include only an exit, \
-				a character, at least a coin, floors and walls");
+				ft_printf("%s", "Error, map has to include only an exit,\
+					a character, at least a coin, floors and walls");
 				return (0);
 			}
 			j++;
@@ -65,34 +65,32 @@ int	map_error(char **map)
 	}
 	return (1);
 }
+
 int	map_error_sides(char **map)
 {
-	static int	i = 0;
-	static int	j = 0;
+	int	i;
+	int	j;
 
-	while (map[i])
+	i = 0;
+	j = 0;
+	while (map[i] != NULL)
 		i++;
 	while (map[i - 1][j] != '\0')
 	{
 		if (map[i - 1][j] != '1')
-		{
-			ft_printf("%s", "Error, map has to be surrounded by walls");
 			return (0);
-		}
 		j++;
 	}
 	i = 0;
-	while (map[i])
+	while (map[i] != NULL)
 	{
 		if (map[i][j - 1] != '1')
-		{
-			ft_printf("%s", "Error, map has to be surrounded by walls");
 			return (0);
-		}
 		i++;
 	}
 	return (1);
 }
+
 int	map_size(char **map)
 {
 	int	i;
@@ -119,6 +117,7 @@ int	map_size(char **map)
 	}
 	return (1);
 }
+
 int	map_count(t_data *data, char obj)
 {
 	int	i;

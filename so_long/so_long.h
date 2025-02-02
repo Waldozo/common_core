@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 19:52:28 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:52:05 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ int				flood_fill(t_data *data, int x, int y, char **copy_map);
 int				verif_path(char **copy_map);
 int				ft_verif(t_data data, char **copy_map, char *str);
 int				verif_file_name(char *str);
+int				opening_window(t_data data);
+int				verif_everything(t_data *data);
+void			print_floor_wall(t_data *data, char **map);
+void			free_exit(t_data *data);
+void			ft_free_tab(char **tab);
+int				ft_size_tab(char **tab);
 
 # define W 119
 # define S 115
