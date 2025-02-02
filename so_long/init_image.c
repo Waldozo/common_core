@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:15:33 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 19:17:01 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:53:50 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,9 @@ int	map_things(t_data *data)
 	item = map_count(data, 'C');
 	exit = map_count(data, 'E');
 	if (start != 1 || exit != 1)
-	{
-		ft_printf("%s",
-			"Error\nThere has to be only one exit and one starting position");
 		return (0);
-	}
 	if (item < 1)
-	{
-		ft_printf("%s", "Error\nThere has to be at least one item collectible");
 		return (0);
-	}
 	return (1);
 }
 

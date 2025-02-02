@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:35:54 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 19:18:55 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:54:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	verif_everything(t_data *data)
 {
 	if (map_things(data) && map_error_sides(data->map))
 		return (1);
+	else
+		ft_printf("Error, collectible or map is not good");
 	return (0);
 }
 
