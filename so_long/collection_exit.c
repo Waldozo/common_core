@@ -6,13 +6,13 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:56:52 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 19:15:47 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:08:32 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_collection(t_data *data)
+void	ft_collection(t_data *data)
 {
 	data->nbr_c = 0;
 	if (data->map[data->player.x][data->player.y] == 'C')
@@ -20,24 +20,23 @@ int	ft_collection(t_data *data)
 		data->nbr_c++;
 		data->map[data->player.x][data->player.y] = 0;
 	}
-	return (data->nbr_c);
 }
 
 void	ft_exit(t_data *data, int keysym)
 {
-	if (map_count(data, 'C') == ft_collection(data))
+	if (map_count(data, 'C') == data->nbr_c)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img[5],
 			data->pos_flag.x * 32, data->pos_flag.y * 32);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == W
+	if (map_count(data, 'C') == data->nbr_c && keysym == W
 		&& data->map[data->player.x - 1][data->player.y] == 'E')
 		on_destroy(data);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == S
+	if (map_count(data, 'C') == data->nbr_c && keysym == S
 		&& data->map[data->player.x + 1][data->player.y] == 'E')
 		on_destroy(data);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == D
+	if (map_count(data, 'C') == data->nbr_c && keysym == D
 		&& data->map[data->player.x][data->player.y + 1] == 'E')
 		on_destroy(data);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == A
+	if (map_count(data, 'C') == data->nbr_c && keysym == A
 		&& data->map[data->player.x][data->player.y - 1] == 'E')
 		on_destroy(data);
 }

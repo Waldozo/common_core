@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 18:52:05 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:08:55 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_data
 	t_player	pos_flag;
 	int			count;
 	int			nbr_c;
+	int			nbr_e;
 	t_player	player;
 }				t_data;
 
@@ -57,7 +58,6 @@ int				map_size(char **map);
 int				map_error_top_bottom(char **map);
 int				on_destroy(t_data *data);
 char			*gnl_img(char *str);
-void			print_table_of_table(char **table);
 int				map_things(t_data *data);
 void			print_elements(t_data *data, char **map);
 int				map_count(t_data *data, char obj);
@@ -66,7 +66,7 @@ int				on_keypress(int keysym, t_data *data);
 void			moving_up_down(int keysym, t_data *data);
 void			moving_sides(int keysym, t_data *data);
 void			ft_exit(t_data *data, int keysym);
-int				ft_collection(t_data *data);
+void			ft_collection(t_data *data);
 void			init_img(t_data *data);
 int				flood_fill(t_data *data, int x, int y, char **copy_map);
 int				verif_path(char **copy_map);
@@ -78,6 +78,7 @@ void			print_floor_wall(t_data *data, char **map);
 void			free_exit(t_data *data);
 void			ft_free_tab(char **tab);
 int				ft_size_tab(char **tab);
+void			ft_count_exit(t_data *data);
 
 # define W 119
 # define S 115

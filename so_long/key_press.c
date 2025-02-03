@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:22:07 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 19:17:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:05:34 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ int	on_keypress(int keysym, t_data *data)
 		on_destroy(data);
 		exit(0);
 	}
+	data->move++;
+	ft_printf("move = %i\n", data->move);
+	ft_exit(data, keysym);
 	moving_up_down(keysym, data);
 	moving_sides(keysym, data);
 	ft_collection(data);
-	ft_exit(data, keysym);
 	return (0);
 }
