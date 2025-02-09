@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:41:06 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2024/12/19 11:15:02 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:51:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,19 @@ int	main(int ac, char **av)
 {
 	int	i;
 	int	j;
+	int	k;
 
+	k = 0;
 	j = 0;
 	i = 1;
 	if (ac > 2)
 	{
-		while (av[i][j])
+		while (av[i] != NULL)
 		{
+			while(av[j] != NULL)
+			{
+				if(av[j][k] )
+			}
 		}
 	}
 }

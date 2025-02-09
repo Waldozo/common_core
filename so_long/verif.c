@@ -6,20 +6,28 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:35:54 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 19:54:45 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:40:12 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_verif(t_data data, char **copy_map, char *str)
+void	ft_verif(t_data data, char **copy_map, char **copy_map_2)
 {
 	if (map_size(data.map) == 1 && map_things(&data) == 1
 		&& map_error_top_bottom(data.map) == 1 && map_error_sides(data.map) == 1
-		&& map_error(data.map) == 1 && verif_path(copy_map) == 1
-		&& verif_file_name(str) == 1)
-		return (1);
-	return (0);
+		&& map_error(data.map) == 1 && verif_path_collectible(copy_map_2) == 1
+		&& verif_path_exit(copy_map) == 1)
+	{
+		ft_free_tab(copy_map);
+		ft_free_tab(copy_map_2);
+		opening_window(data);
+		return ;
+	}
+	ft_free_tab(data.map);
+	ft_free_tab(copy_map);
+	ft_free_tab(copy_map_2);
+	return ;
 }
 
 int	verif_file_name(char *str)
@@ -29,16 +37,12 @@ int	verif_file_name(char *str)
 	i = 0;
 	while (str[i])
 		i++;
-	while (str[i] != '.')
+	while (i > 0 && str[i] != '.')
 		i--;
 	if (ft_strncmp(&str[i], ".ber", 5) == 0)
 		return (1);
-	else
-	{
-		ft_printf("le nom du fichier n'est pas bon");
-		return (0);
-	}
-	return (1);
+	ft_printf("Error\nFiles name is not good");
+	return (0);
 }
 
 int	verif_everything(t_data *data)
@@ -46,7 +50,7 @@ int	verif_everything(t_data *data)
 	if (map_things(data) && map_error_sides(data->map))
 		return (1);
 	else
-		ft_printf("Error, collectible or map is not good");
+		ft_printf("Error\nCollectible or map is not good");
 	return (0);
 }
 

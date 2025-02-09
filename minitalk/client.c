@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:05:36 by walid             #+#    #+#             */
-/*   Updated: 2025/02/01 14:01:19 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:29:54 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_send_bits(int pid, char i)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(10);
+		usleep(100);
 		bit++;
 	}
 }

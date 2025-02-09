@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:41:03 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2024/11/23 14:38:50 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:18:32 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+int	ft_strlen(char *str)
+{
+	int	i;
+	i = 0;
+	while(str[i])
+	{
+		i++;
+	}
+	return(i);
+}
 int	ft_putstr(char *s)
 {
 	int	i;
@@ -24,7 +34,7 @@ int	ft_putstr(char *s)
 	}
 	while (s[i])
 	{
-		write(1, &s[i], 1);
+		write(1, &s[i], ft_strlen(s));
 		i++;
 	}
 	return (i);

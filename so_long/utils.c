@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 18:16:58 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 19:18:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:37:34 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*gnl_img(char *str)
 	free(map_line);
 	return (map);
 }
-
 /*void	print_table_of_table(char **table)
 {
 	int i;
@@ -44,4 +43,4 @@ char	*gnl_img(char *str)
 	i = 0;
 	while (table[i])
 		ft_putendl_fd(table[i++], 1);
-} */
+}*/

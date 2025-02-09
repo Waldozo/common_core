@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "libft.h"
 
 static int	strlen_split(const char *s, char c)
@@ -66,20 +64,21 @@ char	**ft_split(char const *s, char c)
 	return (result[k] = NULL, result);
 }
 
-//int	main(int argc, char **argv)
-//{
-//	(void)argc;
-//	int i;
-//	char **test;
-//
-//	i = 0;
-//	if (argc < 3)
-//		return (0);
-//	test = ft_split(argv[1], argv[2][0]);
-//	while (test[i] != NULL)
-//	{
-//		printf("output test[%d] : %s\n", i, test[i]);
-//		free(test[i++]);
-//	}
-//	free(test);
-//}
+/*
+int	main(int argc, char **argv)
+{
+	(void)argc;
+	int i;
+	char **test;
+
+	i = 0;
+	if (argc < 3)
+		return (0);
+	test = ft_split(argv[1], argv[2][0]);
+	while (test[i] != NULL)
+	{
+		printf("output test[%d] : %s\n", i, test[i]);
+		free(test[i++]);
+	}
+	free(test);
+}*/

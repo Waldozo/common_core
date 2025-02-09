@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:38:54 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/20 11:45:50 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/06 12:49:15 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**ft_split(char *str)
 	split = malloc(1000000);
 	if (!split)
 		return (0);
-	while(str[i] == 32)
+	while(str[i] == 32 && '\t' && '\n')
 		i++;
 	while (str[i] != '\0')
 	{

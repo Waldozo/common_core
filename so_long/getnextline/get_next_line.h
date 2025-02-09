@@ -6,11 +6,9 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 11:20:47 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/02 14:18:42 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:07:26 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H

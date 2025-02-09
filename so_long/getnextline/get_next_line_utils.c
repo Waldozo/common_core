@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 11:21:12 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 11:53:08 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:07:44 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		i++;
 	}
 	sub_s[i] = '\0';
-    return (sub_s);
+	return (sub_s);
 }
-	
