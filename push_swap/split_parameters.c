@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 13:41:06 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/03 13:51:45 by wlarbi-a         ###   ########.fr       */
+/*   Created: 2025/02/12 08:30:49 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2025/02/12 10:09:13 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "push_swap.h"
 
 // output
 // swap sa/sb ss
@@ -18,81 +20,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	count_words(char *str)
-{
-	int	i;
-	int	count;
-
-	count = 0;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if ((str[i + 1] == 32 || str[i + 1] == '\n' || str[i + 1] == '\0'
-				|| str[i + 1] == '\t') && (str[i] >= '0' && str[i] <= '9'))
-		{
-			i++;
-			count++;
-		}
-		else
-			i++;
-	}
-	return (count);
-}
-int	len_word(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != 32 && str[i] != '\t' && str[i] != '\n')
-		i++;
-	return (i);
-}
-
-char	**ft_split(char *str)
-{
-	char	**split;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	k = 0;
-	split = malloc(count_words(str) * sizeof(char *) + 1);
-	if (!split)
-		return (0);
-	while (str[i] != '\0')
-	{
-		j = 0;
-		split[k] = malloc(len_word(str) * sizeof(char *) + 1);
-		if (!split[k])
-			return (0);
-		while (str[i] != 32 && str[i] != '\n' && str[i] != '\t')
-			split[k][j++] = str[i++];
-		while (str[i] == 32 || str[i] == '\n' || str[i] == '\t')
-			i++;
-		k += 1;
-	}
-	split[k] = NULL;
-	return (split);
-}
 
 int	main(int ac, char **av)
 {
 	int	i;
 	int	j;
-	int	k;
 
-	k = 0;
 	j = 0;
 	i = 1;
-	if (ac > 2)
+	int k;
+	k = ft_atoi(av[j]);
+	if (ac >= 2)
 	{
-		while (av[i] != NULL)
+		while(av[i] != NULL)
 		{
-			while(av[j] != NULL)
+			j = 0;
+			while(av[i][j] != '\0')
 			{
-				if(av[j][k] )
+				k = ft_atoi(av[j]);
+				ft_printf("%d\n", k);
+				//ft_putnbr(k);
+				// else
+				// {
+				// 	ft_printf("Error, has to be a number");
+				// 	return(0);
+				// }
+				j++;
 			}
+			i++;
 		}
 	}
 }

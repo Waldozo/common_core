@@ -6,35 +6,30 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:56:52 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/05 14:55:45 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:32:14 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_collection(t_data *data)
+void	ft_collection(t_data *data)
 {
-	data->nbr_c = 0;
 	if (data->map[data->player.x][data->player.y] == 'C')
-	{
-		data->nbr_c++;
-		data->map[data->player.x][data->player.y] = 0;
-	}
-	return (data->nbr_c);
+		data->map[data->player.x][data->player.y] = '0';
 }
 
 void	ft_exit(t_data *data, int keysym)
 {
-	if (map_count(data, 'C') == ft_collection(data) && keysym == W
-		&& data->map[data->player.x - 1][data->player.y] == 'E')
+	if (map_count(data, 'C') == 0 && keysym == W && data->map[data->player.x
+			- 1][data->player.y] == 'E')
 		on_destroy(data);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == S
-		&& data->map[data->player.x + 1][data->player.y] == 'E')
+	if (map_count(data, 'C') == 0 && keysym == S && data->map[data->player.x
+			+ 1][data->player.y] == 'E')
 		on_destroy(data);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == D
+	if (map_count(data, 'C') == 0 && keysym == D
 		&& data->map[data->player.x][data->player.y + 1] == 'E')
 		on_destroy(data);
-	if (map_count(data, 'C') == ft_collection(data) && keysym == A
+	if (map_count(data, 'C') == 0 && keysym == A
 		&& data->map[data->player.x][data->player.y - 1] == 'E')
 		on_destroy(data);
 }

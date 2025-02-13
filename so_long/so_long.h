@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/06 10:36:46 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:41:10 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ typedef struct s_data
 	void		*win_ptr;
 	void		*mlx;
 	void		*img[256];
-	char		*img_wall;
-	char		*img_floor;
-	char		*img_perso;
-	char		*img_coin;
-	char		*img_exit;
 	int			img_width;
 	int			img_height;
 	int			move;
@@ -46,7 +41,7 @@ typedef struct s_data
 	t_player	pos_flag;
 	int			count;
 	int			nbr_c;
-	int			nbr_e;
+	// int			nbr_e;
 	t_player	player;
 }				t_data;
 
@@ -65,7 +60,7 @@ int				on_keypress(int keysym, t_data *data);
 void			moving_up_down(int keysym, t_data *data);
 void			moving_sides(int keysym, t_data *data);
 void			ft_exit(t_data *data, int keysym);
-int				ft_collection(t_data *data);
+void			ft_collection(t_data *data);
 void			init_img(t_data *data);
 int				flood_fill(t_data *data, int x, int y, char **copy_map);
 int				flood_fill_collectible(t_data *data, int x, int y,
@@ -82,6 +77,7 @@ void			ft_free_tab(char **tab);
 int				ft_size_tab(char **tab);
 void			ft_count_exit(t_data *data);
 void			print_table_of_table(char **table);
+int				test_map(char *map);
 
 # define W 119
 # define S 115

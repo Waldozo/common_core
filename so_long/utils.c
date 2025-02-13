@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 18:16:58 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/06 10:37:34 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:32:14 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*gnl_img(char *str)
 	if (fd < 0)
 		return (NULL);
 	map_line = get_next_line(fd);
+	if (!map_line)
+		exit(0);
 	map = ft_strdup("");
 	while (map_line)
 	{
@@ -35,6 +37,30 @@ char	*gnl_img(char *str)
 	close(fd);
 	free(map_line);
 	return (map);
+}
+
+int	test_map(char *map)
+{
+	int	i;
+
+	i = 0;
+	while(map[i] != '\0')
+	{
+		if(map[0] == '\n')
+		{
+			free(map);
+			ft_printf("Error,\nnew line in map\n");
+			return(0);
+		}
+		if (map[i] == '\n' && map[i + 1] == '\n')
+		{
+			free(map);
+			ft_printf("Error,\nnew line in map\n");
+			return(0);
+		}
+		i++;
+	}
+	return(1);
 }
 /*void	print_table_of_table(char **table)
 {

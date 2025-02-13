@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:35:54 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/06 16:40:12 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:30:00 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	verif_file_name(char *str)
 		i--;
 	if (ft_strncmp(&str[i], ".ber", 5) == 0)
 		return (1);
-	ft_printf("Error\nFiles name is not good");
+	ft_printf("Error\nFiles name is not good\n");
 	return (0);
 }
 
@@ -50,7 +50,7 @@ int	verif_everything(t_data *data)
 	if (map_things(data) && map_error_sides(data->map))
 		return (1);
 	else
-		ft_printf("Error\nCollectible or map is not good");
+		ft_printf("Error\nCollectible or map is not good\n");
 	return (0);
 }
 
@@ -59,9 +59,9 @@ int	opening_window(t_data data)
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, 1920, 1080, "hi");
+	data.win_ptr = mlx_new_window(data.mlx_ptr, 1920, 1080, "So_long");
 	if (!data.win_ptr)
-		return (free(data.mlx_ptr), 1);
+		return (free(data.mlx_ptr), 0);
 	data.move = 0;
 	print_elements(&data, data.map);
 	print_floor_wall(&data, data.map);

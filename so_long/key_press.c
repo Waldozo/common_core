@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:22:07 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/03 14:34:42 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:11:02 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	on_keypress(int keysym, t_data *data)
 	}
 	data->move++;
 	ft_printf("move = %i\n", data->move);
+	ft_collection(data);
 	ft_exit(data, keysym);
 	moving_up_down(keysym, data);
 	moving_sides(keysym, data);
-	if (map_count(data, 'C') == ft_collection(data))
+	if (map_count(data, 'C') == 0)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img[5],
 			data->pos_flag.x * 32, data->pos_flag.y * 32);
-	ft_collection(data);
 	return (0);
 }

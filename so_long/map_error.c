@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 13:46:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/05 14:55:11 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:00:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	map_error_top_bottom(char **map)
 	{
 		if (map[0][j] != '1')
 		{
-			ft_printf("%s", "Error\nMap has to be surrounded by walls");
+			ft_printf("%s", "Error\nMap has to be surrounded by walls\n");
 			return (0);
 		}
 		j++;
@@ -32,7 +32,7 @@ int	map_error_top_bottom(char **map)
 	{
 		if (map[i][0] != '1')
 		{
-			ft_printf("%s", "Error\nMap has to be surrounded by walls");
+			ft_printf("%s", "Error\nMap has to be surrounded by walls\n");
 			return (0);
 		}
 		i++;
@@ -55,8 +55,7 @@ int	map_error(char **map)
 			if (map[i][j] != '1' && map[i][j] != 'P' && map[i][j] != 'E'
 				&& map[i][j] != 'C' && map[i][j] != '0')
 			{
-				ft_printf("%s", "Error\nMap has to include only an exit,\
-					a character, at least a coin, floors and walls");
+				ft_printf("%s", "Error\nMap is not good\n");
 				return (0);
 			}
 			j++;
@@ -110,7 +109,7 @@ int	map_size(char **map)
 			j++;
 		if (j != size)
 		{
-			ft_printf("%s", "Error,\nMap has to be a rectangle");
+			ft_printf("%s", "Error,\nMap has to be a rectangle\n");
 			return (0);
 		}
 		i++;
