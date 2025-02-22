@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:52:13 by walid             #+#    #+#             */
-/*   Updated: 2025/02/01 13:54:23 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:35:08 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@
 int	ft_isdigit(int c);
 int	ft_atoi(const char *str);
 void	handler(int sig);
+int	ft_strlen(char *str);
 
 #endif

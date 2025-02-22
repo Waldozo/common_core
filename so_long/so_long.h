@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/13 14:41:10 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:50:25 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,4 @@ int				test_map(char *map);
 # define S 115
 # define A 97
 # define D 100
-
 #endif

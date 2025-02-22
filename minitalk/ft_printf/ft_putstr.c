@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:41:03 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/05 14:18:32 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:30:32 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_putstr(char *s)
 	}
 	while (s[i])
 	{
-		write(1, &s[i], ft_strlen(s));
+		write(1, &s[i], 1);
 		i++;
 	}
 	return (i);
