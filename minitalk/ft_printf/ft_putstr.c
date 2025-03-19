@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:41:03 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/22 12:30:32 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/15 11:09:03 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 int	ft_strlen(char *str)
 {
 	int	i;
+
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		i++;
 	}
-	return(i);
+	return (i);
 }
+
 int	ft_putstr(char *s)
 {
 	int	i;

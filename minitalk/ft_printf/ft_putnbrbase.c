@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:38:07 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/01 13:47:33 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/15 11:09:11 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_pointer(size_t n, int base)
 	}
 	else
 	{
-		count = ft_pointer(n /(size_t)base, base);
+		count = ft_pointer(n / (size_t)base, base);
 		ft_putchar(symbols[n % (size_t)base]);
 		count += 1;
 		return (count);

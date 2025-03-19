@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 14:05:36 by walid             #+#    #+#             */
-/*   Updated: 2025/03/19 11:48:20 by wlarbi-a         ###   ########.fr       */
+/*   Created: 2025/03/19 11:49:23 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2025/03/19 11:49:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minitalk.h"
 
@@ -22,11 +24,11 @@ void	ft_handler(int signo, siginfo_t *siginfo, void *unused)
 
 	if(signo == SIGUSR1)
 		g_signal_received = 1; // Mettre à jour la variable pour indiquer que le signal a été reçu
-	// else if(signo == SIGUSR2)
-	// {
-	// 	write(1, "Signal received: SIGUSR2\n", 26);
-	// 	exit(0);
-	// }
+	else if(signo == SIGUSR2)
+	{
+		write(1, "Signal received: SIGUSR2\n", 26);
+		exit(0);
+	}
 }
 
 // Fonction pour envoyer un caractère au processus avec l'identifiant pid

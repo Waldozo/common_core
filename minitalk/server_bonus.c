@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 14:05:42 by walid             #+#    #+#             */
-/*   Updated: 2025/03/19 13:49:26 by wlarbi-a         ###   ########.fr       */
+/*   Created: 2025/03/19 11:49:10 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2025/03/19 11:49:11 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minitalk.h"
 
@@ -44,7 +46,7 @@ void	ft_handler_serv(int sig, siginfo_t *info, void *unused)
 	bit_count++;
 	if (bit_count == 8) // Si 8 bits ont été reçus, traiter le caractère
 	{
-		ft_handle_char(c); 
+		ft_handle_char(c);
 		if (c == '\0') // Si le caractère est nul, afficher le buffer
 			kill(info->si_pid, SIGUSR2); // Envoyer un signal de confirmation au client
 		bit_count = 0; // Réinitialiser le compteur de bits
@@ -58,9 +60,9 @@ int	main(void)
 {
 	struct sigaction	act; // Structure pour définir le gestionnaire de signal
 
-	sigemptyset(&act.sa_mask); // Initialiser le masque de signaux à vide
-	act.sa_sigaction = ft_handler_serv; // Définir la fonction de gestion des signaux
-	act.sa_flags = SA_SIGINFO; // Définir les flags pour utiliser la fonction de gestion des signaux
+	sigemptyset(&act.sa_mask);
+	act.sa_sigaction = ft_handler_serv;
+	act.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &act, NULL) == -1 || sigaction(SIGUSR2, &act,
 			NULL) == -1)
 	{
@@ -72,4 +74,3 @@ int	main(void)
 		pause(); // Attendre les signaux
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 08:30:49 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/12 10:09:13 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:55:40 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-int	main(int ac, char **av)
+int isnum(char *str)
 {
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 1;
-	int k;
-	k = ft_atoi(av[j]);
-	if (ac >= 2)
+	int i = 0;
+	while (str[i])
 	{
-		while(av[i] != NULL)
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int main(int ac, char **argv)
+{
+	int i = 0;
+	int j = i + 1;
+	char **str;
+	
+	if (ac < 2)
+		return (0);
+	if (ac == 2)
+	{	
+		str = ft_split(argv[1], ' ');
+		while(str[i])
 		{
-			j = 0;
-			while(av[i][j] != '\0')
+			j = i + 1;
+			while(str[j])
 			{
-				k = ft_atoi(av[j]);
-				ft_printf("%d\n", k);
-				//ft_putnbr(k);
-				// else
-				// {
-				// 	ft_printf("Error, has to be a number");
-				// 	return(0);
-				// }
+				if(str[j] == str[i])
+				{
+					printf("Error\n");
+					return (0);
+				}
 				j++;
 			}
 			i++;
 		}
+		i = 0;
+		while(str[i])
+		{
+			if(isnum(str[i]) == 0)
+			{
+				printf("Error\n");
+				return (0);
+			}
+			else if(isnum(str[i]) == 1)
+			{
+				printf("str[%d] = %s\n", i, str[i]);
+			}
+			i++;
+		}
+	}
+	else
+	{
+		str = malloc(sizeof(char *) * ac);
+		while (i < ac - 1)
+		{
+			str[i] = argv[i + 1];
+			printf("str[%d] = %s\n", i, str[i]);
+			i++;
+		}
+		str[i] = NULL;
 	}
 }
