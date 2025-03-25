@@ -6,12 +6,11 @@
 #    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 08:30:31 by wlarbi-a          #+#    #+#              #
-#    Updated: 2025/02/12 09:15:29 by wlarbi-a         ###   ########.fr        #
+#    Updated: 2025/03/24 12:11:12 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-SOURCE = split_parameters.c ft_putnbr.c
+SOURCE = split_parameters.c ft_putnbr.c parsing.c ft_utils.c push_swap.c list.c rotate.c rrotate.c push.c swap.c algorythm.c
 OBJECT = ${SOURCE:.c=.o}
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -29,7 +28,7 @@ $(NAME) : $(OBJECT)
 clean :
 	@make -C libft clean --no-print-directory
 	@make -C ft_printf clean --no-print-directory
-	@rm -f $(OBJECT) $(NAME)
+	@rm -f $(OBJECT)
 fclean : clean
 	@make -C libft fclean --no-print-directory
 	@make -C ft_printf fclean --no-print-directory
