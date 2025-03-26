@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:20:30 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/25 17:38:49 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:56:26 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,11 @@ t_lst	*process_list(char **str)
 
 void printf_list(t_lst *lst)
 {
-	// t_lst *b;
-	// b = NULL;
+	t_lst *b;
+	b = NULL;
 	
-	ft_max(lst);
-	// ft_turc(lst, &b);
-	//ft_for_two(lst);
-	// ft_index(lst);
-	// ft_for_three(lst);
-	// while(b)
-	// {
-	// 	printf("b->content = %d\n", (b)->content);
-	// 	b = b->next;
-	// }
-    // while(lst)
-    // {
-    //     printf("lst->content = %d\n", lst->content);
-    //     lst = lst->next;
-    // }
-    // printf("end\n");
+	ft_pushb(&lst, &b, ft_lstsize_bis(lst));
+	ft_sort(&lst, &b);
+	
 }
+

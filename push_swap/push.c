@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:38:37 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/24 11:25:54 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:05:53 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ void	push_b(t_lst **a, t_lst **b)
 void	push_a(t_lst **a, t_lst **b)
 {
 	t_lst	*temp;
-
+	t_lst 	*tmp;
+	
 	if (*b == NULL)
 		return ;
 	temp = *b;
 	*b = (*b)->next;
-	temp->next = *a;
+	tmp = *a;
 	*a = temp;
+	temp->next = tmp;
 	printf("pa\n");
 }

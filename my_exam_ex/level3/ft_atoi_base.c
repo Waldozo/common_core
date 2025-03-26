@@ -6,28 +6,22 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:20:56 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/10 14:34:09 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:51:18 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int ft_atoi_base(const char *str, int str_base)
 {
-    int sign;
-    int res;
-    int i;
-    int c;
-
-    c = 0;
-    sign = 1;
-    res = 0;
-    i = 0;
+    int sign = 1;
+    int res = 0;
+    int i = 0;
+    int c = 0;
     
     if(str[0] == '-')
     {
         sign = -1;
         i++;
     }
-    
     while(str[i])
     {
         if(str[i] >= '0' && str[i] <= '9')

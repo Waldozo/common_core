@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 08:30:49 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/23 13:23:25 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:50:03 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **argv)
 {
 	int		i;
 	char	**str;
-	t_lst	*lst;
+	t_lst	*a;
 
 	i = 0;
 	if (ac < 2)
@@ -38,7 +38,7 @@ int	main(int ac, char **argv)
 		}
 		test(str);
 	}
-	lst = process_list(str);
-	printf_list(lst);
+	a = process_list(str);
+	printf_list(a);
 	return (0);
 }
