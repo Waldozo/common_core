@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:58:14 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/24 12:02:06 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:56:47 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_duplicates(char **str)
 	int	j;
 
 	i = 0;
+	j = 0;
 	while (str[i] != NULL)
 	{
 		j = i + 1;

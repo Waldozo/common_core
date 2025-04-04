@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:04:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/22 14:55:16 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/30 10:03:53 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,38 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (res * sign);
+}
+void	ft_index(t_lst *a)
+{
+	t_lst	*head;
+	t_lst	*first;
+
+	head = a;
+	first = a;
+	while (head)
+	{
+		head->index = 1;
+		while (a)
+		{
+			if (a->content < head->content)
+				head->index += 1;
+			a = a->next;
+		}
+		a = first;
+		head = head->next;
+	}
+}
+void	get_index(t_lst *a)
+{
+	t_lst *tmp;
+	int index;
+
+	tmp = a;
+	index = 1;
+	while (tmp)
+	{
+		tmp->index_b = index;
+		index++;
+		tmp = tmp->next;
+	}
 }

@@ -6,64 +6,34 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:02:53 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/26 17:48:49 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:07:06 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_index(t_lst *a)
+void	ft_for_three(t_lst **a, t_list **c)
 {
-	t_lst	*head;
-	t_lst	*first;
-
-	head = a;
-	first = a;
-	while (head)
+	if ((*a)->content < (*a)->next->content
+		&& (*a)->content > (*a)->next->next->content)
+		reverse_rotate_a(a, c);
+	else if ((*a)->content > (*a)->next->content
+		&& (*a)->content < (*a)->next->next->content)
+		swap_a(a, c);
+	else if ((*a)->content > (*a)->next->content
+		&& (*a)->next->content < (*a)->next->next->content)
+		rotate_a(a, c);
+	else if ((*a)->content > (*a)->next->content
+		&& (*a)->content > (*a)->next->next->content)
 	{
-		head->index = 1;
-		while (a)
-		{
-			if (a->content < head->content)
-				head->index += 1;
-			a = a->next;
-		}
-		a = first;
-		head = head->next;
+		swap_a(a, c);
+		reverse_rotate_a(a, c);
 	}
-}
-
-// void	ft_for_two(t_lst *lst)
-// {
-// 	if (ft_lstsize_bis(lst) == 2)
-// 	{
-// 		if (lst->content > lst->next->content)
-// 			swap_a(&lst);
-// 	}
-// }
-
-void	ft_for_three(t_lst *a)
-{
-
-    if (a->content < a->next->content && a->content > a->next->next->content)
-		reverse_rotate_a(&a);
-	else if (a->content > a->next->content
-		&& a->content < a->next->next->content)
-		swap_a(&a);
-	else if (a->content > a->next->content
-		&& a->next->content < a->next->next->content)
-		rotate_a(&a);
-	else if (a->content > a->next->content
-		&& a->content > a->next->next->content)
+	else if ((*a)->content < (*a)->next->content
+		&& (*a)->next->content > (*a)->next->next->content)
 	{
-		swap_a(&a);
-		reverse_rotate_a(&a);
-	}
-	else if (a->content < a->next->content
-		&& a->next->content > a->next->next->content)
-	{
-		swap_a(&a);
-		rotate_a(&a);
+		swap_a(a, c);
+		rotate_a(a, c);
 	}
 }
 
@@ -95,134 +65,205 @@ int	ft_min(t_lst *a)
 	return (min);
 }
 
-void	ft_pushb(t_lst **a, t_lst **b, int size)
-{
-	int push;
+// int	mid_value(t_lst *a)
+// {
+// 	long	size;
+// 	long	result;
+// 	long	rslt;
 
-	push = 0;
-	ft_index(*a);
-	while (size > 6 && push < size * 2 / 3)
+// 	size = 0;
+// 	result = 0;
+// 	while (a)
+// 	{
+// 		result += a->content;
+// 		size++;
+// 		a = a->next;
+// 	}
+// 	rslt = result / size;
+// 	return ((int)rslt);
+// }
+
+void	ft_pushb(t_lst **a, t_lst **b, t_list **c, int size)
+{
+	int	mid;
+
+	mid = ft_lstsize_bis(*a) / 2;
+	// ft_index(*a);
+	while (ft_min(*a) <= mid)
 	{
-		if ((*a)->index <= size / 3)
+		if((*a)->content <= mid * 2 /3)
 		{
-			push_b(a, b);
-			rotate_b(b);
-			push++;
+			push_b(a, b, c);
+			rotate_b(b, c);
 		}
-		else if ((*a)->index <= size * 2 / 3)
-		{
-			push_b(a, b);
-			push++;
-		}
+		else if ((*a)->content <= mid * 4 / 3 )
+			push_b(a, b, c);
 		else
-			rotate_a(a);
+			rotate_a(a, c);
 	}
-	while (size - push > 3)
+	while (ft_lstsize_bis(*a) > 3)
 	{
-		push_b(a, b);
-		push++;
+		push_b(a, b, c);
+		size--;
 	}
-    if (size - push == 3)
-	    ft_for_three(*a);
+	if (ft_lstsize_bis(*a) == 3)
+		ft_for_three(a, c);
 }
 
-
-// Fonction pour calculer la cible de chaque élément de b
-void	ft_gettarget(t_lst **a, t_lst **b)
+void	ft_push_lowest_cost(t_lst **a, t_lst **b, t_list **c, int lim)
 {
-    t_lst	*tmp_b;
-    t_lst	*tmp_a;
-    int		target;
+	t_lst	*lowest_cost_node;
+	int		rev;
+	int		rev_2;
 
-    tmp_b = *b;
-    while (tmp_b)
-    {
-        tmp_a = *a;
-        target = ft_max(*a);
-        while (tmp_a)
-        {
-            if (tmp_a->content > tmp_b->content && tmp_a->content < target)
-                target = tmp_a->content;
-            tmp_a = tmp_a->next;
-        }
-        // if (target == ft_max(*a))
-        //     target = ft_min(*a);
-        tmp_b->target = target;
-        tmp_b = tmp_b->next;
-    }
+	ft_gettarget(a, b);
+	ft_calculate_cost(*a, *b);
+	lowest_cost_node = ft_find_lowest_cost(b , lim);
+	rev_2 = swp_rev(*b, lowest_cost_node->content, ft_lstsize_bis(*b));
+	while ((*b) != lowest_cost_node)
+	{
+		if (rev_2 == 0)
+			rotate_b(b, c);
+		else if (rev_2 == 1)
+			reverse_rotate_b(b, c);
+	}
+	rev = swp_rev(*a, (*b)->target, ft_lstsize_bis(*a));
+	while ((*b)->target != (*a)->content)
+	{
+		if (rev == 0)
+			rotate_a(a, c);
+		else if (rev == 1)
+			reverse_rotate_a(a, c);
+	}
+		push_a(a, b, c);
 }
 
-// Fonction pour calculer le coût de déplacement de chaque élément de b
-void	ft_calculate_cost(t_lst **a, t_lst **b)
+void	ft_sort(t_lst **a, t_lst **b, t_list **c)
 {
-    t_lst	*tmp_b;
-    int		size_a;
-    int		size_b;
-
-    size_a = ft_lstsize_bis(*a);
-    size_b = ft_lstsize_bis(*b);
-    printf("size_a = %d\n", size_a);
-    printf("size_b = %d\n", size_b);
-    tmp_b = *b;
-    while (tmp_b)
-    {
-        tmp_b->cost_b = tmp_b->index;
-        if (tmp_b->index > size_b / 2)
-            tmp_b->cost_b = size_b - tmp_b->index;
-        tmp_b->cost_a = 0;
-        t_lst *tmp_a = *a;
-        while (tmp_a)
-        {
-            if (tmp_a->content == tmp_b->target)
-                break;
-            tmp_b->cost_a++;
-            tmp_a = tmp_a->next;
-        }
-        if (tmp_b->cost_a > size_a / 2)
-            tmp_b->cost_a = size_a - tmp_b->cost_a;
-        tmp_b->total_cost = tmp_b->cost_a + tmp_b->cost_b;
-        tmp_b = tmp_b->next;
-    }
+	int	rev;
+	int	lim;
+	
+	rev = 0;
+	lim = ft_lstsize_bis(*b) / 2;
+	while (ft_max(*b) < lim)
+	{
+		get_index(*b);
+		ft_push_lowest_cost(a, b, c, lim);
+	}
+	while (*b)
+	{
+		get_index(*b);
+		ft_push_lowest_cost(a, b, c, lim);
+	}
+	rev = swp_rev(*a, ft_min(*a), ft_lstsize_bis(*a));
+	while ((*a)->content != ft_min(*a))
+	{
+		if (rev == 0)
+			rotate_a(a, c);
+		else if (rev == 1)
+			reverse_rotate_a(a, c);
+	}
 }
 
-// Fonction pour trouver l'élément de b avec le coût le plus bas
-t_lst	*ft_find_lowest_cost(t_lst **b)
+int	swp_rev(t_lst *a, int element, int size)
 {
-    t_lst	*tmp_b;
-    t_lst	*lowest_cost_node;
-
-    tmp_b = *b;
-    lowest_cost_node = tmp_b;
-    while (tmp_b)
-    {
-        if (tmp_b->total_cost <= lowest_cost_node->total_cost)
-            lowest_cost_node = tmp_b;
-        tmp_b = tmp_b->next;
-    }
-    return (lowest_cost_node);
+	int	i;
+	t_lst *tmp;
+	
+	tmp = a;
+	i = 0;
+	while (tmp->content != element)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	if (i >= (size / 2) + (size % 2))
+	return (1);
+	return (0);
 }
 
-// Fonction principale pour pousser l'élément avec le coût le plus bas de b vers a
-void	ft_push_lowest_cost(t_lst **a, t_lst **b)
+void	swp_is_both(t_list *lst, char *content, char *target, char *replace)
 {
-    t_lst	*lowest_cost_node;
-  
-    ft_gettarget(a, b);
-    ft_calculate_cost(a, b);
-    lowest_cost_node = ft_find_lowest_cost(b);
-    while (*b != lowest_cost_node)
-    {
-        if (lowest_cost_node->index > ft_lstsize_bis(*b) / 2)
-            rotate_b(b);
-        else if(lowest_cost_node->index <= ft_lstsize_bis(*b) / 2)
-            reverse_rotate_b(b);
-    }
-    push_a(a, b);
+	t_list	*first;
+	t_list	*temp;
+
+	first = lst;
+	while (lst->next && ft_strncmp(content, lst->next->content, 4) == 0)
+		lst = lst->next;
+	if (lst->next && ft_strncmp(target, lst->next->content, 4) == 0)
+	{
+		free(first->content);
+		first->content = ft_strdup(replace);
+		temp = lst->next;
+		if (lst->next->next)
+			lst->next = lst->next->next;
+		else
+			lst->next = NULL;
+		ft_lstdelone(temp, swp_del);
+	}
 }
 
-// Fonction pour trier la pile a en utilisant les éléments de b
-void	ft_sort(t_lst **a, t_lst **b)
+void	swp_check_both(t_list *lst)
 {
-    while (*b)
-        ft_push_lowest_cost(a, b);
+	while (lst)
+	{
+		if (ft_strncmp(lst->content, "sa", 3) == 0)
+			swp_is_both(lst, "sa", "sb", "ss");
+		else if (ft_strncmp(lst->content, "sb", 3) == 0)
+			swp_is_both(lst, "sb", "sa", "ss");
+		else if (ft_strncmp(lst->content, "ra", 3) == 0)
+			swp_is_both(lst, "ra", "rb", "rr");
+		else if (ft_strncmp(lst->content, "rb", 3) == 0)
+			swp_is_both(lst, "rb", "ra", "rr");
+		else if (ft_strncmp(lst->content, "rra", 4) == 0)
+			swp_is_both(lst, "rra", "rrb", "rrr");
+		else if (ft_strncmp(lst->content, "rrb", 4) == 0)
+			swp_is_both(lst, "rrb", "rra", "rrr");
+		lst = lst->next;
+	}
+}
+
+void	swp_lstprinter(t_list *lst)
+{
+	while (lst->next)
+	{
+		lst = lst->next;
+		ft_putendl_fd(lst->content, 1);
+	}
+}
+
+void	swp_lstprint(t_list *result)
+{
+	swp_check_both(result);
+	swp_lstprinter(result);
+}
+
+void	swp_del(void *content)
+{
+	free(content);
+}
+
+void free_list(t_lst *lst)
+{
+	t_lst *tmp;
+
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
+}
+
+void free_list_bis(t_list *lst)
+{
+	t_list *tmp;
+
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp->content);
+		free(tmp);
+	}
 }

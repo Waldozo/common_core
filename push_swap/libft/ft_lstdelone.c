@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:58:14 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/22 16:03:15 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:53:03 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	(del)(lst->content);
+	del(lst->content);
 	free(lst);
 }

@@ -7,6 +7,9 @@
         "ranges": "c",
         "span": "c",
         "regex": "c",
-        "utility": "c"
+        "utility": "c",
+        "libft.h": "c",
+        "push_swap.h": "c",
+        "stdlib.h": "c"
     }
 }

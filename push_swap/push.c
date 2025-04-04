@@ -6,13 +6,13 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:38:37 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/26 15:05:53 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:09:07 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_b(t_lst **a, t_lst **b)
+void	push_b(t_lst **a, t_lst **b, t_list **c)
 {
 	t_lst	*temp;
 	t_lst 	*tmp;
@@ -24,10 +24,10 @@ void	push_b(t_lst **a, t_lst **b)
 	tmp = *b;
 	*b = temp;
 	temp->next = tmp;
-	printf("pb\n");
+	ft_lstadd_back(c, ft_lstnew(ft_strdup("pb")));
 }
 
-void	push_a(t_lst **a, t_lst **b)
+void	push_a(t_lst **a, t_lst **b, t_list **c)
 {
 	t_lst	*temp;
 	t_lst 	*tmp;
@@ -39,5 +39,5 @@ void	push_a(t_lst **a, t_lst **b)
 	tmp = *a;
 	*a = temp;
 	temp->next = tmp;
-	printf("pa\n");
+	ft_lstadd_back(c, ft_lstnew(ft_strdup("pa")));
 }

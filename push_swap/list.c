@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:18:33 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/24 12:13:44 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:08:42 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,47 @@ t_lst	*ft_lstnew_bis(int content)
 	lst->next = NULL;
 	return (lst);
 }
+t_lst	*ft_lstnew_ter(void *content_bis)
+{
+	t_lst	*lst;
+
+	lst = (t_lst *)malloc(sizeof(t_lst));
+	if (!lst)
+		return (NULL);
+	lst->content_bis = (void *)content_bis;
+	lst->next = NULL;
+	return (lst);
+}
+
+// void	ft_lstadd_back_bis(t_lst **lst, t_lst *new)
+// {
+// 	t_lst	*slt;
+
+// 	slt = NULL;
+// 	if (*lst)
+// 	{
+// 		slt = ft_lstlast_bis(*lst);
+// 		slt->next = new;
+//     }
+// 	else
+// 		*lst = new;
+// }
 
 void	ft_lstadd_back_bis(t_lst **lst, t_lst *new)
 {
-	t_lst	*slt;
+    t_lst	*last;
 
-	if (*lst)
-	{
-		slt = ft_lstlast_bis(*lst);
-		slt->next = new;
+    if (!lst || !new)
+        return ;
+    if (*lst == NULL)
+    {
+        *lst = new;
+        return ;
     }
-	else
-		*lst = new;
+    last = *lst;
+    while (last->next)
+        last = last->next;
+    last->next = new;
 }
 
 t_lst	*ft_lstlast_bis(t_lst *lst)
@@ -59,4 +88,10 @@ int	ft_lstsize_bis(t_lst *lst)
 		i++;
 	}
 	return (i);
+}
+
+void	ft_lstdelone_bis(t_lst *lst, void (*del)(void *))
+{
+	(del)(lst->content_bis);
+	free(lst);
 }
