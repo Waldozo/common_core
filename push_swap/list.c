@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:18:33 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/04 20:08:42 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/04 21:41:03 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,36 @@ t_lst	*ft_lstnew_ter(void *content_bis)
 	return (lst);
 }
 
-// void	ft_lstadd_back_bis(t_lst **lst, t_lst *new)
-// {
-// 	t_lst	*slt;
-
-// 	slt = NULL;
-// 	if (*lst)
-// 	{
-// 		slt = ft_lstlast_bis(*lst);
-// 		slt->next = new;
-//     }
-// 	else
-// 		*lst = new;
-// }
-
 void	ft_lstadd_back_bis(t_lst **lst, t_lst *new)
 {
-    t_lst	*last;
+	t_lst	*slt;
 
-    if (!lst || !new)
-        return ;
-    if (*lst == NULL)
-    {
-        *lst = new;
-        return ;
+	slt = NULL;
+	if (*lst)
+	{
+		slt = ft_lstlast_bis(*lst);
+		slt->next = new;
     }
-    last = *lst;
-    while (last->next)
-        last = last->next;
-    last->next = new;
+	else
+		*lst = new;
 }
+
+// void	ft_lstadd_back_bis(t_lst **lst, t_lst *new)
+// {
+//     t_lst	*last;
+
+//     if (!lst || !new)
+//         return ;
+//     if (*lst == NULL)
+//     {
+//         *lst = new;
+//         return ;
+//     }
+//     last = *lst;
+//     while (last->next)
+//         last = last->next;
+//     last->next = new;
+// }
 
 t_lst	*ft_lstlast_bis(t_lst *lst)
 {

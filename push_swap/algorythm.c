@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:02:53 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/04 20:07:06 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/04 23:14:50 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,50 +65,109 @@ int	ft_min(t_lst *a)
 	return (min);
 }
 
-// int	mid_value(t_lst *a)
-// {
-// 	long	size;
-// 	long	result;
-// 	long	rslt;
+int	mid_value(t_lst *a)
+{
+	long	size;
+	long	result;
+	long	rslt;
 
-// 	size = 0;
-// 	result = 0;
-// 	while (a)
+	size = 0;
+	result = 0;
+	while (a)
+	{
+		result += a->content;
+		size++;
+		a = a->next;
+	}
+	rslt = result / size;
+	return ((int)rslt / 2);
+}
+
+// void	ft_pushb(t_lst **a, t_lst **b, t_list **c, int size)
+// {
+// 	int	mid;
+
+// 	mid = mid_value(*a);
+// 	size = ft_lstsize_bis(*a);
+// 	ft_index(*a);
+// 	printf
+// 	while (ft_min(*a) <= mid)
 // 	{
-// 		result += a->content;
-// 		size++;
-// 		a = a->next;
+// 		if ((*a)->content <= mid * 2 / 3)
+// 		{
+// 			push_b(a, b, c);
+// 			rotate_b(b, c);
+// 		}
+// 		else if ((*a)->content <= mid * 4/3)
+// 			push_b(a, b, c);
+// 		else
+// 			rotate_a(a, c);
 // 	}
-// 	rslt = result / size;
-// 	return ((int)rslt);
+// 	while (ft_lstsize_bis(*a) > 3)
+// 	{
+// 		push_b(a, b, c);
+// 		size--;
+// 	}
+// 	if (ft_lstsize_bis(*a) == 3)
+// 		ft_for_three(a, c);
 // }
 
-void	ft_pushb(t_lst **a, t_lst **b, t_list **c, int size)
+void	ft_pushb(t_lst **pile_a, t_lst **pile_b, t_list **result)
 {
-	int	mid;
+	int	median;
+	int	i;
 
-	mid = ft_lstsize_bis(*a) / 2;
-	// ft_index(*a);
-	while (ft_min(*a) <= mid)
+	i = 1;
+	median = mid_value(*pile_a);
+	while (ft_lstsize_bis(*pile_a) > 3 )
 	{
-		if((*a)->content <= mid * 2 /3)
+		while (ft_min(*pile_a) < median * i)
 		{
-			push_b(a, b, c);
-			rotate_b(b, c);
+			if ((*pile_a)->content < median * i)
+				push_b(pile_a, pile_b, result);
+			else
+				rotate_a(pile_a, result);
 		}
-		else if ((*a)->content <= mid * 4 / 3 )
-			push_b(a, b, c);
-		else
-			rotate_a(a, c);
+		i++;
+		while (i > 3 && ft_lstsize_bis(*pile_a) > 3)
+			push_b(pile_a, pile_b, result);
 	}
-	while (ft_lstsize_bis(*a) > 3)
-	{
-		push_b(a, b, c);
-		size--;
-	}
-	if (ft_lstsize_bis(*a) == 3)
-		ft_for_three(a, c);
+	if (ft_lstsize_bis(*pile_a) == 3)
+		ft_for_three(pile_a, result);
+	if (*pile_b)
+		ft_sort(pile_a, pile_b, result);
 }
+// void	ft_pushb(t_lst **a, t_lst **b, t_list **c, int size)
+// {
+// 	int push;
+
+// 	if (ft_lstsize_bis(*a) == 3)
+// 		push = 0;
+// 	ft_index(*a);
+// 	while (size > 6 && push < size * 2 / 3)
+// 	{
+// 		if ((*a)->index <= size / 3)
+// 		{
+// 			push_b(a, b, c);
+// 			rotate_b(b, c);
+// 			push++;
+// 		}
+// 		else if ((*a)->index <= size * 2 / 3)
+// 		{
+// 			push_b(a, b, c);
+// 			push++;
+// 		}
+// 		else
+// 			rotate_a(a, c);
+// 	}
+// 	// while (size - push > 3)
+// 	// {
+// 	// 	push_b(a, b, c);
+// 	// 	push++;
+// 	// }
+// 	// if (size - push == 3)
+// 	// 	ft_for_three(a, c);
+// }
 
 void	ft_push_lowest_cost(t_lst **a, t_lst **b, t_list **c, int lim)
 {
@@ -118,7 +177,7 @@ void	ft_push_lowest_cost(t_lst **a, t_lst **b, t_list **c, int lim)
 
 	ft_gettarget(a, b);
 	ft_calculate_cost(*a, *b);
-	lowest_cost_node = ft_find_lowest_cost(b , lim);
+	lowest_cost_node = ft_find_lowest_cost(b, lim);
 	rev_2 = swp_rev(*b, lowest_cost_node->content, ft_lstsize_bis(*b));
 	while ((*b) != lowest_cost_node)
 	{
@@ -135,17 +194,23 @@ void	ft_push_lowest_cost(t_lst **a, t_lst **b, t_list **c, int lim)
 		else if (rev == 1)
 			reverse_rotate_a(a, c);
 	}
-		push_a(a, b, c);
+	push_a(a, b, c);
 }
 
 void	ft_sort(t_lst **a, t_lst **b, t_list **c)
 {
 	int	rev;
 	int	lim;
-	
+
 	rev = 0;
-	lim = ft_lstsize_bis(*b) / 2;
-	while (ft_max(*b) < lim)
+	lim = mid_value(*b);
+	while (ft_max(*b) > lim)
+	{
+		get_index(*b);
+		ft_push_lowest_cost(a, b, c, lim);
+	}
+	lim = mid_value(*b);
+	while (ft_max(*b) > lim)
 	{
 		get_index(*b);
 		ft_push_lowest_cost(a, b, c, lim);
@@ -167,9 +232,9 @@ void	ft_sort(t_lst **a, t_lst **b, t_list **c)
 
 int	swp_rev(t_lst *a, int element, int size)
 {
-	int	i;
-	t_lst *tmp;
-	
+	int		i;
+	t_lst	*tmp;
+
 	tmp = a;
 	i = 0;
 	while (tmp->content != element)
@@ -178,7 +243,7 @@ int	swp_rev(t_lst *a, int element, int size)
 		i++;
 	}
 	if (i >= (size / 2) + (size % 2))
-	return (1);
+		return (1);
 	return (0);
 }
 
@@ -243,9 +308,9 @@ void	swp_del(void *content)
 	free(content);
 }
 
-void free_list(t_lst *lst)
+void	free_list(t_lst *lst)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	while (lst)
 	{
@@ -255,7 +320,7 @@ void free_list(t_lst *lst)
 	}
 }
 
-void free_list_bis(t_list *lst)
+void	free_list_bis(t_list *lst)
 {
 	t_list *tmp;
 

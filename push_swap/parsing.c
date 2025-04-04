@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:58:14 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/03 14:56:47 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/04 23:27:02 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	check_isnum(char **str)
 			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
-		if (str[i][0] == '-' && ft_strlen(str[i]) < 2)
+		if ((str[i][0] == '-' && ft_strlen(str[i]) < 2) || (str[i][0] == '+' && ft_strlen(str[i]) < 2))
 		{
 			ft_putstr_fd("Error\n", 2);
 			return (0);

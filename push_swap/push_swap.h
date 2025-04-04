@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 08:41:51 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/02 12:44:43 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/04 22:58:47 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void				ft_for_three(t_lst **a, t_list **c);
 void				ft_index(t_lst *a);
 int					ft_max(t_lst *a);
 int					ft_min(t_lst *a);
-void				ft_pushb(t_lst **a, t_lst **b, t_list **c, int size);
+void				ft_pushb(t_lst **a, t_lst **b, t_list **c);
 void				ft_sort(t_lst **a, t_lst **b, t_list **c);
 void				ft_push_lowest_cost(t_lst **a, t_lst **b, t_list **c,
 						int lim);
@@ -77,7 +77,7 @@ void				swp_lstprinter(t_list *lst);
 void				swp_check_both(t_list *lst);
 void				swp_is_both(t_list *lst, char *content, char *target,
 						char *replace);
-void				printf_list(t_lst *lst, t_list *c);
+void				printf_list(t_lst **lst, t_list *c);
 void				free_list(t_lst *lst);
 void				free_list_bis(t_list *lst);
 #endif

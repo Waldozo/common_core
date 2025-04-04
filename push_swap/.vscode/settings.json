@@ -10,6 +10,8 @@
         "utility": "c",
         "libft.h": "c",
         "push_swap.h": "c",
-        "stdlib.h": "c"
-    }
+        "stdlib.h": "c",
+        "random": "c"
+    },
+    "cmake.sourceDirectory": "/home/wlarbi-a/common/push_swap/push_swap_visualizer/dependencies"
 }
