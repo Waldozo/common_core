@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:58:14 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/04 23:27:02 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:41:05 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_duplicates(char **str)
 		{
 			if (ft_atoi(str[j]) == ft_atoi(str[i]))
 			{
-				printf("Error\n");
+				ft_printf("Error\n");
 				return (0);
 			}
 			j++;
@@ -48,7 +48,7 @@ int	check_limits(char **str)
 				&& ft_strlen(str[i]) > 1) || (ft_atol(str[i]) == '-'
 				&& ft_strlen(str[i]) < 2))
 		{
-			printf("Error\n");
+			ft_printf("Error\n");
 			return (0);
 		}
 		i++;
@@ -73,7 +73,8 @@ int	check_isnum(char **str)
 			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
-		if ((str[i][0] == '-' && ft_strlen(str[i]) < 2) || (str[i][0] == '+' && ft_strlen(str[i]) < 2))
+		if ((str[i][0] == '-' && ft_strlen(str[i]) < 2) || (str[i][0] == '+'
+				&& ft_strlen(str[i]) < 2))
 		{
 			ft_putstr_fd("Error\n", 2);
 			return (0);
@@ -86,6 +87,9 @@ int	check_isnum(char **str)
 int	test(char **str)
 {
 	if (!check_duplicates(str) || !check_limits(str) || !check_isnum(str))
+	{
+		ft_free_tab(str);
 		return (0);
+	}
 	return (1);
 }

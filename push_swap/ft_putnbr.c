@@ -6,11 +6,11 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:19:25 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/12 09:34:28 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:40:57 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
+#include <unistd.h>
 
 void	ft_putchar(char c)
 {
@@ -35,10 +35,3 @@ void	ft_putnbr(int nb)
 	else
 		ft_putchar(nbr + '0');
 }
-/*int	main(void)
-{
-	int nb;
-
-	nb = 12;
-	ft_putnbr(nb);
-}*/

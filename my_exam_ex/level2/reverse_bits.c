@@ -21,18 +21,8 @@ unsigned char reverse_bits(unsigned char octet)
     while(i > 0)
     {
         res = res * 2 + (octet % 2);
-        write(1, "octet = ", 9);
-        print_bits(octet);
-        write(1, "\n", 1);
-        write(1, "res = ", 7);
-        print_bits(res);
-        write(1, "\n", 1);
         octet = octet / 2;
         i--;
-        write(1, "octet / 2 = ", 13);
-        print_bits(octet);
-        write(1, "\n", 1);
-
     }
     return(res);
 }

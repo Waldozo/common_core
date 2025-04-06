@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:12:07 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/31 18:08:46 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:42:15 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,8 @@ void	reverse_rotate_b(t_lst **b, t_list **c)
 	ft_lstadd_back(c, ft_lstnew(ft_strdup("rrb")));
 }
 
-// void	reverse_rotate_ab(t_lst **a, t_lst **b)
-// {
-// 	reverse_rotate_a(a);
-// 	reverse_rotate_b(b);
-// 	printf("rrr\n");
-// }
+void	reverse_rotate_ab(t_lst **a, t_list **c)
+{
+	reverse_rotate_a(a, c);
+	reverse_rotate_b(a, c);
+}

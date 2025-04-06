@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:10:33 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/31 18:08:57 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:42:25 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ void	swap_b(t_lst **b, t_list **c)
 	ft_lstadd_back(c, ft_lstnew(ft_strdup("sb")));
 }
 
-// void	swap_ab(t_lst **a, t_lst **b)
-// {
-// 	swap_a(a);
-// 	swap_b(b);
-// 	printf("ss\n");
-// }
+void	swap_ab(t_lst **a, t_list **b)
+{
+	swap_a(a, b);
+	swap_b(a, b);
+}

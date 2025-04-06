@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:04:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/03/30 10:03:53 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:12:10 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ long	ft_atol(char *str)
 	}
 	return (res * sign);
 }
+
 void	ft_index(t_lst *a)
 {
 	t_lst	*head;
@@ -72,10 +73,11 @@ void	ft_index(t_lst *a)
 		head = head->next;
 	}
 }
+
 void	get_index(t_lst *a)
 {
-	t_lst *tmp;
-	int index;
+	t_lst	*tmp;
+	int		index;
 
 	tmp = a;
 	index = 1;
@@ -85,4 +87,15 @@ void	get_index(t_lst *a)
 		index++;
 		tmp = tmp->next;
 	}
+}
+
+int	swp_order(t_lst *a)
+{
+	while (a->next)
+	{
+		if (a->content > a->next->content)
+			return (1);
+		a = a->next;
+	}
+	return (0);
 }
