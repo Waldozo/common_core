@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:20:30 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/06 19:14:06 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 21:55:50 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	printf_list(t_lst **a, t_list *c, t_lst *b)
 		ft_pushb(a, &b, &c);
 		ft_sort(a, &b, &c);
 	}
-	if ((ft_lstsize_bis(*a) == 5 || ft_lstsize_bis(*a) == 4) && swp_order(*a) == 1)
+	if ((ft_lstsize_bis(*a) == 5 || ft_lstsize_bis(*a) == 4)
+		&& swp_order(*a) == 1)
 	{
 		while (ft_lstsize_bis(*a) > 3)
 			push_b(a, &b, &c);

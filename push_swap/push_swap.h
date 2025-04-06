@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 08:41:51 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/06 19:12:16 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/06 22:00:09 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define PUSH_SWAP_H
 # include "./ft_printf/ft_printf.h"
 # include "./libft/libft.h"
-// # include <stdio.h>
 # include <stdlib.h>
-
 
 typedef struct s_lst
 {
@@ -44,7 +42,6 @@ void				reverse_rotate_ab(t_lst **a, t_list **c);
 void				swap_a(t_lst **a, t_list **c);
 void				swap_b(t_lst **b, t_list **c);
 void				swap_ab(t_lst **a, t_list **b);
-void				ft_putnbr(int nb);
 int					isnum(char *str);
 long				ft_atol(char *str);
 int					test(char **str);
