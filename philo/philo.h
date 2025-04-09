@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:21:18 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/08 21:07:32 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:58:51 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,31 @@
 
 typedef struct s_philo
 {
-	pthread_t		thread; 
+	pthread_t		thread[200];
 	int				number_of_philosophers;
-	int time_to_die;   // in milliseconds
-	int time_to_eat;   // in milliseconds
-	int time_to_sleep; // in milliseconds
-	int				left_fork;
-	int				right_fork;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
 	int				meals_eaten;
 	long			last_meal_time;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*write_lock;
+	pthread_mutex_t	write_lock;
 	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	*meal_lock;
 	struct philo	*next;
 }					t_philo;
 
-int					pthread_join(pthread_t thread, void **retval);// bloque le thread appelant jusqu'à ce que le thread spécifié se termine
-int					pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *mutexattr); // initialise un mutex
-int					pthread_mutex_destroy(pthread_mutex_t *mutex);// détruit un mutex
-int					pthread_mutex_lock(pthread_mutex_t *mutex);// verrouille un mutex
-int					pthread_mutex_unlock(pthread_mutex_t *mutex);// déverrouille un mutex
-int					pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg); // crée un thread
-int					pthread_detach(pthread_t thread);// détache un thread
-// int gettimeofday(struct timeval *tv, struct timezone *tz); // obtient l'heure actuelle
+int					pthread_mutex_init(pthread_mutex_t *mutex,
+						const pthread_mutexattr_t *mutexattr);
+int					pthread_mutex_destroy(pthread_mutex_t *mutex);
+int					pthread_mutex_lock(pthread_mutex_t *mutex);
+int					pthread_mutex_unlock(pthread_mutex_t *mutex);
+int					pthread_join(pthread_t thread, void **retval);
+int					pthread_create(pthread_t *thread,
+						const pthread_attr_t *attr,
+						void *(*start_routine)(void *), void *arg);
+int					pthread_detach(pthread_t thread);
 
 size_t				ft_strlen(const char *c);
 int					isnum(char *str);
@@ -61,5 +61,14 @@ static int			strlen_split(const char *s, char c);
 static int			count_words_split(char const *s, char c);
 char				**ft_split(char const *s, char c);
 char				*ft_strdup(const char *src);
-int check_arguments(char **argv);
+void				initialize_philosophers(t_philo *philo, int c);
+int					created_thread(t_philo *philo);
+void				initialize_time_to_die(t_philo *philo, int c);
+void				initialize_time_to_eat(t_philo *philo, int c);
+void				initialize_time_to_sleep(t_philo *philo, int c);
+void				initialize_forks(t_philo *philo, int c);
+
+int					check_arguments(char **argv);
+int					check_arguments_1(char **argv);
+int					check_arguments_2(char **argv);
 #endif

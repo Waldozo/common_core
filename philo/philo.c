@@ -6,11 +6,11 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:41:56 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/08 21:04:02 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:18:11 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
 char	**handle_multiple_arguments(int ac, char **argv)
 {
@@ -37,53 +37,73 @@ char	**handle_multiple_arguments(int ac, char **argv)
 	return (str);
 }
 
-int check_arguments(char **argv)
+void	*test(void *arg)
 {
-    if(atol(argv[1]) <= 0 || atol(argv[1]) > 200)
-    {
-        printf("Error: the number of philosophers should be bigger than 0\n");
-        return (1);
-    }
-    if(atol(argv[2]) <= 0)
-    {
-        printf("Error, the time to die should be bigger than 0\n");
-        return (1);
-    }
-    if(atol(argv[3]) <= 0)
-    {
-        printf("Error, the time to eat should be bigger than 0\n");
-        return (1);
-    }
-    if(atol(argv[4]) <= 0)
-    {
-        printf("Error, the time to sleep should be bigger than 0\n");
-        return (1);
-    }
-    if(atol(argv[5]) <= 0)
-    {
-        printf("Error, the number of meals should be bigger than 0\n");
-        return (1);
-    }
-    return(0);
+	int		i;
+	t_philo	philo;
+
+	i = 0;
+	while (i < 1000)
+	{
+		pthread_mutex_lock(&philo.write_lock);
+		i++;
+		pthread_mutex_unlock(&philo.write_lock);
+	}
+	pthread_exit(EXIT_SUCCESS);
 }
 
-int main(int argc, char **argv)
+int	created_thread(t_philo *philo)
 {
-    int i;
-    int j;
-    char **str;
-    str = NULL;
+	int	i;
 
-    if(argc != 6)
-    {
-        printf("Error: Wrong number of arguments\n");
-        return (1);
-    }
-    
-    if(argc == 6)
-    {
-        str = handle_multiple_arguments(6, argv);
+	i = 0;
+	pthread_mutex_init(&philo->write_lock, NULL);
+	while (i <= philo->number_of_philosophers)
+	{
+		if (pthread_create(&philo->thread[i], NULL, &test, NULL) != 0)
+		{
+			printf("Error creating thread\n");
+			return (0);
+		}
+		printf("thread %d has started\n", i);
+		printf("thread %d has finished\n", i);
+		i++;
+	}
+	while (i < philo->number_of_philosophers)
+	{
+		if (pthread_join(philo->thread[i], NULL) != 0)
+		{
+			printf("Error joining thread\n");
+			return (0);
+		}
+		i++;
+	}
+	pthread_mutex_destroy(&philo->write_lock);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	int		i;
+	int		j;
+	char	**str;
+	t_philo	philo;
+
+	str = NULL;
+	if (argc != 6)
+	{
+		printf("Error: Wrong number of arguments\n");
+		return (1);
+	}
+	if (argc == 6)
+	{
+		str = handle_multiple_arguments(6, argv);
         check_arguments(argv);
         check_error(str);
-    }
+        initialize_philosophers(&philo, atoi(argv[1]));
+		initialize_time_to_die(&philo, atoi(argv[2]));
+		initialize_time_to_eat(&philo, atoi(argv[3]));
+		initialize_time_to_sleep(&philo, atoi(argv[4]));
+		created_thread(&philo);
+	}
 }
