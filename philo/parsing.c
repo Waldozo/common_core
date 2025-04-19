@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:34:21 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/08 20:59:36 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:18:04 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,4 @@ int	check_error(char **str)
 		return (0);
 	}
 	return (1);
-}
-
-char	*ft_strdup(const char *src)
-{
-	char	*des;
-	int		i;
-
-	i = 0;
-	des = (char *)malloc(ft_strlen(src) * sizeof(char) + 1);
-	if (!des)
-		return (NULL);
-	while (src[i])
-	{
-		des[i] = src[i];
-		i++;
-	}
-	des[i] = '\0';
-	return (des);
 }

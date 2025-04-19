@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:36:20 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/08 19:37:23 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:45:30 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,22 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (res * sign);
+}
+
+char	**handle_multiple_arguments(int ac, char **argv)
+{
+	char	**str;
+	int		i;
+
+	str = malloc(sizeof(char *) * ac);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < ac - 1)
+	{
+		str[i] = argv[i + 1];
+		i++;
+	}
+	str[i] = NULL;
+	return (str);
 }
