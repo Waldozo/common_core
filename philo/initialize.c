@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:43:48 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/19 19:37:48 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/20 22:34:09 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 int	initialize_data(t_data *data, int argc, char **argv)
 {
+	t_philo	*philo;
 	data->number_of_philosophers = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
@@ -31,6 +32,9 @@ int	initialize_data(t_data *data, int argc, char **argv)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
 		pthread_mutex_init(&data->philosopher[i].meal_lock, NULL);
+		data->philosopher[i].has_eaten = 0;
+		data->philosopher[i].eaten_enough = 0;
+		data->philosopher[i].last_meal = data->birth;
 		i++;
 	}
 	pthread_mutex_init(&data->output, NULL);
@@ -39,23 +43,24 @@ int	initialize_data(t_data *data, int argc, char **argv)
 	return (1);
 }
 	
-void	initialize_philosophers(t_data *data)
+void initialize_philosophers(t_data *data)
 {
-	int		i;
-	t_philo	*philo;
-	
-	i = 0;
-	data->birth = timeoftheday();
-	while (i < data->number_of_philosophers)
-	{
-		data->philosopher[i].philo_id = i + 1;
-		data->philosopher[i].meals_eaten = 0;
-		data->philosopher[i].data = data;
-		data->philosopher[i].last_meal = timeoftheday();
-		data->philosopher[i].r_fork = &data->forks[i];
-		data->philosopher[i].l_fork = &data->forks[(i + 1) % data->number_of_philosophers];
-		i++;
-	}
+    int i = 0;
+    
+    data->birth = timeoftheday();
+    while (i < data->number_of_philosophers)
+    {
+        data->philosopher[i].philo_id = i + 1;
+        data->philosopher[i].meals_eaten = 0;
+        data->philosopher[i].has_eaten = 0;
+        data->philosopher[i].eaten_enough = 0;
+        data->philosopher[i].data = data;
+        data->philosopher[i].last_meal = data->birth;
+        data->philosopher[i].l_fork = &data->forks[i];
+        data->philosopher[i].r_fork = &data->forks[(i + 1) % data->number_of_philosophers];
+        pthread_mutex_init(&data->philosopher[i].meal_lock, NULL);
+        i++;
+    }
 }
 
 void	mutex(t_data *data)
@@ -93,8 +98,6 @@ void	output(t_data *data, int time, int philo_id, char *message)
 	}
 	pthread_mutex_unlock(&data->dead_lock);
 }
-
-
 
 long long	timeoftheday(void)
 {

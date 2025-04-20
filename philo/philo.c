@@ -6,11 +6,28 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:41:56 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/19 19:49:45 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/20 22:40:32 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int join_thread(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		if (pthread_join(data->philosopher[i].thread_id, NULL) != 0)
+		{
+			printf("Error: Failed to join thread\n");
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
 
 int	created_thread(t_data *data)
 {
@@ -30,14 +47,7 @@ int	created_thread(t_data *data)
 		}
 		i++;
 	}
-	while (--i >= 0)
-	{
-		if(pthread_join(data->philosopher[i].thread_id, NULL) != 0)
-		{
-			printf("Error: Failed to join thread\n");
-			return (0);
-		}
-	}
+	join_thread(data);
 	pthread_join(monitor_thread, NULL);
 	pthread_mutex_destroy(&data->output);
 	return (1);
