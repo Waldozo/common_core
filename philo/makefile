@@ -6,15 +6,15 @@
 #    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/08 13:28:39 by wlarbi-a          #+#    #+#              #
-#    Updated: 2025/04/19 17:04:44 by wlarbi-a         ###   ########.fr        #
+#    Updated: 2025/04/21 18:50:19 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = philo.c split.c utils.c parsing.c initialize.c check_arguments.c states.c
+SRCS = philo.c utils.c parsing.c initialize.c check_arguments.c states.c eating.c routine.c free.c
 OBJ = ${SRCS:.c=.o}
 CC = cc
 NAME = philo
-FLAGS = -Wall -Wextra -Werror -pthread -g3
+FLAGS = -Wall -Wextra -Werror -pthread 
 
 all : $(NAME)
 
@@ -22,7 +22,7 @@ all : $(NAME)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJ)
-	@$(CC) $(OBJ) -g3 -o $@
+	@$(CC) $(OBJ) -o $@
 
 clean:
 	@rm -f $(OBJ)

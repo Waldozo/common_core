@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:21:18 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/20 21:45:16 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:49:28 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ typedef struct s_philo
 	int				philo_id;
 	int				eat;
 	long long		last_meal;
-	int 			meals_eaten;
-	int eaten_enough;
-	int has_eaten;
+	int				meals_eaten;
+	int				eaten_enough;
+	int				has_eaten;
 
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*write;
 	pthread_t		thread_id;
-	pthread_mutex_t last_meal_mutex;
-	pthread_mutex_t meal_lock;
+	pthread_mutex_t	last_meal_mutex;
+	pthread_mutex_t	meal_lock;
 	struct s_data	*data;
 }					t_philo;
 
@@ -52,24 +52,12 @@ typedef struct s_data
 	long long		birth;
 	t_philo			philosopher[200];
 	long long		time;
-	pthread_mutex_t ate_lock;
+	pthread_mutex_t	ate_lock;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	eat;
 	pthread_mutex_t	forks[200];
 	pthread_mutex_t	output;
 }					t_data;
-
-int					pthread_mutex_init(pthread_mutex_t *mutex,
-						const pthread_mutexattr_t *mutexattr);
-int					pthread_mutex_destroy(pthread_mutex_t *mutex);
-int					pthread_mutex_lock(pthread_mutex_t *mutex);
-int					pthread_mutex_unlock(pthread_mutex_t *mutex);
-int					pthread_join(pthread_t thread, void **retval);
-int					pthread_create(pthread_t *thread,
-						const pthread_attr_t *attr,
-						void *(*start_routine)(void *), void *arg);
-int					pthread_detach(pthread_t thread);
-void				pthread_exit(void *retval);
 
 size_t				ft_strlen(const char *c);
 int					isnum(char *str);
@@ -77,17 +65,11 @@ long				ft_atol(char *str);
 int					check_isnum(char **str);
 int					check_limits(char **str);
 int					check_error(char **str);
-
 char				**handle_multiple_arguments(int ac, char **argv);
 
-static int			strlen_split(const char *s, char c);
-static int			count_words_split(char const *s, char c);
-char				**ft_split(char const *s, char c);
-char				*ft_strdup(const char *src);
 void				initialize_philosophers(t_data *data);
 int					created_thread(t_data *data);
 int					initialize_data(t_data *data, int argc, char **argv);
-void				assigning_forks(t_philo *philo, t_data *data);
 
 int					check_arguments(int argc, char **argv);
 int					check_arguments_1(char **argv);
@@ -98,9 +80,10 @@ void				output(t_data *data, int time, int philo_id, char *message);
 void				eating(t_philo *philosopher);
 void				thinking(t_philo *philosopher);
 void				sleeping(t_philo *philosopher);
-void				mutex(t_data *data);
 void				*routine(void *arg);
 long long			time_to(int time);
-long long			its_time(int t);
 void				*monitor(void *arg);
+
+void				ft_free_tab(char **tab);
+int					ft_size_tab(char **tab);
 #endif
