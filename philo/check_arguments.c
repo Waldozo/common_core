@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:58:00 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/21 19:15:52 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/23 20:26:39 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_arguments_1(char **argv)
 {
 	if (ft_atol(argv[1]) <= 0 || ft_atol(argv[1]) > 200)
 	{
-		printf("Error: the number of philosophers should be between 0 and 200\n");
+		printf("Error,the number of philosophers should be between 0 and 200\n");
 		return (0);
 	}
 	if (ft_atol(argv[2]) <= 0)

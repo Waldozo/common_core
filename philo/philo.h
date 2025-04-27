@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:21:18 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/21 18:49:28 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:36:57 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_philo
 	int				meals_eaten;
 	int				eaten_enough;
 	int				has_eaten;
-
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*write;

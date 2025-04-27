@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 09:31:48 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/01/16 12:29:34 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:50:23 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*ft_line(char *buffer)
 		i++;
 	}
 	line[i] = '\0';
-	// free(buffer);
 	return (line);
 }
 
@@ -115,7 +114,6 @@ char	*get_next_line(int fd)
 	buffer = ft_next(buffer);
 	return (line);
 }
-#include <fcntl.h>
 
 int	main(void)
 {
@@ -141,4 +139,3 @@ int	main(void)
 	}
 	return (0);
 }
-

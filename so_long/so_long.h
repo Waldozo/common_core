@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:27:42 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/02/13 14:41:10 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:57:49 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_data
 	t_player	pos_flag;
 	int			count;
 	int			nbr_c;
-	// int			nbr_e;
 	t_player	player;
 }				t_data;
 
