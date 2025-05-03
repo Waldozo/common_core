@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:05:36 by walid             #+#    #+#             */
-/*   Updated: 2025/03/19 11:48:20 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:18:09 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_send_char(int pid, unsigned char c)
 // Fonction pour envoyer un message au processus avec l'identifiant pid
 void	send_message(int pid, const char *msg)
 {
-    struct sigaction act; // Déclaration d'une structure sigaction
+    struct sigaction act; /* Déclaration d'une structure sigaction */
     
     sigemptyset(&act.sa_mask); // Initialiser le masque de signaux à vide
     act.sa_flags = SA_SIGINFO; // Définir les flags pour utiliser la fonction de gestion des signaux

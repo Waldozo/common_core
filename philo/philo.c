@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:41:56 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/26 21:38:09 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:37:13 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	created_thread(t_data *data)
 	return (1);
 }
 
-int	handle_errors(t_data *data, char **str, int argc, char **argv)
+int	handle_errors(char **str, int argc, char **argv)
 {
 	if (!check_arguments(argc, argv))
 	{
@@ -63,7 +63,7 @@ int	handle_errors(t_data *data, char **str, int argc, char **argv)
 	return (1);
 }
 
-int	process_arguments(t_data *data, char **str, int argc, char **argv)
+int	process_arguments(char **str, int argc, char **argv)
 {
 	str = handle_multiple_arguments(argc, argv);
 	if (!*str)
@@ -72,7 +72,7 @@ int	process_arguments(t_data *data, char **str, int argc, char **argv)
 		return (0);
 	}
 	check_error(str);
-	if (!handle_errors(data, str, argc, argv))
+	if (!handle_errors(str, argc, argv))
 		return (0);
 	free(str);
 	return (1);
@@ -89,7 +89,7 @@ int	main(int argc, char **argv)
 		printf("Error: Wrong number of arguments\n");
 		return (1);
 	}
-	if (!process_arguments(&data, str, argc, argv))
+	if (!process_arguments(str, argc, argv))
 		return (1);
 	initialize_data(&data, argc, argv);
 	initialize_philosophers(&data);

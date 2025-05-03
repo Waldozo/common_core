@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:43:48 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/04/21 15:14:40 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:37:29 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	initialize_data(t_data *data, int argc, char **argv)
 {
-	t_philo	*philo;
 	int		i;
 
 	data->number_of_philosophers = ft_atol(argv[1]);

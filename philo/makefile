@@ -6,7 +6,7 @@
 #    By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/08 13:28:39 by wlarbi-a          #+#    #+#              #
-#    Updated: 2025/04/21 18:50:19 by wlarbi-a         ###   ########.fr        #
+#    Updated: 2025/05/02 16:35:56 by wlarbi-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ FLAGS = -Wall -Wextra -Werror -pthread
 
 all : $(NAME)
 
-%.o: %.cc
+%.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJ)
