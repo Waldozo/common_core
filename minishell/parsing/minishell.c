@@ -6,20 +6,22 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:23:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/05/23 20:53:37 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:01:59 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv,  char **envp)
 {
 	t_struct	*data;
 	t_struct	*tmp;
+	char	**cmd;
 
 	(void)argv;
 	tmp = NULL;
 	data = NULL;
+	
 	if (argc != 1)
 	{
 		printf("Error: need only one argument\n");
@@ -31,14 +33,24 @@ int	main(int argc, char **argv)
 		perror("Error allocating memory");
 		return (1);
 	}
+	cmd = malloc(sizeof(int) * 100);
+	cpy_env(data, envp);
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, handle_sigquit);
 		data->str = readline("💻 minishell > ");
 		if (data->str == NULL)
-			break ;
+		{
+			//ici on fait ctrl+D, il ne faut pas oublier de free pour quitter proprement
+			write(1, "exit\n", 5);
+			exit(0);
+		}
 		if (ft_strlen(data->str) > 0)
 		{
 			add_history(data->str);
+			if(ft_strcmp(data->str, "env") == 0)
+				ft_env(data, cmd);
 			if (parsing(data))
 			{
 				tmp = data->next;

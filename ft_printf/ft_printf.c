@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:29:03 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2024/11/28 13:40:27 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:24:17 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,9 @@ int	ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	return (count);
+}
+int main(void)
+{
+	printf("%d", ft_printf(0));
+	return(1);
 }
