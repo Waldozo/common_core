@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/05/27 15:57:35 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/05/29 07:28:41 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,5 @@ void				handle_sigint(int sig);
 void				handle_sigquit(int sig);
 int					cpy_env(t_struct *data, char **envp);
 void				ft_env(t_struct *data, char **cmd);
+char				*expand_variables(char *str, char **envp);
 #endif
