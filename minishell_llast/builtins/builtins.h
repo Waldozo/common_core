@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 12:18:51 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 15:38:02 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:39:14 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 
 # include "../libft/libft.h"
 # include "../parsing/minishell.h"
+
+typedef struct s_redir			t_redir;
+typedef struct s_cmd			t_cmd;
+typedef struct s_exec			t_exec;
+typedef struct s_struct			t_struct;
+typedef struct s_token_pool		t_token_pool;
+typedef struct s_gc_node		t_gc_node;
+typedef struct s_garbage		t_garbage;
+typedef struct s_expand_data	t_expand_data;
 
 /*------------------builtin-----------------*/
 

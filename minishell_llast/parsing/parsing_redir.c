@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:11:40 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/29 13:31:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:18:03 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,44 @@ int	utils_parse_redir(t_struct *data, int i, int *found_redir)
 	return (i);
 }
 
+char	*process_redir_char(t_struct *data, int i)
+{
+	i++;
+	if (data->str[i] && (data->str[i] == '<' || data->str[i] == '>'))
+		i++;
+	while (data->str[i] && data->str[i] == ' ')
+		i++;
+	if (!data->str[i])
+		return ("newline");
+	else if (data->str[i] == '|')
+		return ("|");
+	else if (data->str[i] == '>' && data->str[i + 1] == '>')
+		return (">>");
+	else if (data->str[i] == '>')
+		return (">");
+	else if (data->str[i] == '<' && data->str[i + 1] == '<')
+		return ("<<");
+	else if (data->str[i] == '<')
+		return ("<");
+	return (NULL);
+}
+
 char	*get_error_token(t_struct *data)
 {
-	int	i;
+	int		i;
+	char	*result;
 
 	i = 0;
-	// Find the problematic location
 	while (data->str[i])
 	{
 		if (data->str[i] == '<' || data->str[i] == '>')
 		{
-			i++;
-			if (data->str[i] && (data->str[i] == '<' || data->str[i] == '>'))
-				i++;
-			while (data->str[i] && data->str[i] == ' ')
-				i++;
-			if (!data->str[i])
-				return ("newline");
-			else if (data->str[i] == '|')
-				return ("|");
-			else if (data->str[i] == '>' && data->str[i + 1] == '>')
-				return (">>");
-			else if (data->str[i] == '>')
-				return (">");
-			else if (data->str[i] == '<' && data->str[i + 1] == '<')
-				return ("<<");
-			else if (data->str[i] == '<')
-				return ("<");
+			result = process_redir_char(data, i);
+			if (result)
+				return (result);
 		}
-		else if (data->str[i] == '>' && data->str[i + 1] == '>' && data->str[i + 2] == '>')
+		else if (data->str[i] == '>' && data->str[i + 1] == '>'
+			&& data->str[i + 2] == '>')
 			return (">");
 		i++;
 	}

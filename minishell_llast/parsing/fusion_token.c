@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:42:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/29 16:06:06 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:05:46 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ int	can_join_tokens(t_struct *current, t_struct *next)
 		&& (next->type == WORD || next->type == WORD_D_QUOTES
 			|| next->type == WORD_S_QUOTES))
 		return (1);
-	if (current->type == WORD 
-		&& (next->type == WORD_D_QUOTES || next->type == WORD_S_QUOTES))
+	if (current->type == WORD && (next->type == WORD_D_QUOTES
+			|| next->type == WORD_S_QUOTES))
 		return (1);
-	
 	return (0);
 }
 
@@ -41,111 +40,64 @@ int	join_quoted_tokens(t_struct *current)
 	joined_str = ft_strjoin(current->str, current->next->str);
 	if (!joined_str)
 		return (0);
-	// PROBLÈME : On ne peut pas faire free des elements du pool !
-	// Solution : on laisse les anciennes strings, elles seront libérées par reset_token_pool
-	current->str = joined_str; // Remplacer par la nouvelle string
+	current->str = joined_str;
 	temp = current->next;
 	current->next = temp->next;
-	// Ne pas libérer temp->str ni temp car ils font partie du pool
-	// Mettre temp->str à NULL pour éviter double free dans reset_token_pool
 	temp->str = NULL;
 	return (1);
 }
 
-int	process_quote_chars(char *str, char *clean)
+int	process_fusion_iteration(t_struct *data)
 {
-	int	i;
-	int	j;
-	int	in_dquote;
-	int	in_squote;
+	t_struct	*current;
+	int			fused;
 
-	i = 0;
-	j = 0;
-	in_dquote = 0;
-	in_squote = 0;
-	while (str[i])
+	fused = 0;
+	current = data;
+	while (current && current->next)
 	{
-		if ((str[i] == '"' && !in_squote) || (str[i] == '\'' && !in_dquote))
+		if (current->type == SPACES)
 		{
-			if (str[i] == '"')
-				in_dquote = !in_dquote;
-			else
-				in_squote = !in_squote;
-			i++;
+			current = current->next;
 			continue ;
 		}
-		clean[j++] = str[i++];
+		if (current->next->type == SPACES)
+		{
+			current = current->next;
+			continue ;
+		}
+		if (join_quoted_tokens(current))
+		{
+			fused = 1;
+			continue ;
+		}
+		current = current->next;
 	}
-	return (j);
+	return (fused);
 }
 
-void clean_quotes(t_struct *token)
+void	fusion_tokens_loop(t_struct *data)
 {
-    char *clean;
-    int clean_len;
-    size_t original_len;
+	int	fused;
 
-    if (!token || !token->str)
-        return;
-
-    original_len = ft_strlen(token->str);
-    clean = malloc(original_len + 1);
-    if (!clean)
-        return;
-
-    clean_len = process_quote_chars(token->str, clean);
-    clean[clean_len] = '\0';
-    
-    // Only replace if the string actually changed
-    if (clean_len != (int)original_len || ft_strcmp(token->str, clean) != 0)
-    {
-        free(token->str);
-        token->str = clean;
-    }
-    else
-    {
-        // No change needed, free the temporary buffer
-        free(clean);
-    }
+	fused = 1;
+	while (fused)
+		fused = process_fusion_iteration(data);
 }
 
 void	echo_fusion(t_struct *data)
 {
 	t_struct	*current;
-	int fused;
 
 	if (!data)
 		return ;
-	fused = 1;
-	while (fused)
-	{
-		fused = 0;
-		current = data;
-		while (current && current->next)
-		{
-			if (current->type == SPACES)
-			{
-				current = current->next;
-				continue;
-			}
-			if (current->next->type == SPACES)
-			{
-				current = current->next;
-				continue;
-			}
-			if (join_quoted_tokens(current))
-			{
-				fused = 1;
-				continue ;
-			}
-			current = current->next;
-		}
-	}
+	fusion_tokens_loop(data);
 	current = data;
 	while (current)
 	{
-		// Skip the main data structure, only process actual tokens
-		if (current->type != NONE && (current->type == WORD || current->type == WORD_D_QUOTES || current->type == WORD_S_QUOTES))
+		if (current->type != NONE && (current->type == WORD
+				|| current->type == WORD_D_QUOTES
+				|| current->type == WORD_S_QUOTES))
 			clean_quotes(current);
 		current = current->next;
 	}
