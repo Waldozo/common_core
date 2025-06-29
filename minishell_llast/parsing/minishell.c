@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:23:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/28 19:49:54 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:27:01 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	free_token_chain(t_struct *tokens)
 	{
 		tmp = tokens->next;
 		if (tokens->str)
+		{
 			free(tokens->str);
+			tokens->str = NULL;
+		}
 		free(tokens);
 		tokens = tmp;
 	}
@@ -41,6 +44,22 @@ void	free_tokens(t_struct *data)
 			free(data->str);
 		free(data);
 		data = tmp;
+	}
+}
+
+void	cleanup_all_data(t_struct *data)
+{
+	// Reset the token pool instead of freeing individual tokens
+	if (data->token_pool)
+	{
+		reset_token_pool(data->token_pool);
+		data->next = NULL;
+	}
+	// Clean up data->str (should be the original readline string)
+	if (data->str)
+	{
+		free(data->str);
+		data->str = NULL;
 	}
 }
 
@@ -65,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		printf("Error: need only one argument\n");
 		// free_garbage(&gc);
+		free(exec);
 		return (1);
 	}
 	data = malloc(sizeof(t_struct));
@@ -75,9 +95,21 @@ int	main(int argc, char **argv, char **envp)
 		free(exec);
 		return (1); // Ajoutez cette fonction à la fin du fichier
 	}
+	
+	// Initialiser le pool de tokens avec une capacité initiale de 100
+	data->token_pool = init_token_pool(100);
+	if (!data->token_pool)
+	{
+		perror("Error allocating token pool");
+		free(exec);
+		free(data);
+		return (1);
+	}
+	
 	if (cpy_env(data, envp) == -1)
 	{
 		// free_garbage(&gc);
+		free_token_pool(data->token_pool);
 		free(exec);
 		free(data);
 		return (1);
@@ -97,6 +129,9 @@ int	main(int argc, char **argv, char **envp)
 		if (data->str == NULL)
 		{
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
+			// Reset the token pool before exit to avoid leaks
+			reset_token_pool(data->token_pool);
+			data->next = NULL;
 			break ;
 		}
 		if (ft_strlen(data->str) > 0)
@@ -104,7 +139,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data->str);
 			if (parsing(data))
 			{
-				t_struct *token_chain = data->next; // Save reference to token chain
 				// t_struct *tmp = data->next;
 				// while (tmp)
 				// {
@@ -115,8 +149,9 @@ int	main(int argc, char **argv, char **envp)
 				if (!cmd)
 				{
 					// free_garbage(&gc)
-					free_token_chain(token_chain);
+					// No need to free individual tokens - they're in the pool
 					free(data->str);
+					free_token_pool(data->token_pool);
 					free(exec);
 					free(data);
 					return (1);
@@ -126,39 +161,47 @@ int	main(int argc, char **argv, char **envp)
 				execution(cmd, exec, &data);
 				// ft_printf("%d\n", exec->last_status);
 				free_all_cmd(cmd);
-				free_token_chain(token_chain);
+				// Reset the token pool instead of freeing individual tokens
+				reset_token_pool(data->token_pool);
 				data->next = NULL;
 			}
 			else
 			{
-				// If parsing failed, still need to clean up any tokens that may have been created
-				if (data->next)
-				{
-					free_token_chain(data->next);
-					data->next = NULL;
-				}
+				// If parsing failed, reset the token pool
+				reset_token_pool(data->token_pool);
+				data->next = NULL;
 			}
 		}
 		else
 		{
-			// Even for empty strings, make sure to reset data->next in case it was set
-			if (data->next)
-			{
-				free_token_chain(data->next);
-				data->next = NULL;
-			}
+			// Even for empty strings, reset the token pool
+			reset_token_pool(data->token_pool);
+			data->next = NULL;
 		}
 		free(data->str);
 		data->str = NULL;
+		data->str = NULL;
 	}
-	// Additional cleanup - ensure any remaining tokens are freed
-	if (data->next)
+	
+	// Clean up readline history and internal buffers
+	clear_history();
+	rl_clear_history();
+	
+	if (data)
 	{
-		free_token_chain(data->next);
-		data->next = NULL;
+		if (data->env)
+			ft_free_array(data->env);
+		if (data->str)
+		{
+			free(data->str);
+			data->str = NULL;
+		}
+		// Libérer le token pool
+		if (data->token_pool)
+			free_token_pool(data->token_pool);
+		free(data);
 	}
-	ft_free_array(data->env);
-	free(data);
-	free(exec);
+	if (exec)
+		free(exec);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:11:40 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/27 20:01:05 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:31:29 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,28 @@ char	*get_error_token(t_struct *data)
 		if (data->str[i] == '<' || data->str[i] == '>')
 		{
 			i++;
-			// Skip additional < or > for << >> <>
 			if (data->str[i] && (data->str[i] == '<' || data->str[i] == '>'))
 				i++;
-			// Skip spaces after redirection
 			while (data->str[i] && data->str[i] == ' ')
 				i++;
-			// Check what comes after the redirection
 			if (!data->str[i])
 				return ("newline");
 			else if (data->str[i] == '|')
 				return ("|");
+			else if (data->str[i] == '>' && data->str[i + 1] == '>')
+				return (">>");
 			else if (data->str[i] == '>')
 				return (">");
+			else if (data->str[i] == '<' && data->str[i + 1] == '<')
+				return ("<<");
 			else if (data->str[i] == '<')
 				return ("<");
 		}
 		else if (data->str[i] == '>' && data->str[i + 1] == '>' && data->str[i + 2] == '>')
-		{
-			return (">");  // For >>> case
-		}
+			return (">");
 		i++;
 	}
-	return ("newline");  // Default for end of line errors
+	return ("newline");
 }
 
 int	parse_redir(t_struct *data)

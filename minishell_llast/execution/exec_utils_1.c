@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:09:40 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 21:00:31 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:06:06 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,36 @@ void	free_all_shell(t_struct **data, t_exec *exec, t_cmd *cmd)
 	if (cmd)
 		free_all_cmd(cmd);
 	if (*data)
+	{
+		// Dans les processus enfants, libérer tout car ils ont leur propre copie après fork()
+		if ((*data)->env)
+			ft_free_array((*data)->env);
+		if ((*data)->str)
+			free((*data)->str);
+		// Libérer complètement le token pool car le processus enfant a sa propre copie
+		if ((*data)->token_pool)
+			free_token_pool((*data)->token_pool);
+		free(*data);
+	}
+	if (exec->pipes != NULL)
+		free(exec->pipes);
+	if (exec->path)
+		free(exec->path);
+	free(exec);
+}
+
+// Fonction pour libérer tout depuis le processus parent (inclut le token pool)
+void	free_all_shell_parent(t_struct **data, t_exec *exec, t_cmd *cmd)
+{
+	if (cmd)
+		free_all_cmd(cmd);
+	if (*data)
+	{
+		// Libérer le token pool seulement depuis le processus parent
+		if ((*data)->token_pool)
+			free_token_pool((*data)->token_pool);
 		free_tokens((*data));
+	}
 	if (exec->pipes != NULL)
 		free(exec->pipes);
 	if (exec->path)
@@ -71,7 +100,11 @@ void	run_command(t_struct **data, t_exec *exec, t_cmd *cmd)
 				exit(126);
 			}
 			// Clean up memory before exit
-			exit(exec->last_status);
+			{
+				int exit_status = exec->last_status;
+				free_all_shell(data, exec, cmd);
+				exit(exit_status);
+			}
 		}
 		execve(exec->path, cmd->argv, (*data)->env);
 		handle_cmd_error(cmd->argv[0]);

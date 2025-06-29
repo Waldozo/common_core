@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:29:08 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 15:40:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:06:06 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@ int	ft_exit(t_exec *exec, t_struct *data, t_cmd *cmd)
 	{
 		exit_code = exec->last_status;
 		printf("exit\n");
-		free_all_shell(&data, exec, cmd);
+		free_all_shell_parent(&data, exec, cmd);
 		exit(exit_code);
 	}
 	if (!valid_number(cmd->argv[1]))
 	{
 		printf("exit\n");
 		error_msg(cmd->argv[1]);
-		free_all_shell(&data, exec, cmd);
+		free_all_shell_parent(&data, exec, cmd);
 		exit(2);
 	}
 	exit_code = ft_atoi(cmd->argv[1]);
-	free_all_shell(&data, exec, cmd);
+	free_all_shell_parent(&data, exec, cmd);
 	exit(exit_code);
 }

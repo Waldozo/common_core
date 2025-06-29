@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/28 20:32:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:06:06 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_signal_status;
+
+// Forward declarations
+typedef struct s_token_pool	t_token_pool;
 
 typedef enum e_token
 {
@@ -83,6 +86,7 @@ typedef struct s_struct
 	char						**env;
 	t_exec						*exec;
 	struct s_struct				*next;
+	t_token_pool				*token_pool; // Pointeur vers le pool de tokens
 	// struct s_struct				*new;
 }								t_struct;
 
@@ -158,27 +162,20 @@ void							handle_cmd_error(char *cmd);
 
 void							free_all_cmd(t_cmd *cmd);
 void							free_tokens(t_struct *tokens);
-void							free_token_chain(t_struct *tokens);
-
+void							free_all_shell_parent(t_struct **data, 
+									t_exec *exec, t_cmd *cmd);
+void							close_unused_pipes(t_exec *data, int index);
 int								command_loc(t_struct *data, t_exec *exec,
 									char *cmd);
-
 t_cmd							*create_cmd_from_tokens(t_struct **cur,
 									char **env, t_exec *exec);
-int								handle_in(t_struct **cur, t_cmd *cmd);
-int								handle_out_and_in(t_struct **cur, t_cmd *cmd);
-int								handle_word_and_append(t_struct **cur,
-									t_cmd *cmd, int *i, char **envp);
-
-int								create_pipe(t_exec *data);
-int								caculate_nb_cmd(t_exec *data, t_cmd *cmd);
-int								ft_lstsize_bis(t_cmd *cmd);
-void							close_unused_pipes(t_exec *data, int index);
-void							close_pipes(t_exec *data, int index, int i,
-									int j);
 int								heredoc_input(t_struct **data, char *delimiter);
-void							free_all_shell(t_struct **data, t_exec *exec,
-									t_cmd *cmd);
+int								caculate_nb_cmd(t_exec *data, t_cmd *cmd);
+int								create_pipe(t_exec *data);
+int								handle_out_and_in(t_struct **cur, t_cmd *cmd);
+int								handle_word_and_append(t_struct **cur, t_cmd *cmd, 
+									int *i, char **envp);
+
 /*--------------------utils-----------------*/
 // int					ft_strlen(char *str);
 // int					ft_strcmp(const char *s1, const char *s2);
@@ -272,5 +269,20 @@ void							free_outfiles(t_redir *outfiles);
 t_redir							*create_redir_node(char *filename, int append);
 
 /*--------------parsing redir----------------*/
+
+// Structure pour gérer le pool de tokens (allocation dynamique)
+typedef struct s_token_pool
+{
+	t_struct				*tokens;     // Array de tokens alloué dynamiquement
+	int						index;       // Index actuel dans le pool
+	int						capacity;    // Capacité actuelle du pool
+}							t_token_pool;
+
+/*--------------token pool functions----------------*/
+t_token_pool					*init_token_pool(int initial_capacity);
+t_struct					*get_token_from_pool(t_token_pool *pool);
+void						reset_token_pool(t_token_pool *pool);
+void						free_token_strings_only(t_token_pool *pool);
+void						free_token_pool(t_token_pool *pool);
 
 #endif

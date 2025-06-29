@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 16:05:00 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/26 20:28:05 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:33:38 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,26 @@ int	handle_token_chars(t_struct *data, int i, int *found_redir)
 {
 	*found_redir = 0;
 	while (data->str[i] && data->str[i] != ' ' && data->str[i] != '>'
-		&& data->str[i] != '<' && data->str[i] != '|')
+		&& data->str[i] != '<' && data->str[i] != '|' 
+		&& data->str[i] != '\'' && data->str[i] != '"')
 		i++;
 	return (i);
 }
 
 int	process_char(t_struct *data, int i, int *found_redir)
 {
-	if (data->str[i] == '>' || data->str[i] == '<')
+	if (data->str[i] == '\'' || data->str[i] == '"')
+	{
+		char	quote;
+		quote = data->str[i];
+		i++;
+		while (data->str[i] && data->str[i] != quote)
+			i++;
+		if (data->str[i])
+			i++;
+		*found_redir = 0;
+	}
+	else if (data->str[i] == '>' || data->str[i] == '<')
 	{
 		i = handle_redir(data, i, found_redir);
 		if (i == -1)

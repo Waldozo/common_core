@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:57:06 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/28 19:19:21 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/29 12:59:16 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,12 @@ void	handle_word_token(char *s, int *i, t_struct **cur)
 	int		j;
 
 	start = *i;
-	// Handle the special case where we're at a '=' character
 	if (s[*i] == '=')
 	{
 		(*i)++;
 		append_and_advance(cur, create_token(s + start, 1, WORD, *cur));
 		return;
 	}
-	
-	// First pass: calculate how much content we have, skipping empty quotes
 	temp_i = *i;
 	content_len = 0;
 	while (s[temp_i] && s[temp_i] != ' ' && s[temp_i] != '<' && s[temp_i] != '>' && s[temp_i] != '|'
@@ -46,39 +43,27 @@ void	handle_word_token(char *s, int *i, t_struct **cur)
 		{
 			char quote_char = s[temp_i];
 			temp_i++; // Skip opening quote
-			
-			// Check if it's empty quotes
 			if (s[temp_i] == quote_char)
 			{
-				// Empty quotes - skip both and don't add to content
 				temp_i++; // Skip closing quote
 				continue;
 			}
 			else
-			{
-				// Not empty quotes, stop here
 				break;
-			}
 		}
 		else if (s[temp_i] == '=')
-		{
 			break;
-		}
 		else
 		{
 			content_len++;
 			temp_i++;
 		}
 	}
-	
 	if (content_len == 0)
 		return;
-	
-	// Second pass: build the content string without empty quotes
 	word_content = malloc(content_len + 1);
 	if (!word_content)
 		return;
-	
 	j = 0;
 	while (s[*i] && s[*i] != ' ' && s[*i] != '<' && s[*i] != '>' && s[*i] != '|'
 		&& s[*i] != '(' && s[*i] != ')')
@@ -87,25 +72,19 @@ void	handle_word_token(char *s, int *i, t_struct **cur)
 		{
 			char quote_char = s[*i];
 			(*i)++; // Skip opening quote
-			
-			// Check if it's empty quotes
 			if (s[*i] == quote_char)
 			{
-				// Empty quotes - skip both and don't add to content
 				(*i)++; // Skip closing quote
 				continue;
 			}
 			else
 			{
-				// Not empty quotes, we're done
 				(*i)--; // Back up to let quote handler deal with it
 				break;
 			}
 		}
 		else if (s[*i] == '=')
-		{
 			break;
-		}
 		else
 		{
 			word_content[j++] = s[*i];
