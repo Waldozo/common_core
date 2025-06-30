@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:23:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/29 20:46:18 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:17:13 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,11 @@ int	main(int argc, char **argv, char **envp)
 				free_all_cmd(cmd);
 				reset_token_pool(data->token_pool);
 				data->next = NULL;
+				if (g_signal_status == 130)
+				{
+					rl_on_new_line();
+					rl_replace_line("", 0);
+				}
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/29 17:48:35 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:17:13 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_expand_data
 /* ========== SIGNAL HANDLING ========== */
 void							handle_sigint(int sig);
 void							handle_sigint_exec(int sig);
+void							handle_sigint_heredoc(int sig);
 
 /* ========== TOKEN POOL MANAGEMENT ========== */
 t_token_pool					*init_token_pool(int initial_capacity);

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:27:28 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 20:32:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:19:34 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ int	execution(t_cmd *cmd, t_exec *exec, t_struct **data)
 		ft_putstr_fd("Error executing commands\n", 2);
 		return (-1);
 	}
-	signal(SIGINT, handle_sigint_exec);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	close_pipes_and_wait(exec);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	free(exec->pipes);
 	exec->pipes = NULL; // Set to NULL to avoid double free
 	return (1);

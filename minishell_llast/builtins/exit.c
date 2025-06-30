@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:29:08 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/29 16:06:06 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:44:56 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	error_msg(char *num)
 
 int	valid_number(char *num)
 {
-	int	i;
+	long long	i;
 
 	i = 0;
 	if (num[i] == '-' || num[i] == '+')
@@ -42,7 +42,8 @@ int	valid_number(char *num)
 
 int	ft_exit(t_exec *exec, t_struct *data, t_cmd *cmd)
 {
-	int	exit_code;
+	long long	exit_code_ll;
+	int			exit_code;
 
 	exit_code = 0;
 	if (cmd->argv[2])
@@ -57,14 +58,15 @@ int	ft_exit(t_exec *exec, t_struct *data, t_cmd *cmd)
 		free_all_shell_parent(&data, exec, cmd);
 		exit(exit_code);
 	}
-	if (!valid_number(cmd->argv[1]))
+	if (!valid_number(cmd->argv[1]) || !ft_atoll_safe(cmd->argv[1], &exit_code_ll))
 	{
 		printf("exit\n");
 		error_msg(cmd->argv[1]);
 		free_all_shell_parent(&data, exec, cmd);
 		exit(2);
 	}
-	exit_code = ft_atoi(cmd->argv[1]);
+	exit_code = (int)(exit_code_ll % 256);
+	printf("exit\n");
 	free_all_shell_parent(&data, exec, cmd);
 	exit(exit_code);
 }

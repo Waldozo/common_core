@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:09:40 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/29 16:06:06 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:53:05 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	free_all_shell_parent(t_struct **data, t_exec *exec, t_cmd *cmd)
 
 void	run_command(t_struct **data, t_exec *exec, t_cmd *cmd)
 {
+	int	exit_status;
+
 	if (!cmd->argv[0] || cmd->argv[0][0] == '\0')
 	{
 		exec->last_status = 0;
@@ -101,7 +103,7 @@ void	run_command(t_struct **data, t_exec *exec, t_cmd *cmd)
 			}
 			// Clean up memory before exit
 			{
-				int exit_status = exec->last_status;
+				exit_status = exec->last_status;
 				free_all_shell(data, exec, cmd);
 				exit(exit_status);
 			}
@@ -129,6 +131,7 @@ void	close_pipes_and_wait(t_exec *exec)
 {
 	int	i;
 	int	status;
+	int	sig;
 
 	i = 0;
 	// ft_printf("9- %d\n", exec->last_status);
@@ -147,10 +150,16 @@ void	close_pipes_and_wait(t_exec *exec)
 			if (WIFEXITED(status))
 			{
 				exec->last_status = WEXITSTATUS(status);
-				// ft_printf("9- %d\n", exec->last_status);
 			}
 			else if (WIFSIGNALED(status))
-				exec->last_status = 0;
+			{
+				sig = WTERMSIG(status);
+				if (sig == SIGQUIT)
+				{
+					write(STDERR_FILENO, "Quit (core dumped)\n", 19); // changement ctrl+"\""
+					exec->last_status = 128 + sig;
+				}
+			}
 		}
 		i++;
 	}
