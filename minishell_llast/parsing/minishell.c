@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:23:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/30 13:17:13 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 19:50:21 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	exec->path = NULL;
 	exec->pipes = 0;
+	exec->cmds = NULL;
 	if (argc != 1)
 	{
 		printf("Error: need only one argument\n");

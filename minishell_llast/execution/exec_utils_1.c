@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:09:40 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/30 14:53:05 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/06/30 19:50:21 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ void	free_all_shell(t_struct **data, t_exec *exec, t_cmd *cmd)
 			free_token_pool((*data)->token_pool);
 		free(*data);
 	}
-	if (exec->pipes != NULL)
-		free(exec->pipes);
-	if (exec->path)
-		free(exec->path);
-	free(exec);
+	if (exec)
+	{
+		if (exec->pipes != NULL)
+			free(exec->pipes);
+		if (exec->path)
+			free(exec->path);
+		free(exec);
+	}
 }
 
 // Fonction pour libérer tout depuis le processus parent (inclut le token pool)
@@ -70,18 +73,22 @@ void	free_all_shell_parent(t_struct **data, t_exec *exec, t_cmd *cmd)
 
 void	run_command(t_struct **data, t_exec *exec, t_cmd *cmd)
 {
-	int	exit_status;
+	int		exit_status;
+	t_cmd	*cmd_list;
 
+	cmd_list = exec->cmds;
 	if (!cmd->argv[0] || cmd->argv[0][0] == '\0')
 	{
 		exec->last_status = 0;
-		free_all_shell(data, exec, cmd);
+		free_all_cmd(cmd_list);
+		free_all_shell(data, exec, NULL);
 		exit(0);
 	}
 	if (is_builtin(cmd->argv[0]))
 	{
 		exec_builtin(exec, *data, cmd);
-		free_all_shell(data, exec, cmd);
+		free_all_cmd(cmd_list);
+		free_all_shell(data, exec, NULL);
 		exit(0);
 	}
 	else
@@ -92,19 +99,22 @@ void	run_command(t_struct **data, t_exec *exec, t_cmd *cmd)
 			if (errno == ENOENT)
 			{
 				exec->last_status = 127;
-				free_all_shell(data, exec, cmd);
+				free_all_cmd(cmd_list);
+				free_all_shell(data, exec, NULL);
 				exit(127);
 			}
 			else if (errno == EACCES)
 			{
 				exec->last_status = 126;
-				free_all_shell(data, exec, cmd);
+				free_all_cmd(cmd_list);
+				free_all_shell(data, exec, NULL);
 				exit(126);
 			}
 			// Clean up memory before exit
 			{
 				exit_status = exec->last_status;
-				free_all_shell(data, exec, cmd);
+				free_all_cmd(cmd_list);
+				free_all_shell(data, exec, NULL);
 				exit(exit_status);
 			}
 		}
@@ -113,13 +123,15 @@ void	run_command(t_struct **data, t_exec *exec, t_cmd *cmd)
 		if (errno == ENOENT)
 		{
 			exec->last_status = 127;
-			free_all_shell(data, exec, cmd);
+			free_all_cmd(cmd_list);
+			free_all_shell(data, exec, NULL);
 			exit(127);
 		}
 		else if (errno == EACCES)
 		{
 			exec->last_status = 126;
-			free_all_shell(data, exec, cmd);
+			free_all_cmd(cmd_list);
+			free_all_shell(data, exec, NULL);
 			exit(126);
 		}
 		// exec->last_status = 1;
