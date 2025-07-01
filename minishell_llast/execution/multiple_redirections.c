@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:45:00 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/26 19:53:05 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:56:35 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_outfiles(t_redir *outfiles)
 	}
 }
 
-int	handle_multiple_outfiles(t_cmd *cmd)
+int	handle_multiple_outfiles(t_struct *data, t_cmd *cmd, t_exec *exec)
 {
 	t_redir	*current;
 	int		fd;
@@ -58,11 +58,37 @@ int	handle_multiple_outfiles(t_cmd *cmd)
 		if (fd < 0)
 		{
 			handle_cmd_error(current->filename);
+			free_all_shell(&data, exec, cmd);
 			exit(1);
 		}
 		if (current->next == NULL)
 		{
 			dup2(fd, STDOUT_FILENO);
+		}
+		close(fd);
+		current = current->next;
+	}
+	return (0);
+}
+
+int	handle_multiple_infiles(t_struct *data, t_cmd *cmd, t_exec *exec)
+{
+	t_redir *current;
+	int fd;
+
+	current = cmd->infiles;
+	while (current)
+	{
+		fd = open(current->filename, O_RDONLY);
+		if (fd < 0)
+		{
+			handle_cmd_error(current->filename);
+			free_all_shell(&data, exec, cmd);
+			exit(1);
+		}
+		if (current->next == NULL)
+		{
+			dup2(fd, STDIN_FILENO);
 		}
 		close(fd);
 		current = current->next;

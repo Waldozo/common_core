@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:16:07 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 19:45:57 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:31:00 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,40 @@
 
 int	handle_in(t_struct **cur, t_cmd *cmd)
 {
+	t_redir	*new_redir;
+	t_redir	*current;
+
 	if ((*cur)->next)
 	{
-		while (*cur && (*cur)->next && (*cur)->next->type == SPACES)
+		*cur = (*cur)->next;
+		while (*cur && (*cur)->type == SPACES)
 			*cur = (*cur)->next;
+		if (!*cur)
+			return (-1);
+		
+		// Create new redirection node
+		new_redir = create_redir_node((*cur)->str, 0);
+		if (!new_redir)
+			return (-1);
+		
+		// Add to infiles list
+		if (!cmd->infiles)
+			cmd->infiles = new_redir;
+		else
+		{
+			current = cmd->infiles;
+			while (current->next)
+				current = current->next;
+			current->next = new_redir;
+		}
+		
+		// Keep backward compatibility with single infile
 		if (cmd->infile)
 			free(cmd->infile);
-		cmd->infile = ft_strdup((*cur)->next->str);
+		cmd->infile = ft_strdup((*cur)->str);
 		if (!cmd->infile)
 			return (-1);
-		if ((*cur)->next)
-			*cur = (*cur)->next;
+		
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/30 13:17:13 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:55:46 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_cmd
 {
 	char						**argv;
 	char						*infile;
+	t_redir						*infiles;
 	char						*outfile;
 	int							append;
 	t_redir						*outfiles;
@@ -139,7 +140,7 @@ int								open_all_heredocs(t_exec *exec, t_struct **data,
 									t_cmd *cmd);
 int								execute_single_builtin(t_exec *exec, t_cmd *cmd,
 									t_struct **data);
-void							setup_redirections(t_cmd *cmd);
+void							setup_redirections(t_struct *data, t_cmd *cmd, t_exec *exec);
 void							setup_pipe_redirections(t_exec *exec, int index,
 									t_cmd *cmd);
 void							run_command(t_struct **data, t_exec *exec,
@@ -263,7 +264,8 @@ int								process_quote_chars(char *str, char *clean);
 void							clean_quotes(t_struct *token);
 
 /* ========== MULTIPLE REDIRECTIONS ========== */
-int								handle_multiple_outfiles(t_cmd *cmd);
+int								handle_multiple_outfiles(t_struct *data, t_cmd *cmd, t_exec *exec);
+int								handle_multiple_infiles(t_struct *data, t_cmd *cmd, t_exec *exec);
 void							free_outfiles(t_redir *outfiles);
 t_redir							*create_redir_node(char *filename, int append);
 

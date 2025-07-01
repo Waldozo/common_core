@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:21:25 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 20:32:29 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:56:22 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,14 @@ void	handle_outfile(t_cmd *cmd)
 	}
 }
 
-void	setup_redirections(t_cmd *cmd)
+void	setup_redirections(t_struct *data, t_cmd *cmd, t_exec *exec)
 {
 	int	fd;
 
+	// printf("cmd->infile: %s\n", cmd->infile);
 	fd = 0;
 	if (cmd->outfiles)
-		handle_multiple_outfiles(cmd);
+		handle_multiple_outfiles(data, cmd, exec);
 	else if (cmd->outfile)
 		handle_outfile(cmd);
 	if (cmd->heredoc)
@@ -118,6 +119,8 @@ void	setup_redirections(t_cmd *cmd)
 		// free(cmd->heredoc_delim);
 		close(cmd->heredoc_fd);
 	}
+	else if (cmd->infiles)
+		handle_multiple_infiles(data, cmd, exec);
 	else if (cmd->infile)
 	{
 		fd = open(cmd->infile, O_RDONLY);

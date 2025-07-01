@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:39:52 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/28 17:35:09 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:31:00 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_cmd	*init_new_cmd(t_struct **cur, char **env)
 	cmd->outfile = NULL;
 	cmd->infile = NULL;
 	cmd->outfiles = NULL;
+	cmd->infiles = NULL;
 	cmd->next = NULL;
 	cmd->heredoc = 0;
 	cmd->append = 0;
@@ -137,6 +138,8 @@ void	free_all_cmd(t_cmd *cmd)
 			free(cmd->outfile);
 		if (cmd->outfiles)
 			free_outfiles(cmd->outfiles);
+		if (cmd->infiles)
+			free_outfiles(cmd->infiles); // Réutilise free_outfiles car même structure
 		if (cmd->heredoc_delim)
 			free(cmd->heredoc_delim);
 		free(cmd);

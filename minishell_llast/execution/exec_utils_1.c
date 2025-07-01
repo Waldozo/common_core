@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:09:40 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/30 19:50:21 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:59:58 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_all_shell(t_struct **data, t_exec *exec, t_cmd *cmd)
 		free_all_cmd(cmd);
 	if (*data)
 	{
-		// Dans les processus enfants, libérer tout car ils ont leur propre copie après fork()
+		// Dans les processus enfants,libérer tout car ils ont leur propre copie après fork()
 		if ((*data)->env)
 			ft_free_array((*data)->env);
 		if ((*data)->str)
@@ -168,7 +168,8 @@ void	close_pipes_and_wait(t_exec *exec)
 				sig = WTERMSIG(status);
 				if (sig == SIGQUIT)
 				{
-					write(STDERR_FILENO, "Quit (core dumped)\n", 19); // changement ctrl+"\""
+					write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+						// changement ctrl+"\""
 					exec->last_status = 128 + sig;
 				}
 			}
@@ -197,7 +198,9 @@ int	fork_and_execute_commands(t_struct **data, t_exec *exec, t_cmd *cmd)
 			close_unused_pipes(exec, index);
 			if (index > 0 || !cmd->outfile)
 				setup_pipe_redirections(exec, index, cmd);
-			setup_redirections(cmd);
+			if (cmd->outfile && index < exec->nb_cmds - 1)
+				close(exec->pipes[index][1]);
+			setup_redirections(*data, cmd, exec);
 			run_command(data, exec, cmd);
 		}
 		index++;
