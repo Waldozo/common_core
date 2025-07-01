@@ -6,29 +6,13 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:39:52 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 13:31:00 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:27:46 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../libft/libft.h"
 #include "../parsing/minishell.h"
 
 #define MAX_ARGS 100
-
-int	handle_heredocs(t_struct **cur, t_cmd *cmd)
-{
-	cmd->heredoc = 1;
-	while (*cur && (*cur)->next && (*cur)->next->type == SPACES)
-		*cur = (*cur)->next;
-	if ((*cur)->next->type == WORD || (*cur)->next->type == WORD_D_QUOTES
-		|| (*cur)->next->type == WORD_S_QUOTES)
-		*cur = (*cur)->next;
-	cmd->heredoc_delim = ft_strdup((*cur)->str);
-	if (!cmd->heredoc_delim)
-		return (-1);
-	// ft_printf("herdoc delim == %s\n", cmd->heredoc_delim);
-	return (1);
-}
 
 int	fill_cmd_from_token(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 {
@@ -62,9 +46,6 @@ t_cmd	*init_new_cmd(t_struct **cur, char **env)
 {
 	t_cmd	*cmd;
 
-	// static int	count = 0;
-	// if (++count == 2) // Échoue à la 2ème allocation
-	// 	return (NULL);
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
@@ -92,20 +73,12 @@ int	create_cmd_list(t_struct **cur, t_cmd *cmd, char **envp)
 	t_cmd	*current;
 	int		i;
 
-	int		j;
 	current = cmd;
 	while (*cur)
 	{
 		i = 0;
 		if (fill_cmd_from_token(cur, current, &i, (*cur)->env) == -1)
-		{
-			return (-1); // free tout
-		}
-		j = 0;
-		while (current->argv[j] != NULL)
-		{
-			j++;
-		}
+			return (-1);
 		current->argv[i] = NULL;
 		if (*cur && (*cur)->type == PIPE)
 		{
@@ -113,9 +86,7 @@ int	create_cmd_list(t_struct **cur, t_cmd *cmd, char **envp)
 				*cur = (*cur)->next;
 			current->next = init_new_cmd(cur, envp);
 			if (!current->next)
-			{
 				return (-1);
-			}
 			current = current->next;
 		}
 	}
@@ -128,7 +99,6 @@ void	free_all_cmd(t_cmd *cmd)
 
 	while (cmd)
 	{
-		// ft_printf("%s\n", cmd->argv[0]);
 		tmp = cmd->next;
 		if (cmd->argv)
 			ft_free_array(cmd->argv);
@@ -139,7 +109,7 @@ void	free_all_cmd(t_cmd *cmd)
 		if (cmd->outfiles)
 			free_outfiles(cmd->outfiles);
 		if (cmd->infiles)
-			free_outfiles(cmd->infiles); // Réutilise free_outfiles car même structure
+			free_outfiles(cmd->infiles);
 		if (cmd->heredoc_delim)
 			free(cmd->heredoc_delim);
 		free(cmd);
@@ -152,7 +122,6 @@ t_cmd	*create_cmd_from_tokens(t_struct **cur, char **env, t_exec *exec)
 	t_cmd		*cmd;
 	t_struct	*tmp;
 
-	// t_struct	**tmp;
 	cmd = init_new_cmd(cur, env);
 	if (!cmd)
 		return (NULL);

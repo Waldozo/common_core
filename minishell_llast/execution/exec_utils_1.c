@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:09:40 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 14:59:58 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:44:43 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ void	close_pipes_and_wait(t_exec *exec)
 	int	sig;
 
 	i = 0;
-	// ft_printf("9- %d\n", exec->last_status);
 	while (i < exec->nb_cmds - 1)
 	{
 		close(exec->pipes[i][0]);
@@ -160,16 +159,13 @@ void	close_pipes_and_wait(t_exec *exec)
 		if (i == exec->nb_cmds - 1)
 		{
 			if (WIFEXITED(status))
-			{
 				exec->last_status = WEXITSTATUS(status);
-			}
 			else if (WIFSIGNALED(status))
 			{
 				sig = WTERMSIG(status);
 				if (sig == SIGQUIT)
 				{
-					write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-						// changement ctrl+"\""
+					ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 					exec->last_status = 128 + sig;
 				}
 			}
@@ -187,10 +183,7 @@ int	fork_and_execute_commands(t_struct **data, t_exec *exec, t_cmd *cmd)
 	{
 		exec->pids = fork();
 		if (exec->pids == -1)
-		{
-			perror("minishell: fork");
-			return (-1);
-		}
+			return (perror("minishell: fork"), -1);
 		if (exec->pids == 0)
 		{
 			signal(SIGINT, SIG_DFL);  // Comportement par défaut (Terminated)
@@ -212,17 +205,19 @@ int	fork_and_execute_commands(t_struct **data, t_exec *exec, t_cmd *cmd)
 void	complete_cleanup_and_exit(t_struct **data, t_exec *exec, t_cmd *cmd,
 		int exit_code)
 {
+	t_struct	*token_ptr;
+	t_struct	*next_token;
+
 	// Free command structure
 	if (cmd)
 		free_all_cmd(cmd);
-
 	// Complete token cleanup - ensure ALL token memory is freed
 	if (data && *data && (*data)->next)
 	{
-		t_struct *token_ptr = (*data)->next;
+		token_ptr = (*data)->next;
 		while (token_ptr)
 		{
-			t_struct *next_token = token_ptr->next;
+			next_token = token_ptr->next;
 			if (token_ptr->str)
 			{
 				free(token_ptr->str);
@@ -233,7 +228,6 @@ void	complete_cleanup_and_exit(t_struct **data, t_exec *exec, t_cmd *cmd,
 		}
 		(*data)->next = NULL;
 	}
-
 	// Free main data structure
 	if (data && *data)
 	{
@@ -247,7 +241,6 @@ void	complete_cleanup_and_exit(t_struct **data, t_exec *exec, t_cmd *cmd,
 		free(*data);
 		*data = NULL;
 	}
-
 	// Free exec structure
 	if (exec)
 	{
@@ -257,6 +250,5 @@ void	complete_cleanup_and_exit(t_struct **data, t_exec *exec, t_cmd *cmd,
 			free(exec->path);
 		free(exec);
 	}
-
 	exit(exit_code);
 }

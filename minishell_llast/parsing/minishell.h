@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/07/01 14:55:46 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:03:36 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_cmd
 typedef struct s_exec
 {
 	int							pids;
-	int							(*pipes)[2];
+	int (*pipes)[2];
 	int							nb_cmds;
 	char						*path;
 	int							last_status;
@@ -96,6 +96,10 @@ typedef struct s_struct
 	t_token_pool				*token_pool;
 	struct s_struct				*next;
 }								t_struct;
+
+/*-------------------- HEREDOC -----------------*/
+
+int								handle_heredocs(t_struct **cur, t_cmd *cmd);
 
 /*-------------------- EXPAND_HEREDOC -----------------*/
 
@@ -140,7 +144,8 @@ int								open_all_heredocs(t_exec *exec, t_struct **data,
 									t_cmd *cmd);
 int								execute_single_builtin(t_exec *exec, t_cmd *cmd,
 									t_struct **data);
-void							setup_redirections(t_struct *data, t_cmd *cmd, t_exec *exec);
+void							setup_redirections(t_struct *data, t_cmd *cmd,
+									t_exec *exec);
 void							setup_pipe_redirections(t_exec *exec, int index,
 									t_cmd *cmd);
 void							run_command(t_struct **data, t_exec *exec,
@@ -154,6 +159,16 @@ int								fork_and_execute_commands(t_struct **data,
 void							handle_cmd_error(char *cmd);
 int								command_loc(t_struct *data, t_exec *exec,
 									char *cmd);
+void							add_infile_to_list(t_cmd *cmd,
+									t_redir *new_redir, char *filename);
+void							add_outfile_to_list(t_cmd *cmd,
+									t_redir *new_redir, char *filename);
+int								handle_variable_assignment(t_struct **cur,
+									t_cmd *cmd, int *i);
+int								process_variable_expansion2(t_struct **cur,
+									t_cmd *cmd, int *i, char **envp);
+int								handle_append_redirection(t_struct **cur,
+									t_cmd *cmd);
 
 /* ========== COMMAND CREATION ========== */
 t_cmd							*create_cmd_from_tokens(t_struct **cur,
@@ -264,8 +279,10 @@ int								process_quote_chars(char *str, char *clean);
 void							clean_quotes(t_struct *token);
 
 /* ========== MULTIPLE REDIRECTIONS ========== */
-int								handle_multiple_outfiles(t_struct *data, t_cmd *cmd, t_exec *exec);
-int								handle_multiple_infiles(t_struct *data, t_cmd *cmd, t_exec *exec);
+int								handle_multiple_outfiles(t_struct *data,
+									t_cmd *cmd, t_exec *exec);
+int								handle_multiple_infiles(t_struct *data,
+									t_cmd *cmd, t_exec *exec);
 void							free_outfiles(t_redir *outfiles);
 t_redir							*create_redir_node(char *filename, int append);
 

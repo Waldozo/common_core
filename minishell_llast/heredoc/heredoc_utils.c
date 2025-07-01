@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:28:44 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/17 16:24:26 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:17:13 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	copy_var_value(t_expand_data *data, char *var_value)
 {
 	int	k;
 
+	if (!var_value)
+		return (1);
 	k = 0;
 	while (var_value[k])
 	{

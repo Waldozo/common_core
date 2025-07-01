@@ -2,7 +2,7 @@ SOURCE =parsing/minishell.c  parsing/parsing.c  parsing/parsing_pipe.c  parsing/
 		parsing/parsing_quote.c parsing/special_tokens.c parsing/token_pool.c parsing/handle.c parsing/handle_utils.c parsing/word_quote.c parsing/signal.c\
 		builtins/builtins.c  builtins/cd.c builtins/exit.c builtins/cd_path.c builtins/env.c builtins/pwd.c builtins/export_utils.c builtins/unset.c builtins/echo.c builtins/export.c builtins/export_print.c builtins/export_validation.c \
 		execution/exec_utils.c execution/exec_utils_1.c execution/exec_utils_2.c execution/exec_utils_3.c execution/minishell_exec.c execution/multiple_redirections.c \
-		execution/token_to_cmd_1.c execution/token_to_cmd_2.c execution/expand.c execution/expand_utils.c \
+		execution/token_to_cmd_1.c execution/token_to_cmd_2.c execution/token_to_cmd_3.c execution/token_to_cmd_4.c execution/expand.c execution/expand_utils.c \
 		heredoc/heredoc.c heredoc/heredoc_utils.c heredoc/heredoc_utils_1.c \
 		garbage/garbage.c
 

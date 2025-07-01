@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:29:08 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/30 14:44:56 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:59:09 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	error_msg(char *num)
 {
+	printf("exit\n");
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(num, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
@@ -47,10 +48,8 @@ int	ft_exit(t_exec *exec, t_struct *data, t_cmd *cmd)
 
 	exit_code = 0;
 	if (cmd->argv[2])
-	{
-		exec->last_status = 1;
-		return (ft_putstr_fd("minishell: exit: too many arguments\n", 2), 0);
-	}
+		return (exec->last_status = 1,
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2), 0);
 	if (!cmd->argv[1])
 	{
 		exit_code = exec->last_status;
@@ -58,9 +57,9 @@ int	ft_exit(t_exec *exec, t_struct *data, t_cmd *cmd)
 		free_all_shell_parent(&data, exec, cmd);
 		exit(exit_code);
 	}
-	if (!valid_number(cmd->argv[1]) || !ft_atoll_safe(cmd->argv[1], &exit_code_ll))
+	if (!valid_number(cmd->argv[1]) || !ft_atoll_safe(cmd->argv[1],
+			&exit_code_ll))
 	{
-		printf("exit\n");
 		error_msg(cmd->argv[1]);
 		free_all_shell_parent(&data, exec, cmd);
 		exit(2);

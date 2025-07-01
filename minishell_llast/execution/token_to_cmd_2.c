@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:16:07 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 13:31:00 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:04:11 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	handle_in(t_struct **cur, t_cmd *cmd)
 {
 	t_redir	*new_redir;
-	t_redir	*current;
 
 	if ((*cur)->next)
 	{
@@ -24,30 +23,12 @@ int	handle_in(t_struct **cur, t_cmd *cmd)
 			*cur = (*cur)->next;
 		if (!*cur)
 			return (-1);
-		
-		// Create new redirection node
 		new_redir = create_redir_node((*cur)->str, 0);
 		if (!new_redir)
 			return (-1);
-		
-		// Add to infiles list
-		if (!cmd->infiles)
-			cmd->infiles = new_redir;
-		else
-		{
-			current = cmd->infiles;
-			while (current->next)
-				current = current->next;
-			current->next = new_redir;
-		}
-		
-		// Keep backward compatibility with single infile
-		if (cmd->infile)
-			free(cmd->infile);
-		cmd->infile = ft_strdup((*cur)->str);
+		add_infile_to_list(cmd, new_redir, (*cur)->str);
 		if (!cmd->infile)
 			return (-1);
-		
 		return (1);
 	}
 	return (0);
@@ -56,7 +37,6 @@ int	handle_in(t_struct **cur, t_cmd *cmd)
 int	handle_out(t_struct **cur, t_cmd *cmd, int fd)
 {
 	t_redir	*new_redir;
-	t_redir	*current;
 
 	(void)fd;
 	if ((*cur)->next)
@@ -66,27 +46,10 @@ int	handle_out(t_struct **cur, t_cmd *cmd, int fd)
 			*cur = (*cur)->next;
 		if (!*cur)
 			return (-1);
-		
-		// Create new redirection node
 		new_redir = create_redir_node((*cur)->str, 0);
 		if (!new_redir)
 			return (-1);
-		
-		// Add to outfiles list
-		if (!cmd->outfiles)
-			cmd->outfiles = new_redir;
-		else
-		{
-			current = cmd->outfiles;
-			while (current->next)
-				current = current->next;
-			current->next = new_redir;
-		}
-		
-		// Keep backward compatibility with single outfile
-		if (cmd->outfile)
-			free(cmd->outfile);
-		cmd->outfile = ft_strdup((*cur)->str);
+		add_outfile_to_list(cmd, new_redir, (*cur)->str);
 		cmd->append = 0;
 		if (!cmd->outfile)
 			return (-1);
@@ -115,49 +78,21 @@ int	handle_out_and_in(t_struct **cur, t_cmd *cmd)
 
 int	handle_word_and_expand(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 {
-	char	*combined_arg;
-	char	*temp;
-
 	if (*cur && ((*cur)->type == WORD || (*cur)->type == WORD_D_QUOTES
 			|| (*cur)->type == WORD_S_QUOTES || (*cur)->type == EMPTY_QUOTES))
 	{
-		// Check for VAR=VALUE pattern (WORD + = + WORD)
-		if ((*cur)->next && (*cur)->next->type == WORD && 
-			(*cur)->next->str && ft_strcmp((*cur)->next->str, "=") == 0 && 
-			(*cur)->next->next && ((*cur)->next->next->type == WORD || 
-			(*cur)->next->next->type == WORD_D_QUOTES || 
-			(*cur)->next->next->type == WORD_S_QUOTES || 
-			(*cur)->next->next->type == EMPTY_QUOTES))
-		{
-			// Combine VAR + = + VALUE into single argument
-			temp = ft_strjoin((*cur)->str, "=");
-			if (!temp)
-				return (-1);
-			combined_arg = ft_strjoin(temp, (*cur)->next->next->str);
-			free(temp);
-			if (!combined_arg)
-				return (-1);
-			
-			cmd->argv[*i] = combined_arg;
-			(*i)++;
-			
-			// Skip the = and value tokens
-			*cur = (*cur)->next->next;
-			return (1);
-		}
-		
-		// Regular word processing
+		if ((*cur)->next && (*cur)->next->type == WORD && (*cur)->next->str
+			&& ft_strcmp((*cur)->next->str, "=") == 0 && ((!(*cur)->next->next)
+				|| ((*cur)->next->next && ((*cur)->next->next->type == WORD
+						|| (*cur)->next->next->type == WORD_D_QUOTES
+						|| (*cur)->next->next->type == WORD_S_QUOTES
+						|| (*cur)->next->next->type == EMPTY_QUOTES))))
+			return (handle_variable_assignment(cur, cmd, i));
 		if (ft_strchr((*cur)->str, '$') && (*cur)->type != WORD_S_QUOTES)
 		{
-			if (expand_variable(cur, (*cur)->str, envp) == -1)
+			if (process_variable_expansion2(cur, cmd, i, envp) == -1)
 				return (-1);
-			if ((*cur)->str[0] == '\0')
-			{
-				return (1);
-			}
-			cmd->argv[*i] = ft_strdup((*cur)->str);
-			if (!cmd->argv[*i])
-				return (ft_free_array(cmd->argv), -1);
+			return (1);
 		}
 		else
 		{
@@ -172,43 +107,12 @@ int	handle_word_and_expand(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 
 int	handle_word_and_append(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 {
-	t_redir	*new_redir;
-	t_redir	*current;
-
 	if (*cur && (*cur)->type == APPEND)
 	{
 		if ((*cur)->next)
 		{
-			while (*cur && (*cur)->next && (*cur)->next->type == SPACES)
-				*cur = (*cur)->next;
-			if (!(*cur)->next)
+			if (handle_append_redirection(cur, cmd) == -1)
 				return (-1);
-			
-			// Create new redirection node for append
-			new_redir = create_redir_node((*cur)->next->str, 1);
-			if (!new_redir)
-				return (-1);
-			
-			// Add to outfiles list
-			if (!cmd->outfiles)
-				cmd->outfiles = new_redir;
-			else
-			{
-				current = cmd->outfiles;
-				while (current->next)
-					current = current->next;
-				current->next = new_redir;
-			}
-			
-			// Keep backward compatibility
-			if (cmd->outfile)
-				free(cmd->outfile);
-			cmd->outfile = ft_strdup((*cur)->next->str);
-			cmd->append = 1;
-			if (!cmd->outfile)
-				return (-1);
-			if ((*cur)->next)
-				*cur = (*cur)->next;
 		}
 	}
 	else if (*cur && ((*cur)->type == WORD || (*cur)->type == WORD_D_QUOTES

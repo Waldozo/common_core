@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:27:28 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/30 19:50:21 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:31:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	execution(t_cmd *cmd, t_exec *exec, t_struct **data)
 	if (heredoc_status == 130)
 		return (1);
 	if (heredoc_status == -1)
-		return (ft_putstr_fd("Error opening heredoc\n", 2), -1);
+		return (-1);
 	if (caculate_nb_cmd(exec, cmd) == -1)
 		return (ft_putstr_fd("Error calculating number of commands\n", 2), -1);
 	if (exec->nb_cmds == 1 && is_builtin(cmd->argv[0]) && !cmd->outfile

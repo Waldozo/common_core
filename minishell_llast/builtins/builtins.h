@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 12:18:51 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/29 17:39:14 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:38:14 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,50 @@ typedef struct s_expand_data	t_expand_data;
 
 /*------------------builtin-----------------*/
 
-int		ft_export(t_exec *exec, t_struct *data, char **cmd);
-int		ft_unset(t_exec *exec, t_struct *data, char **cmd);
-int		ft_env(t_exec *exec, t_struct *data, char **cmd);
-int		ft_cd(t_exec *exec, t_struct *data, char **cmd);
-int		ft_echo(t_exec *exec, char **cmd);
+int								ft_export(t_exec *exec, t_struct *data,
+									char **cmd);
+int								ft_unset(t_exec *exec, t_struct *data,
+									char **cmd);
+int								ft_env(t_exec *exec, t_struct *data,
+									char **cmd);
+int								ft_cd(t_exec *exec, t_struct *data, char **cmd);
+int								ft_echo(t_exec *exec, char **cmd);
 // int		ft_exit(char **cmd);
-int		ft_pwd(t_exec *exec);
+int								ft_pwd(t_exec *exec);
 
-int		exec_builtin(t_exec *exec, t_struct *data, t_cmd *cmd);
-int		is_builtin(char *cmd);
+int								exec_builtin(t_exec *exec, t_struct *data,
+									t_cmd *cmd);
+int								is_builtin(char *cmd);
 
 /*------------------export functions-----------------*/
 
-void	print_export(t_exec *exec, char **cpy_env);
-void	print_after_equal(char **cpy_env, int i, int j, int *flag);
-void	sorted_export(char **cpy_env);
-int		is_valid_identifier(char *cmd);
-int		is_likely_parsing_fragment(char *arg, char **cmd, int current_index);
-int		should_process_export_arg(char *arg);
-int		is_valid_export(char *cmd);
+void							print_export(t_exec *exec, char **cpy_env);
+void							print_after_equal(char **cpy_env, int i, int j,
+									int *flag);
+void							sorted_export(char **cpy_env);
+int								is_valid_identifier(char *cmd);
+int								is_likely_parsing_fragment(char *arg,
+									char **cmd, int current_index);
+int								should_process_export_arg(char *arg);
+int								is_valid_export(char *cmd);
 
 /*------------------env functions-----------------*/
 
-int		add_or_replace_env_var(t_struct *data, char *cmd);
-int		add_in_env(t_struct *data, char *cmd);
-int		cpy_env(t_struct *data, char **envp);
+int								add_or_replace_env_var(t_struct *data,
+									char *cmd);
+int								add_in_env(t_struct *data, char *cmd);
+int								cpy_env(t_struct *data, char **envp);
 
-char	*update_env(t_struct *data, char *var, char *new_val_var);
-int		update_pwd_vars(t_struct *data, char *oldpwd);
-int		cd_path(t_struct *data, const char *path);
-void	free_all(char *new_pwd, char *oldpwd, char *env_old, char *env_new);
-void	actualize_last_status(t_exec *exec, int *flag);
+char							*update_env(t_struct *data, char *var,
+									char *new_val_var);
+int								update_pwd_vars(t_struct *data, char *oldpwd);
+int								cd_path(t_struct *data, const char *path);
+void							free_all(char *new_pwd, char *oldpwd,
+									char *env_old, char *env_new);
+void							actualize_last_status(t_exec *exec, int *flag);
 
 /*------------------exit functions-----------------*/
-int	ft_exit(t_exec *exec, t_struct *data, t_cmd *cmd);
+int								ft_exit(t_exec *exec, t_struct *data,
+									t_cmd *cmd);
 
 #endif

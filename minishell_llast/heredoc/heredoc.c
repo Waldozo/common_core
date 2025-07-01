@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:27:16 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/30 13:17:13 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:32:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	check_heredoc_interrupts(int line_nb, char *delimiter, int *fd)
 	ft_putstr_fd(" delimited by end-of-file (wanted ", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putstr_fd("')\n", 2);
+	close(fd[0]);  // ← Fermer fd[0] aussi
 	close(fd[1]);
 }
 
@@ -136,7 +137,10 @@ int	heredoc_input(t_struct **data, char *delimiter)
 			return (-1);
 		}
 		else if (ret == -2)
-			break ;
+		{
+			sigaction(SIGINT, &old_sigint, NULL);
+			return (-1);
+		}
 	}
 	sigaction(SIGINT, &old_sigint, NULL);
 	close(fd[1]);

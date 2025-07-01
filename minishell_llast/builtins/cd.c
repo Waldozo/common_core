@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:11:03 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/21 16:43:19 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:38:25 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	cd_without_arg(t_struct *data)
 	char	*home;
 	char	*oldpwd;
 
-	// char	*new_pwd;
-	// new_pwd = NULL;
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 		return (perror("getcwd"), 0);

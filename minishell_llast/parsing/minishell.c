@@ -6,13 +6,14 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:23:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/30 19:50:21 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:22:42 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_signal_status = 0;
+volatile sig_atomic_t			g_signal_status = 0;
+
 
 void	free_token_chain(t_struct *tokens)
 {

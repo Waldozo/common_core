@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:12:39 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/06/19 15:04:32 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:35:17 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 #include <stddef.h>
+
+
 
 char	*ft_strncpy(char *dest, const char *src, size_t n)
 {

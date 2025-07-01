@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:21:25 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 14:56:22 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:35:50 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,62 +61,19 @@ int	execute_single_builtin(t_exec *exec, t_cmd *cmd, t_struct **data)
 			free(cmd->heredoc_delim);
 		}
 	}
-	else
-	{
-		// handle_cmd_error(cmd->argv[0]);
-		// ft_putstr_fd("minishell: ", STDERR_FILENO);
-		// ft_putstr_fd("Command not found\n", STDERR_FILENO);
-		// exec->last_status = 127;
-	}
 	return (builtin_status);
-}
-
-void	handle_outfile(t_cmd *cmd)
-{
-	int	fd2;
-
-	fd2 = 0;
-	if (cmd->outfile)
-	{
-		// ft_printf("%s\n", cmd->outfile);
-		if (cmd->append)
-			fd2 = open(cmd->outfile, O_APPEND | O_CREAT | O_WRONLY, 0644);
-		else
-			fd2 = open(cmd->outfile, O_TRUNC | O_WRONLY | O_CREAT, 0644);
-		if (fd2 < 0)
-		{
-			if (errno == EACCES) // Error Access
-			{
-				// ft_putstr_fd("minishell: Permission denied\n",
-				// STDER`R_FILENO);
-				handle_cmd_error(cmd->outfile);
-				// faut que rajoute t_struct a ton prototype
-				exit(1);
-			}
-			// ft_putstr_fd("minishell: Error opening file\n", STDERR_FILENO);
-			handle_cmd_error(cmd->outfile);
-			exit(1);
-		}
-		dup2(fd2, STDOUT_FILENO);
-		close(fd2);
-	}
 }
 
 void	setup_redirections(t_struct *data, t_cmd *cmd, t_exec *exec)
 {
 	int	fd;
 
-	// printf("cmd->infile: %s\n", cmd->infile);
 	fd = 0;
 	if (cmd->outfiles)
 		handle_multiple_outfiles(data, cmd, exec);
-	else if (cmd->outfile)
-		handle_outfile(cmd);
 	if (cmd->heredoc)
 	{
 		dup2(cmd->heredoc_fd, STDIN_FILENO);
-		// Don't free heredoc_delim in child process - it belongs to parent
-		// free(cmd->heredoc_delim);
 		close(cmd->heredoc_fd);
 	}
 	else if (cmd->infiles)
