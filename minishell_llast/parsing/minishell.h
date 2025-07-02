@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/07/02 13:10:50 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:50:23 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int								execution(t_cmd *cmd, t_exec *exec,
 									t_struct **data);
 int								open_all_heredocs(t_exec *exec, t_struct **data,
 									t_cmd *cmd);
+int								create_combined_input(t_cmd *cmd);
 int								execute_single_builtin(t_exec *exec, t_cmd *cmd,
 									t_struct **data);
 void							setup_redirections(t_struct *data, t_cmd *cmd,
