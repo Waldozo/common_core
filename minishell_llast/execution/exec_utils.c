@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:21:25 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 17:35:50 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,20 @@ void	setup_redirections(t_struct *data, t_cmd *cmd, t_exec *exec)
 
 	fd = 0;
 	if (cmd->outfiles)
-		handle_multiple_outfiles(data, cmd, exec);
+	{
+		if (handle_multiple_outfiles(data, cmd, exec) == -1)
+			exit(1);  // Seulement exit dans le processus enfant
+	}
 	if (cmd->heredoc)
 	{
 		dup2(cmd->heredoc_fd, STDIN_FILENO);
 		close(cmd->heredoc_fd);
 	}
 	else if (cmd->infiles)
-		handle_multiple_infiles(data, cmd, exec);
+	{
+		if (handle_multiple_infiles(data, cmd, exec) == -1)
+			exit(1);  // Seulement exit dans le processus enfant
+	}
 	else if (cmd->infile)
 	{
 		fd = open(cmd->infile, O_RDONLY);

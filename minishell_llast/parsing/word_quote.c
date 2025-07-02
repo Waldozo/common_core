@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:57:35 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/06/29 16:38:38 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	handle_d_quotes(char *s, int *i, t_struct **cur)
 		(*i)++;
 	len = *i - start;
 	if (len == 2 && s[start] == '\"' && s[start + 1] == '\"')
-		return ;
+	{
+		append_and_advance(cur, create_token("", 0, EMPTY_QUOTES, *cur));
+	}
 	else
 	{
 		append_and_advance(cur, create_token(s + start, len, WORD_D_QUOTES,
@@ -70,7 +72,9 @@ void	handle_s_quotes(char *s, int *i, t_struct **cur)
 		(*i)++;
 	len = *i - start;
 	if (len == 2 && s[start] == '\'' && s[start + 1] == '\'')
-		return ;
+	{
+		append_and_advance(cur, create_token("", 0, EMPTY_QUOTES, *cur));
+	}
 	else
 		append_and_advance(cur, create_token(s + start, len, WORD_S_QUOTES,
 				*cur));

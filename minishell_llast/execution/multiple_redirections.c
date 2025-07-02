@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:45:00 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/07/01 17:34:35 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	handle_multiple_outfiles(t_struct *data, t_cmd *cmd, t_exec *exec)
 	t_redir	*current;
 	int		fd;
 
+	(void)data;
+	(void)exec;
 	current = cmd->outfiles;
 	while (current)
 	{
@@ -58,8 +60,7 @@ int	handle_multiple_outfiles(t_struct *data, t_cmd *cmd, t_exec *exec)
 		if (fd < 0)
 		{
 			handle_cmd_error(current->filename);
-			free_all_shell(&data, exec, cmd);
-			exit(1);
+			return (-1);  // Retourner une erreur au lieu de faire exit(1)
 		}
 		if (current->next == NULL)
 		{
@@ -76,6 +77,8 @@ int	handle_multiple_infiles(t_struct *data, t_cmd *cmd, t_exec *exec)
 	t_redir	*current;
 	int		fd;
 
+	(void)data;
+	(void)exec;
 	current = cmd->infiles;
 	while (current)
 	{
@@ -83,8 +86,7 @@ int	handle_multiple_infiles(t_struct *data, t_cmd *cmd, t_exec *exec)
 		if (fd < 0)
 		{
 			handle_cmd_error(current->filename);
-			free_all_shell(&data, exec, cmd);
-			exit(1);
+			return (-1);  // Retourner une erreur au lieu de faire exit(1)
 		}
 		if (current->next == NULL)
 		{

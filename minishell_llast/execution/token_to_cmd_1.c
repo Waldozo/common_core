@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:39:52 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/02 14:38:26 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:01:09 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,15 @@ int	fill_cmd_from_token(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 				return (-1);
 		}
 		else if ((*cur)->type == APPEND || (*cur)->type == WORD
-			|| (*cur)->type == WORD_D_QUOTES || (*cur)->type == WORD_S_QUOTES)
+			|| (*cur)->type == WORD_D_QUOTES || (*cur)->type == WORD_S_QUOTES
+			|| (*cur)->type == EMPTY_QUOTES)
 		{
+			// Vérification spéciale pour EMPTY_QUOTES en première position (commande vide)
+			if ((*cur)->type == EMPTY_QUOTES && *i == 0)
+			{
+				ft_putstr_fd("minishell: : command not found\n", 2);
+				return (-1);
+			}
 			if (handle_word_and_append(cur, cmd, i, envp) == -1)
 				return (-1);
 		}
@@ -178,7 +185,10 @@ t_cmd	*create_cmd_from_tokens(t_struct **cur, char **env, t_exec *exec)
 	if((*cur))
 	{
 		if (create_cmd_list(cur, cmd, (*cur)->env) == -1)
+		{
+			free_all_cmd(cmd);
 			return (NULL);
+		}
 	}
 	return (cmd);
 }

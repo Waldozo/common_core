@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:27:28 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 17:31:45 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:01:09 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,17 @@ int	execution(t_cmd *cmd, t_exec *exec, t_struct **data)
 		return (-1);
 	if (caculate_nb_cmd(exec, cmd) == -1)
 		return (ft_putstr_fd("Error calculating number of commands\n", 2), -1);
+	
+	// Vérifier les commandes vides - seulement pour les quotes explicites
+	// Les variables vides ($EMPTY) ne doivent pas générer d'erreur
+	if (!cmd->argv[0])
+	{
+		exec->last_status = 0;
+		return (1);
+	}
+	
 	if (exec->nb_cmds == 1 && is_builtin(cmd->argv[0]) && !cmd->outfile
-		&& !cmd->infile)
+		&& !cmd->infile && !cmd->outfiles && !cmd->infiles)
 	{
 		builtin_ret = execute_single_builtin(exec, cmd, data);
 		if (builtin_ret == 0)

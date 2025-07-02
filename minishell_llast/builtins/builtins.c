@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:56:23 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 15:38:59 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:46:36 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
+	if (ft_strcmp(cmd, ":") == 0)
+		return (1);
 	return (0);
 }
 
@@ -49,6 +51,8 @@ int	exec_builtin(t_exec *exec, t_struct *data, t_cmd *cmd)
 		return (ft_pwd(exec));
 	else if (ft_strcmp(*cmd->argv, "unset") == 0)
 		return (ft_unset(exec, data, cmd->argv));
+	else if (ft_strcmp(*cmd->argv, ":") == 0)
+		return (0);
 	else
 		return (0);
 	return (1);

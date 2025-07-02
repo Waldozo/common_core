@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:23:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/07/02 14:31:27 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,20 +128,22 @@ int	main(int argc, char **argv, char **envp)
 				cmd = create_cmd_from_tokens(&data->next, data->env, exec);
 				if (!cmd)
 				{
-					free(data->str);
-					free_token_pool(data->token_pool);
-					free(exec);
-					free(data);
-					return (1);
+					// Ne pas sortir du shell pour les erreurs de redirection
+					// Juste nettoyer et continuer
+					reset_token_pool(data->token_pool);
+					data->next = NULL;
 				}
-				execution(cmd, exec, &data);
-				free_all_cmd(cmd);
-				reset_token_pool(data->token_pool);
-				data->next = NULL;
-				if (g_signal_status == 130)
+				else
 				{
-					rl_on_new_line();
-					rl_replace_line("", 0);
+					execution(cmd, exec, &data);
+					free_all_cmd(cmd);
+					reset_token_pool(data->token_pool);
+					data->next = NULL;
+					if (g_signal_status == 130)
+					{
+						rl_on_new_line();
+						rl_replace_line("", 0);
+					}
 				}
 			}
 			else

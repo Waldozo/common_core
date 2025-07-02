@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:16:07 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 19:04:11 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ int	handle_in(t_struct **cur, t_cmd *cmd)
 			*cur = (*cur)->next;
 		if (!*cur)
 			return (-1);
+		
+		// Vérifier si le nom de fichier est vide
+		if (!(*cur)->str || (*cur)->str[0] == '\0')
+		{
+			ft_putstr_fd("minishell: : No such file or directory\n", 2);
+			return (-1);
+		}
+		
 		new_redir = create_redir_node((*cur)->str, 0);
 		if (!new_redir)
 			return (-1);
@@ -46,6 +54,14 @@ int	handle_out(t_struct **cur, t_cmd *cmd, int fd)
 			*cur = (*cur)->next;
 		if (!*cur)
 			return (-1);
+		
+		// Vérifier si le nom de fichier est vide
+		if (!(*cur)->str || (*cur)->str[0] == '\0')
+		{
+			ft_putstr_fd("minishell: : No such file or directory\n", 2);
+			return (-1);
+		}
+		
 		new_redir = create_redir_node((*cur)->str, 0);
 		if (!new_redir)
 			return (-1);
