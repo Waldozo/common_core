@@ -6,22 +6,11 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:27:16 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 17:32:45 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:45:00 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
-
-void	check_heredoc_interrupts(int line_nb, char *delimiter, int *fd)
-{
-	ft_putstr_fd("\nminishell: warning: here-document at line ", 2);
-	ft_putnbr_fd(line_nb, 2);
-	ft_putstr_fd(" delimited by end-of-file (wanted ", 2);
-	ft_putstr_fd(delimiter, 2);
-	ft_putstr_fd("')\n", 2);
-	close(fd[0]);  // ← Fermer fd[0] aussi
-	close(fd[1]);
-}
 
 int	init_heredoc_pipe(int *fd)
 {
@@ -33,70 +22,47 @@ int	init_heredoc_pipe(int *fd)
 	return (1);
 }
 
-int	read_heredoc_line(char *delimiter, int line_nb, int *fd, char *buffer)
-{
-	int		bytes_read;
-	char	c;
-	int		i;
-
-	i = 0;
-	while (1)
-	{
-		if (g_signal_status == 130)
-			return (-1);
-		bytes_read = read(0, &c, 1);
-		if (bytes_read == 0)
-		{
-			if (i == 0)
-				return (check_heredoc_interrupts(line_nb, delimiter, fd), -2);
-			else
-				continue ;
-		}
-		if (bytes_read == -1)
-		{
-			if (g_signal_status == 130)
-				return (-1);
-			return (perror("read"), close(fd[0]), close(fd[1]), -1);
-		}
-		buffer[i++] = c;
-		if (i >= 1023 || c == '\n')
-		{
-			buffer[i] = '\0';
-			return (0);
-		}
-	}
-	return (1);
-}
-
 int	process_heredoc_line(t_struct **data, char *delimiter, int *fd,
 		int *line_nb)
 {
-	char	buffer[1024];
 	char	*line;
 	char	*expanded_line;
-	int		ret;
 
-	write(1, "> ", 2);
-	ret = read_heredoc_line(delimiter, *line_nb, fd, buffer);
-	if (ret == -1)
-		return (-1);
-	else if (ret == -2)
-		return (-2);
-	if (ret == 0)
+	line = readline("> ");
+	if (!line)  // Ctrl+D (EOF)
 	{
-		line = buffer;
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
-			&& line[ft_strlen(delimiter)] == '\n')
-			return (-2);
-		expanded_line = expand_variables_heredoc(data, line);
-		if (expanded_line)
-		{
-			write(fd[1], expanded_line, ft_strlen(expanded_line));
-			free(expanded_line);
-		}
-		(*line_nb)++;
+		ft_putstr_fd("\nminishell: warning: here-document at line ", 2);
+		ft_putnbr_fd(*line_nb, 2);
+		ft_putstr_fd(" delimited by end-of-file (wanted ", 2);
+		ft_putstr_fd(delimiter, 2);
+		ft_putstr_fd("')\n", 2);
+		return (-3);  // EOF: cas spécial, arrêter avec erreur
 	}
-	return (1);
+	
+	if (g_signal_status == 130)
+	{
+		free(line);
+		return (-1);
+	}
+	
+	if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
+		&& line[ft_strlen(delimiter)] == '\0')
+	{
+		free(line);
+		return (-2);  // Délimiteur trouvé: arrêter normalement
+	}
+	
+	expanded_line = expand_variables_heredoc(data, line);
+	if (expanded_line)
+	{
+		write(fd[1], expanded_line, ft_strlen(expanded_line));
+		write(fd[1], "\n", 1);  // Ajouter le newline
+		free(expanded_line);
+	}
+	
+	free(line);
+	(*line_nb)++;
+	return (1);  // Continue le heredoc
 }
 
 void	handle_sigint_heredoc(int sig)
@@ -133,18 +99,24 @@ int	heredoc_input(t_struct **data, char *delimiter)
 		ret = process_heredoc_line(data, delimiter, fd, &line_nb);
 		if (ret == -1)
 		{
+			close(fd[0]);
+			close(fd[1]);
 			sigaction(SIGINT, &old_sigint, NULL);
 			return (-1);
 		}
 		else if (ret == -2)
 		{
 			sigaction(SIGINT, &old_sigint, NULL);
-			return (-1);
+			close(fd[1]);
+			return (fd[0]);
+		}
+		else if (ret == -3)  // EOF par Ctrl+D
+		{
+			sigaction(SIGINT, &old_sigint, NULL);
+			close(fd[1]);  // Fermer seulement l'écriture
+			return (fd[0]); // Retourner le fd de lecture pour que la commande s'exécute
 		}
 	}
-	sigaction(SIGINT, &old_sigint, NULL);
-	close(fd[1]);
-	return (fd[0]);
 }
 
 // int handle_heredoc_signal(char *delimiter)

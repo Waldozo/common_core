@@ -6,13 +6,53 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:39:52 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/07/01 15:27:46 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:38:26 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
 #define MAX_ARGS 100
+
+// Fonction pour réorganiser les tokens si la redirection vient avant la commande
+int	reorder_command_tokens(t_struct **cur)
+{
+	t_struct	*redir_start;
+	t_struct	*redir_end;
+	t_struct	*cmd_node;
+	t_struct	*temp;
+
+	if (!cur || !*cur)
+		return (0);
+	if ((*cur)->type == HEREDOC || (*cur)->type == REDIR_OUT 
+		|| (*cur)->type == REDIR_IN || (*cur)->type == APPEND)
+	{
+		redir_start = *cur;
+		redir_end = redir_start;
+		while (redir_end->next && (redir_end->next->type == SPACES 
+			|| redir_end->next->type == WORD || redir_end->next->type == WORD_D_QUOTES 
+			|| redir_end->next->type == WORD_S_QUOTES))
+		{
+			redir_end = redir_end->next;
+			if (redir_start->type == HEREDOC && redir_end->type != SPACES)
+				break;
+		}
+		cmd_node = redir_end->next;
+		while (cmd_node && cmd_node->type == SPACES)
+			cmd_node = cmd_node->next;
+		
+		if (cmd_node && (cmd_node->type == WORD || cmd_node->type == WORD_D_QUOTES 
+			|| cmd_node->type == WORD_S_QUOTES))
+		{
+			temp = cmd_node->next;
+			redir_end->next = temp;
+			cmd_node->next = redir_start;
+			*cur = cmd_node;
+			return (1);
+		}
+	}
+	return (0);
+}
 
 int	fill_cmd_from_token(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 {
@@ -47,7 +87,7 @@ t_cmd	*init_new_cmd(t_struct **cur, char **env)
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
+	if (cmd==NULL)
 		return (NULL);
 	cmd->heredoc_delim = NULL;
 	cmd->outfile = NULL;
@@ -57,7 +97,10 @@ t_cmd	*init_new_cmd(t_struct **cur, char **env)
 	cmd->next = NULL;
 	cmd->heredoc = 0;
 	cmd->append = 0;
-	(*cur)->env = env;
+	if((*cur))
+	{	
+		(*cur)->env = env;
+	}
 	cmd->argv = malloc(sizeof(char *) * (MAX_ARGS + 1));
 	if (!cmd->argv)
 	{
@@ -121,7 +164,8 @@ t_cmd	*create_cmd_from_tokens(t_struct **cur, char **env, t_exec *exec)
 {
 	t_cmd		*cmd;
 	t_struct	*tmp;
-
+	
+	reorder_command_tokens(cur);
 	cmd = init_new_cmd(cur, env);
 	if (!cmd)
 		return (NULL);
@@ -131,7 +175,10 @@ t_cmd	*create_cmd_from_tokens(t_struct **cur, char **env, t_exec *exec)
 		tmp->exec = exec;
 		tmp = tmp->next;
 	}
-	if (create_cmd_list(cur, cmd, (*cur)->env) == -1)
-		return (NULL);
+	if((*cur))
+	{
+		if (create_cmd_list(cur, cmd, (*cur)->env) == -1)
+			return (NULL);
+	}
 	return (cmd);
 }

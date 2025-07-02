@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:54:23 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/07/01 17:03:36 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:10:50 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int								handle_append_redirection(t_struct **cur,
 									t_cmd *cmd);
 
 /* ========== COMMAND CREATION ========== */
+int								reorder_command_tokens(t_struct **cur);
 t_cmd							*create_cmd_from_tokens(t_struct **cur,
 									char **env, t_exec *exec);
 int								handle_in(t_struct **cur, t_cmd *cmd);
