@@ -14,76 +14,44 @@
 
 #define MAX_ARGS 100
 
-// Fonction pour réorganiser les tokens si la redirection vient avant la commande
-int	reorder_command_tokens(t_struct **cur)
+// Fonction pour traiter un token individuel
+int	process_single_token(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 {
-	t_struct	*redir_start;
-	t_struct	*redir_end;
-	t_struct	*cmd_node;
-	t_struct	*temp;
+	int	res;
 
-	if (!cur || !*cur)
-		return (0);
-	if ((*cur)->type == HEREDOC || (*cur)->type == REDIR_OUT 
-		|| (*cur)->type == REDIR_IN || (*cur)->type == APPEND)
+	if ((*cur)->type == REDIR_OUT || (*cur)->type == REDIR_IN)
 	{
-		redir_start = *cur;
-		redir_end = redir_start;
-		while (redir_end->next && (redir_end->next->type == SPACES 
-			|| redir_end->next->type == WORD || redir_end->next->type == WORD_D_QUOTES 
-			|| redir_end->next->type == WORD_S_QUOTES))
-		{
-			redir_end = redir_end->next;
-			if (redir_start->type == HEREDOC && redir_end->type != SPACES)
-				break;
-		}
-		cmd_node = redir_end->next;
-		while (cmd_node && cmd_node->type == SPACES)
-			cmd_node = cmd_node->next;
-		
-		if (cmd_node && (cmd_node->type == WORD || cmd_node->type == WORD_D_QUOTES 
-			|| cmd_node->type == WORD_S_QUOTES))
-		{
-			temp = cmd_node->next;
-			redir_end->next = temp;
-			cmd_node->next = redir_start;
-			*cur = cmd_node;
-			return (1);
-		}
+		res = handle_out_and_in(cur, cmd);
+		if (res == -1)
+			return (-1);
 	}
-	return (0);
+	else if ((*cur)->type == APPEND || (*cur)->type == WORD
+		|| (*cur)->type == WORD_D_QUOTES || (*cur)->type == WORD_S_QUOTES
+		|| (*cur)->type == EMPTY_QUOTES)
+	{
+		if ((*cur)->type == EMPTY_QUOTES && *i == 0)
+			return (ft_putstr_fd("minishell: : command not found\n", 2), -1);
+		if (handle_word_and_append(cur, cmd, i, envp) == -1)
+			return (-1);
+	}
+	else if ((*cur)->type == HEREDOC)
+	{
+		if (handle_heredocs(cur, cmd) == -1)
+			return (-1);
+	}
+	return (1);
 }
 
+// Fonction principale
 int	fill_cmd_from_token(t_struct **cur, t_cmd *cmd, int *i, char **envp)
 {
 	int	res;
 
 	while (*cur && (*cur)->type != PIPE)
 	{
-		if ((*cur)->type == REDIR_OUT || (*cur)->type == REDIR_IN)
-		{
-			res = handle_out_and_in(cur, cmd);
-			if (res == -1)
-				return (-1);
-		}
-		else if ((*cur)->type == APPEND || (*cur)->type == WORD
-			|| (*cur)->type == WORD_D_QUOTES || (*cur)->type == WORD_S_QUOTES
-			|| (*cur)->type == EMPTY_QUOTES)
-		{
-			// Vérification spéciale pour EMPTY_QUOTES en première position (commande vide)
-			if ((*cur)->type == EMPTY_QUOTES && *i == 0)
-			{
-				ft_putstr_fd("minishell: : command not found\n", 2);
-				return (-1);
-			}
-			if (handle_word_and_append(cur, cmd, i, envp) == -1)
-				return (-1);
-		}
-		else if ((*cur)->type == HEREDOC)
-		{
-			if (handle_heredocs(cur, cmd) == -1)
-				return (-1);
-		}
+		res = process_single_token(cur, cmd, i, envp);
+		if (res == -1)
+			return (-1);
 		*cur = (*cur)->next;
 	}
 	return (1);
@@ -104,6 +72,7 @@ t_cmd	*init_new_cmd(t_struct **cur, char **env)
 	cmd->next = NULL;
 	cmd->heredoc = 0;
 	cmd->append = 0;
+	cmd->heredoc_fd = 0;
 	if((*cur))
 	{	
 		(*cur)->env = env;
@@ -141,30 +110,6 @@ int	create_cmd_list(t_struct **cur, t_cmd *cmd, char **envp)
 		}
 	}
 	return (1);
-}
-
-void	free_all_cmd(t_cmd *cmd)
-{
-	t_cmd	*tmp;
-
-	while (cmd)
-	{
-		tmp = cmd->next;
-		if (cmd->argv)
-			ft_free_array(cmd->argv);
-		if (cmd->infile)
-			free(cmd->infile);
-		if (cmd->outfile)
-			free(cmd->outfile);
-		if (cmd->outfiles)
-			free_outfiles(cmd->outfiles);
-		if (cmd->infiles)
-			free_outfiles(cmd->infiles);
-		if (cmd->heredoc_delim)
-			free(cmd->heredoc_delim);
-		free(cmd);
-		cmd = tmp;
-	}
 }
 
 t_cmd	*create_cmd_from_tokens(t_struct **cur, char **env, t_exec *exec)

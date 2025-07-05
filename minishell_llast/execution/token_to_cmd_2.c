@@ -24,13 +24,11 @@ int	handle_in(t_struct **cur, t_cmd *cmd)
 		if (!*cur)
 			return (-1);
 		
-		// Vérifier si le nom de fichier est vide
 		if (!(*cur)->str || (*cur)->str[0] == '\0')
 		{
 			ft_putstr_fd("minishell: : No such file or directory\n", 2);
 			return (-1);
 		}
-		
 		new_redir = create_redir_node((*cur)->str, 0);
 		if (!new_redir)
 			return (-1);
@@ -54,14 +52,11 @@ int	handle_out(t_struct **cur, t_cmd *cmd, int fd)
 			*cur = (*cur)->next;
 		if (!*cur)
 			return (-1);
-		
-		// Vérifier si le nom de fichier est vide
 		if (!(*cur)->str || (*cur)->str[0] == '\0')
 		{
 			ft_putstr_fd("minishell: : No such file or directory\n", 2);
 			return (-1);
 		}
-		
 		new_redir = create_redir_node((*cur)->str, 0);
 		if (!new_redir)
 			return (-1);

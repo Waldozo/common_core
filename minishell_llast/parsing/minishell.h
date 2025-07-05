@@ -23,6 +23,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+#include <stddef.h>
 
 extern volatile sig_atomic_t	g_signal_status;
 
@@ -100,6 +101,12 @@ typedef struct s_struct
 /*-------------------- HEREDOC -----------------*/
 
 int								handle_heredocs(t_struct **cur, t_cmd *cmd);
+int	setup_heredoc_signals(struct sigaction *old_sigint);
+void	restore_heredoc_signals(struct sigaction *old_sigint);
+int	check_signal_status(int *fd, struct sigaction *old_sigint);
+void	cleanup_heredoc_resources(int *fd, struct sigaction *old_sigint);
+void	handle_sigint_heredoc(int sig);
+int	init_heredoc_pipe(int *fd);
 
 /*-------------------- EXPAND_HEREDOC -----------------*/
 
@@ -136,6 +143,9 @@ char							*expand_variables_heredoc(t_struct **data,
 char							*get_env_value_3(char *var_name);
 char							*init_result_buffer(int line_len);
 int								resize_buffer_if_needed(t_expand_data *data);
+char							*ft_strncpy(char *dest, const char *src, size_t n);
+int								update_current_string(t_struct **cur, char *original, char *new_str);
+
 
 /* ========== EXECUTION ========== */
 int								execution(t_cmd *cmd, t_exec *exec,

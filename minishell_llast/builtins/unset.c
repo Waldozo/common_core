@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025/05/20 11:33:46 by fbenkaci          #+#    #+#             */
 /*   Updated: 2025/06/18 16:34:26 by fbenkaci         ###   ########.fr       */
 /*                                                                            */
@@ -12,11 +15,12 @@
 
 #include "builtins.h"
 
+
 void	copy_env_excluding(t_struct *data, char **new_env, char *var_name)
 {
-	int	len;
-	int	i;
-	int	j;
+	int len;
+	int i;
+	int j;
 
 	len = ft_strlen(var_name);
 	i = 0;
@@ -37,10 +41,10 @@ void	copy_env_excluding(t_struct *data, char **new_env, char *var_name)
 
 int	ft_unset(t_exec *exec, t_struct *data, char **cmd)
 {
-	char	*var_name;
-	char	**new_env;
-	int		len;
-	int		i;
+	char *var_name;
+	char **new_env;
+	int len;
+	int i;
 
 	i = 1;
 	if (!cmd || !*cmd)
@@ -63,11 +67,40 @@ int	ft_unset(t_exec *exec, t_struct *data, char **cmd)
 
 int	cpy_env(t_struct *data, char **envp)
 {
-	int	len;
-	int	i;
+	char *cwd;
+	int len;
+	int i;
 
 	len = 0;
 	i = 0;
+	if (!envp || !*envp)
+	{
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			return (-1);
+		len = 4;
+		data->env = malloc(sizeof(char *) * (len + 1));
+		if (!data->env)
+			return (free(cwd), -1);
+		data->env[i] = ft_strjoin("PWD=", cwd);
+		if (!data->env[i])
+			return (free(cwd), ft_free_array(data->env), -1);
+		i++;
+		data->env[i] = ft_strjoin("OLDPWD=", cwd);
+		if (!data->env[i])
+			return (free(cwd), ft_free_array(data->env), -1);
+		i++;
+		data->env[i] = ft_strdup("SHLVL=1");
+		if (!data->env[i])
+			return (free(cwd), ft_free_array(data->env), -1);
+		i++;
+		data->env[i] = ft_strdup("_=/usr/bin/env");
+		if (!data->env[i])
+			return (free(cwd), ft_free_array(data->env), -1);
+		data->env[len] = NULL;
+		free(cwd);
+		return (1);
+	}
 	while (envp[len])
 		len++;
 	data->env = malloc(sizeof(char *) * (len + 1));
@@ -77,52 +110,9 @@ int	cpy_env(t_struct *data, char **envp)
 	{
 		data->env[i] = ft_strdup(envp[i]);
 		if (!data->env[i])
-		{
-			ft_free_array(data->env);
-			return (-1);
-		}
+			return (ft_free_array(data->env), -1);
 		i++;
 	}
 	data->env[len] = NULL;
 	return (1);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_struct	*data;
-// 	char		**cmd;
-// 	int			i;
-
-// 	data = malloc(sizeof(t_struct));
-// 	cmd = malloc(100);
-// 	cmd[0] = "unset";
-// 	cmd[1] = "VAR1";
-// 	cmd[2] = "VAR2";
-// 	cmd[3] = "VAR3";
-// 	cmd[4] = "VAR4";
-// 	cmd[5] = NULL;
-// 	(void)av;
-// 	(void)ac;
-// 	if (!cpy_env(data, envp))
-// 		return (0);
-// 	i = 0;
-
-// 	ft_printf("------------ avant unset ------------\n");
-// 	while (data->env[i])
-// 	{
-// 		ft_printf("%s\n", data->env[i]);
-// 		i++;
-// 	}
-// 	ft_printf("------------ avant unset ------------\n\n\n");
-// 	ft_unset(data, cmd);
-// 	i = 0;
-// 	while (data->env[i])
-// 	{
-// 		ft_printf("%s\n", data->env[i]);
-// 		i++;
-// 	}
-// 	ft_free_array(data->env);
-// 	free(data);
-// 	free(cmd);
-// 	return (0);
-// }

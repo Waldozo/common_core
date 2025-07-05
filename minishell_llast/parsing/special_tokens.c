@@ -74,12 +74,10 @@ int	token_init(t_struct *data)
 void	tokenize_string(t_struct *data, int i)
 {
 	t_struct	*cur;
-	int			flag;
 
 	if (i < 0)
 		return ;
 	cur = data;
-	flag = 0;
 	while (data->str[i])
 	{
 		if (data->str[i] == ' ')

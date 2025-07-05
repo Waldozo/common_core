@@ -11,43 +11,6 @@
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
-#include <stddef.h>
-
-
-
-char	*ft_strncpy(char *dest, const char *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
-}
-
-char	*get_env_value_2(char *var_name, char **envp)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(var_name);
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], var_name, len) == 0 && envp[i][len] == '=')
-			return (&envp[i][len + 1]);
-		i++;
-	}
-	return (NULL);
-}
 
 // Fonction pour extraire le nom de variable après $
 char	*extract_var_name(char *str, int start)
@@ -122,6 +85,7 @@ int	copy_variable_value(char *var_value, char *new_str, int start_pos)
 	}
 	return (i);
 }
+
 // Fonction pour remplacer une variable dans une chaîne
 char	*replace_variable(char *str, int dollar_pos, char *var_name,
 		char *var_value)

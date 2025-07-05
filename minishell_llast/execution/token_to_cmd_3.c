@@ -70,7 +70,6 @@ int	handle_variable_assignment(t_struct **cur, t_cmd *cmd, int *i)
 	temp = ft_strjoin((*cur)->str, "=");
 	if (!temp)
 		return (-1);
-	// Si il y a une valeur après =
 	if ((*cur)->next->next)
 	{
 		combined_arg = ft_strjoin(temp, (*cur)->next->next->str);
@@ -78,7 +77,6 @@ int	handle_variable_assignment(t_struct **cur, t_cmd *cmd, int *i)
 	}
 	else
 	{	
-	// Pas de valeur après =, juste VAR=
 		combined_arg = ft_strdup(temp);
 		*cur = (*cur)->next;
 	}

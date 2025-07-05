@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025/05/13 16:11:03 by fbenkaci          #+#    #+#             */
 /*   Updated: 2025/07/01 15:38:25 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
@@ -12,11 +15,44 @@
 
 #include "builtins.h"
 
+
+char	*add_env_var(t_struct *data, char *var, char *new_val_var)
+{
+	char **new_env;
+	char *new_string;
+	int len;
+	int i;
+
+	len = 0;
+	while (data->env[len])
+		len++;
+	new_env = malloc(sizeof(char *) * (len + 2));
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		new_env[i] = data->env[i];
+		i++;
+	}
+	new_string = ft_strjoin(var, new_val_var);
+	if (!new_string)
+	{
+		free(new_env);
+		return (NULL);
+	}
+	new_env[len] = new_string;
+	new_env[len + 1] = NULL;
+	free(data->env);
+	data->env = new_env;
+	return (new_string);
+}
+
 char	*update_env(t_struct *data, char *var, char *new_val_var)
 {
-	char	*new_string;
-	int		len_var;
-	int		i;
+	char *new_string;
+	int len_var;
+	int i;
 
 	len_var = ft_strlen(var);
 	new_string = NULL;
@@ -34,14 +70,14 @@ char	*update_env(t_struct *data, char *var, char *new_val_var)
 		}
 		i++;
 	}
-	return (NULL);
+	return (add_env_var(data, var, new_val_var));
 }
 
 char	*get_env_value(t_struct *data, char *key)
 {
-	int		len_key;
-	char	*str;
-	int		i;
+	int len_key;
+	char *str;
+	int i;
 
 	len_key = ft_strlen(key);
 	str = NULL;
@@ -60,9 +96,9 @@ char	*get_env_value(t_struct *data, char *key)
 
 int	update_pwd_vars(t_struct *data, char *oldpwd)
 {
-	char	*new_pwd;
-	char	*env_new;
-	char	*env_old;
+	char *new_pwd;
+	char *env_new;
+	char *env_old;
 
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
@@ -75,7 +111,7 @@ int	update_pwd_vars(t_struct *data, char *oldpwd)
 	if (!env_old || !env_new)
 	{
 		free_all(new_pwd, oldpwd, env_old, env_new);
-		return (ft_putstr_fd("error: PWD or OLDPWD dont exist.\n", 2), 0);
+		return (0);
 	}
 	free_all(new_pwd, oldpwd, NULL, NULL);
 	return (1);
@@ -83,8 +119,8 @@ int	update_pwd_vars(t_struct *data, char *oldpwd)
 
 int	cd_without_arg(t_struct *data)
 {
-	char	*home;
-	char	*oldpwd;
+	char *home;
+	char *oldpwd;
 
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
