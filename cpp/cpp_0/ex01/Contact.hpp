@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
-
+#include <cctype>
 class Contact
 {
 private:
@@ -13,4 +13,8 @@ private:
 
 public:
     void setContact();
+    void displayContact() const;
+    std::string getFirstName() const;
+    std::string getLastName() const;
+    std::string getNicknameName() const;
 };

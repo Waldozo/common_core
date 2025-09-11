@@ -6,15 +6,15 @@ OBJECT = $(SOURCE:.cpp=.o)
 
 CC = c++
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all : $(NAME)
 
 $(NAME) : $(OBJECT)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJECT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJECT)
 
 %.o: %.cpp
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	rm -f $(OBJECT)
