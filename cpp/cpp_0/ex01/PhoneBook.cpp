@@ -26,7 +26,7 @@ std::string formatField(const std::string &field)
 void PhoneBook::displayAllContact()
 {
     std::cout << "          ====== Phone Book ======" << std::endl;
-
+    std::cout << "Index     | First_name|  Last_name|   Nickanme|" <<std::endl;
     for (int i = 0; i < contact_count; i++)
     {
         std::cout << std::setw(10) << (i + 1) << "| "
