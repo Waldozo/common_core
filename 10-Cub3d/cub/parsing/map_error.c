@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:39:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 18:47:16 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/15 19:00:59 by waldozoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_bottom_line(char **map)
 	{
 		if (map[i - 1][j] != '1' && map[i - 1][j] != ' ')
 		{
-			printf("%s", "Error\nMap has to be surrounded by walls\n");
+			printf("%s", "Error: Map has to be surrounded by walls\n");
 			return (0);
 		}
 		j++;
@@ -80,7 +80,7 @@ int	map_error(char **map)
 				&& map[i][j] != 'E' && map[i][j] != 'W' && map[i][j] != '0'
 				&& map[i][j] != ' ')
 			{
-				printf("%s", "Error\nMap is not good\n");
+				printf("%s", "Error: Map is not good\n");
 				return (0);
 			}
 			j++;
@@ -97,8 +97,8 @@ int	map_error_sides(char **map)
 	int	start;
 	int	end;
 
-	i = 0;
-	while (map[i] != NULL)
+	i = -1;
+	while (++i, map[i] != NULL)
 	{
 		len = ft_strlen(map[i]);
 		start = 0;
@@ -110,9 +110,11 @@ int	map_error_sides(char **map)
 		if (start < len && end >= 0)
 		{
 			if (map[i][start] != '1' || map[i][end] != '1')
+			{
+				printf("Error: Map has to be surrounded by walls\n");
 				return (0);
+			}
 		}
-		i++;
 	}
 	return (1);
 }

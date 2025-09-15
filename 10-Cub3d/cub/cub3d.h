@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:27:43 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 19:19:02 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/15 20:44:24 by waldozoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define BLOCK 64
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
-# define CEILING_COLOR 0x87CEEB // Bleu ciel
-# define FLOOR_COLOR 0x808080   // GRIS
+# define CEILING_COLOR 0x87CEEB
+# define FLOOR_COLOR 0x808080
 # define W 119
 # define A 97
 # define S 115
@@ -36,12 +36,6 @@
 # define LEFT 65361
 # define RIGHT 65363
 # define PI 3.14159265359
-
-// typedef struct s_player
-// {
-// 	int			x;
-// 	int			y;
-// }				t_player;
 
 typedef struct s_game		t_game;
 typedef struct s_raycast	t_raycast;
@@ -70,29 +64,29 @@ typedef struct s_raycast
 
 typedef struct s_ray
 {
-	double pos_x;          // Position X du rayon
-	double pos_y;          // Position Y du rayon
-	double dir_x;          // Direction X du rayon
-	double dir_y;          // Direction Y du rayon
-	double side_dist_x;    // Distance au prochain côté vertical
-	double side_dist_y;    // Distance au prochain côté horizontal
-	double delta_dist_x;   // Distance entre deux intersections verticales
-	double delta_dist_y;   // Distance entre deux intersections horizontales
-	double perp_wall_dist; // Distance perpendiculaire au mur
-	int map_x;             // Position X sur la carte
-	int map_y;             // Position Y sur la carte
-	int step_x;            // Direction du pas en X (-1 ou 1)
-	int step_y;            // Direction du pas en Y (-1 ou 1)
-	int side;              // Mur touché : vertical (0) ou horizontal (1)
+	double					pos_x;
+	double					pos_y;
+	double					dir_x;
+	double					dir_y;
+	double					side_dist_x;
+	double					side_dist_y;
+	double					delta_dist_x;
+	double					delta_dist_y;
+	double					perp_wall_dist;
+	int						map_x;
+	int						map_y;	
+	int						step_x;
+	int						step_y;
+	int						side;
 	double					ray_dir_x;
 	double					ray_dir_y;
 }							t_ray;
 
 typedef struct s_map
 {
-	char **data; // Tableau 2D contenant la carte
-	int width;   // Largeur de la carte
-	int height;  // Hauteur de la carte
+	char					**data;
+	int						width;
+	int						height;
 }							t_map;
 
 typedef struct s_player
@@ -114,13 +108,13 @@ typedef struct s_player
 
 typedef struct s_texture
 {
-	void *img;     // Image MLX pour la texture
-	char *data;    // Données de l'image
-	int width;     // Largeur de la texture
-	int height;    // Hauteur de la texture
-	int bpp;       // Bits par pixel
-	int size_line; // Taille d'une ligne
-	int endian;    // Endianness
+	void					*img;
+	char					*data;
+	int						width;
+	int						height;
+	int						bpp;
+	int						size_line;
+	int						endian;
 }							t_texture;
 
 typedef struct s_data
@@ -133,25 +127,25 @@ typedef struct s_data
 
 typedef struct s_game
 {
-	void *mlx;      // Pointeur MLX
-	void *win;      // Pointeur vers la fenêtre
-	void *img;      // Image MLX
-	char *data_img; // Données de l'image
-	int bpp;        // Bits par pixel
-	int size_line;  // Taille d'une ligne
-	int endian;     // Endianness
+	void					*mlx;
+	void					*win;
+	void					*img;
+	char					*data_img;
+	int						bpp;
+	int						size_line;
+	int						endian;
 	t_data					data;
-	t_map map_info;       // Structure d'information de la carte
-	t_player player;      // Données du joueur
-	int floor_color;      // Couleur du sol
-	int ceiling_color;    // Couleur du plafond
-	t_texture texture[4]; // Textures (N, S, E, W)
-	double wall_x;        // Position exacte où le mur a été touché
-	int tex_x;            // Coordonnée X de la texture
-	int tex_y;            // Coordonnée Y de la texture
+	t_map					map_info;
+	t_player				player;
+	int						floor_color;
+	int						ceiling_color;
+	t_texture				texture[4];
+	double					wall_x;
+	int						tex_x;
+	int						tex_y;
 	int						close;
 	double					camera_x;
-	t_ray *ray; // Rayon courant
+	t_ray					*ray;
 }							t_game;
 
 typedef struct s_vline
@@ -162,7 +156,7 @@ typedef struct s_vline
 	int						side;
 }							t_vline;
 
-/*Player functions*/ 
+/*Player functions*/
 void						init_player(t_player *player);
 int							key_press(int keycode, t_game *game);
 int							key_release(int keycode, t_player *player);
@@ -171,8 +165,8 @@ void						find_player_start(t_game *game);
 
 /* Raycasting functions*/
 void						init_game(t_game *game, char **file2);
-char	*get_texture_path_from_config(char **file2,
-									const char *prefix);
+char						*get_texture_path_from_config(char **file2,
+								const char *prefix);
 int							get_color_from_file2(char **file2, char identifier);
 void						clear_image(t_game *game);
 void						calculate_ray(t_ray *ray, t_map *map);
@@ -203,6 +197,7 @@ int							validate_file_format(char *str);
 int							verif_file_name(char *str);
 int							is_map_line(char *str, int start);
 int							is_empty_line_in_map(char *str, int pos);
+int							test_empty_lines_in_map(char **map);
 char						get_first_non_space_char(char *line);
 int							map_things(t_data *data);
 int							map_count(t_data *data, char obj);
@@ -226,5 +221,8 @@ void						free_split(char **split);
 int							is_valid_rgb_value(char *str);
 char						*trim_spaces(char *str);
 int							is_texture_char(char c);
-
+int							validate_file_format(char *str);
+int							check_empty_line_in_map(char *str, int i);
+int							check_texture_after_map(char *str, int i,
+								int in_map_section);
 #endif

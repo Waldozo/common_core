@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_error3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 18:46:59 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 18:51:28 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/15 19:01:38 by waldozoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	verif_path(char **map)
 					(j > 0 && map[i][j - 1] == ' ') ||
 					(j < (int)ft_strlen(map[i]) - 1 && map[i][j + 1] == ' '))
 				{
-					printf("error space near floor\n");
+					printf("Error: space near floor\n");
 					return (0);
 				}
 			}
@@ -83,7 +83,7 @@ int	file_things(t_data *data)
 			next_char = data->file2[i][index + 1];
 			if (!is_valid_texture_prefix(first_char, next_char))
 			{
-				printf("error, file2 not good\n");
+				printf("Error: file2 is not good\n");
 				return (0);
 			}
 			if (!validate_texture_line(data->file2[i]))
