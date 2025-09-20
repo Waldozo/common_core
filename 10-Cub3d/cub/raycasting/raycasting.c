@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 13:20:15 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/14 16:35:16 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:47:25 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,37 +95,3 @@ void	init_ray(t_ray *ray, t_player *player, double camera_x)
 	ray->delta_dist_x = fabs(1 / ray->dir_x);
 	ray->delta_dist_y = fabs(1 / ray->dir_y);
 }
-
-/*
-** Fonction principale de rendu qui lance un rayon pour chaque colonne de l'écran
-** et dessine les murs en fonction de la distance calculée
-*/
-// void	render_frame(t_game *game)
-// {
-// 	t_ray	ray;
-// 	int		x;
-// 	int		line_height;
-// 	int		draw_start;
-// 	int		draw_end;
-// 	t_vline	vline;
-
-// 	x = 0;
-// 	while (x < WINDOW_WIDTH)
-// 	{
-// 		game->camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
-// 		init_ray(&ray, &game->player, game->camera_x);
-// 		calculate_ray(&ray, &game->map_info);
-// 		perform_dda(&ray, &game->map_info);
-// 		line_height = (int)(WINDOW_HEIGHT / ray.perp_wall_dist);
-// 		draw_start = -line_height / 2 + WINDOW_HEIGHT / 2;
-// 		if (draw_start < 0)
-// 			draw_start = 0;
-// 		draw_end = line_height / 2 + WINDOW_HEIGHT / 2;
-// 		if (draw_end >= WINDOW_HEIGHT)
-// 			draw_end = WINDOW_HEIGHT - 1;
-// 		vline = {x, draw_start, draw_end, ray.side};
-// 		draw_vertical_line(game, vline);
-// 		x++;
-// 	}
-// 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-// }

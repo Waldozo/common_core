@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:30:23 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/15 20:29:33 by waldozoo         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:23:57 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int	handle_file_input(int argc, char **argv, t_data *data)
 	file_content = gnl_img(argv[1]);
 	if (!file_content)
 	{
+		printf("Erreur : impossible de lire le fichier\n");
 		return (0);
 	}
 	data->file = ft_split(file_content, '\n');

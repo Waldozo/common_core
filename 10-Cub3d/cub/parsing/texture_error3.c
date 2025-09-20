@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_error3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 19:08:05 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/15 20:44:55 by waldozoo         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:12:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	validate_texture_path(char first_char, char next_char, char *line)
 		path = get_texture_path(line);
 		if (!path || *path == '\0')
 		{
-			printf("Error: Missing texture path\n");
+			printf("Error\nMissing texture path\n");
 			return (0);
 		}
 		if (!file_exists(path))
 		{
-			printf("Error: Texture file not found: %s\n", path);
+			printf("Error\nTexture file not found: %s\n", path);
 			return (0);
 		}
 	}
@@ -57,33 +57,35 @@ int	check_texture_after_map(char *str, int i, int in_map_section)
 	{
 		if (is_texture_char(str[i]))
 		{
-			printf("Error: Texture definition after map\n");
+			printf("Error\nTexture definition after map\n");
 			return (0);
 		}
 	}
 	return (1);
 }
 
-int	check_empty_line_in_map(char *str, int i)
+int	validate_file_format(char *str)
 {
-	int	j;
-	int	is_empty;
+	int	i;
+	int	in_map_section;
 
-	j = i;
-	is_empty = 1;
-	while (str[j] && str[j] != '\n')
+	i = 0;
+	in_map_section = 0;
+	while (str[i])
 	{
-		if (str[j] != ' ' && str[j] != '\t')
+		if (!in_map_section && (i == 0 || str[i - 1] == '\n'))
 		{
-			is_empty = 0;
-			break ;
+			if (is_map_line(str, i))
+				in_map_section = 1;
 		}
-		j++;
-	}
-	if (is_empty && (str[j] == '\n' || str[j] == '\0'))
-	{
-		printf("Error: Empty line in map section\n");
-		return (0);
+		if (in_map_section && is_empty_line_in_map(str, i))
+		{
+			printf("Error\nEmpty line in map section\n");
+			return (0);
+		}
+		if (!check_texture_after_map(str, i, in_map_section))
+			return (0);
+		i++;
 	}
 	return (1);
 }

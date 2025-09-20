@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/15 20:45:18 by waldozoo          #+#    #+#             */
-/*   Updated: 2025/09/15 21:08:40 by waldozoo         ###   ########.fr       */
+/*   Created: 2025/08/10 16:27:29 by wlarbi-a          #+#    #+#             */
+/*   Updated: 2025/09/14 19:19:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ char	*read_all_lines(int fd)
 
 	map_line = get_next_line(fd);
 	if (!map_line)
-		return (NULL);
+		exit(0);
 	map = ft_strdup("");
-	if (!map)
-		return (free(map_line), NULL);
 	while (map_line)
 	{
 		tmp = map;
@@ -43,17 +41,9 @@ char	*gnl_img(char *str)
 
 	fd = open(str, O_RDONLY);
 	if (fd < 0)
-	{
-		printf("Erreur: impossible d'ouvrir le fichier\n");
 		return (NULL);
-	}
 	map = read_all_lines(fd);
 	close(fd);
-	if (!map)
-	{
-		printf("Erreur: fichier vide ou illisible\n");
-		return (NULL);
-	}
 	if (!validate_file_format(map))
 	{
 		free(map);
@@ -79,25 +69,23 @@ int	is_map_line(char *str, int start)
 			return (0);
 		j++;
 	}
-	return (found_map_char && (j - start) > 5);
+	return (found_map_char && (j - start) > 10);
 }
 
 int	is_empty_line_in_map(char *str, int pos)
 {
 	int	i;
-	int	line_start;
 
-	line_start = pos;
-	while (line_start > 0 && str[line_start - 1] != '\n')
-		line_start--;
-	i = line_start;
+	if (str[pos] != '\n')
+		return (0);
+	i = pos + 1;
 	while (str[i] && str[i] != '\n')
 	{
 		if (str[i] != ' ' && str[i] != '\t')
 			return (0);
 		i++;
 	}
-	return (i > line_start || (str[i] == '\n' && line_start == pos));
+	return (1);
 }
 
 int	is_texture_char(char c)

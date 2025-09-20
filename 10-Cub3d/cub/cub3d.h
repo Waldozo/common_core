@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:27:43 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/15 20:44:24 by waldozoo         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:45:58 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # define BLOCK 64
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
-# define CEILING_COLOR 0x87CEEB
-# define FLOOR_COLOR 0x808080
 # define W 119
 # define A 97
 # define S 115
@@ -74,7 +72,7 @@ typedef struct s_ray
 	double					delta_dist_y;
 	double					perp_wall_dist;
 	int						map_x;
-	int						map_y;	
+	int						map_y;
 	int						step_x;
 	int						step_y;
 	int						side;
@@ -197,7 +195,6 @@ int							validate_file_format(char *str);
 int							verif_file_name(char *str);
 int							is_map_line(char *str, int start);
 int							is_empty_line_in_map(char *str, int pos);
-int							test_empty_lines_in_map(char **map);
 char						get_first_non_space_char(char *line);
 int							map_things(t_data *data);
 int							map_count(t_data *data, char obj);
@@ -221,8 +218,5 @@ void						free_split(char **split);
 int							is_valid_rgb_value(char *str);
 char						*trim_spaces(char *str);
 int							is_texture_char(char c);
-int							validate_file_format(char *str);
-int							check_empty_line_in_map(char *str, int i);
-int							check_texture_after_map(char *str, int i,
-								int in_map_section);
+
 #endif

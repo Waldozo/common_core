@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 13:20:15 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/14 18:12:33 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:48:52 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	get_texture_color(t_texture *texture, int x, int y)
 	return (color);
 }
 
-// Initialize map-related structures and player
 void	setup_map_and_player(t_game *game)
 {
 	if (!game->data.map)

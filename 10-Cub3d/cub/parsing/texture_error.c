@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:44:21 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/15 19:01:49 by waldozoo         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:08:01 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	validate_color_line(char *line)
 		return (1);
 	if (!parse_color_line(line, &r, &g, &b))
 	{
-		printf("Error: Invalid color format for %c\n", identifier);
+		printf("Error\nInvalid color format for %c\n", identifier);
 		return (0);
 	}
 	return (1);

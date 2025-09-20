@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_error2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 18:37:17 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/15 19:54:15 by waldozoo         ###   ########.fr       */
+/*   Updated: 2025/09/14 18:50:57 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	ft_verif(t_data data)
 {
-	if (!data.map)
-		return (0);
 	if (map_error(data.map) == 1 && map_error_sides(data.map) == 1
 		&& verif_path(data.map) == 1 && map_things(&data) == 1
 		&& file_things(&data) == 1 && check_top_line(data.map) == 1
@@ -81,7 +79,7 @@ int	map_things(t_data *data)
 		+ map_count(data, 'S') + map_count(data, 'E');
 	if (total_players != 1)
 	{
-		printf("Error: Map must have exactly one player (W, N, S, or E)\n");
+		printf("Error\nMap must have exactly one player (W, N, S, or E)\n");
 		return (0);
 	}
 	return (1);

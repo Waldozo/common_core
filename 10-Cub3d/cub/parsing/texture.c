@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waldozoo <waldozoo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 19:11:16 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/15 20:41:54 by waldozoo         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:11:56 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	extract_textures(t_data *data)
 	i = 0;
 	while (data->file[i] && i < texture)
 		i++;
-	if (data->file[i] && get_first_non_space_char(data->file[i]) == '\0')
+	while (data->file[i] && get_first_non_space_char(data->file[i]) == '\0')
 		i++;
 	return (i);
 }

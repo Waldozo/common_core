@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 11:51:32 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/14 18:12:25 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:49:34 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	load_all_textures(t_game *game, char **texture_paths)
 	{
 		game->texture[i].img = mlx_xpm_file_to_image(game->mlx,
 				texture_paths[i], &width, &height);
-		if (!game->texture[i].img)
+		if (!game->texture[i].img || width != height)
 		{
 			printf("Erreur : impossible de charger la texture %d\n", i);
 			cleanup(game);
