@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 18:37:17 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 18:50:57 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:16:50 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	ft_verif(t_data data)
 {
 	if (map_error(data.map) == 1 && map_error_sides(data.map) == 1
-		&& verif_path(data.map) == 1 && map_things(&data) == 1
-		&& file_things(&data) == 1 && check_top_line(data.map) == 1
-		&& check_bottom_line(data.map) == 1)
+		&& verif_path(data.map) == 1 && verif_path2(data.map) == 1
+		&& map_things(&data) == 1 && file_things(&data) == 1
+		&& check_top_line(data.map) == 1 && check_bottom_line(data.map) == 1)
 		return (1);
 	else
 		return (0);

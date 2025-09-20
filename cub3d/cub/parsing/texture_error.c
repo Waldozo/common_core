@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:44:21 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 19:08:01 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:24:24 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	parse_color_line(char *line, int *r, int *g, int *b)
 	return (1);
 }
 
-int	validate_color_line(char *line)
+int	_color_line(char *line)
 {
 	int		index;
 	char	identifier;

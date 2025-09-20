@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:16:32 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/14 18:15:52 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:55:01 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// Init ray position and direction, compute delta distances
 
 static void	init_ray(t_raycast *r, t_player *player, t_game *game,
 		float ray_angle)
@@ -39,8 +37,6 @@ static void	init_ray(t_raycast *r, t_player *player, t_game *game,
 	r->hit = 0;
 }
 
-// 2) Compute step direction and initial side distances
-
 static void	init_step(t_raycast *r)
 {
 	if (r->ray_dir_x < 0.0f)
@@ -65,8 +61,6 @@ static void	init_step(t_raycast *r)
 	}
 }
 
-// 3) Perform the DDA loop until we hit a wall
-
 static void	perform_dda(t_raycast *r, t_game *game)
 {
 	while (r->hit == 0)
@@ -90,7 +84,7 @@ static void	perform_dda(t_raycast *r, t_game *game)
 	}
 }
 
-// Compute perpendicular distance, line start/end and texture X
+/* Compute perpendicular distance, line start/end and texture X */
 static void	compute_dist_and_prepare_line(t_raycast *r, t_player *player,
 		t_game *game, int x)
 {
@@ -120,7 +114,7 @@ static void	compute_dist_and_prepare_line(t_raycast *r, t_player *player,
 	draw_vertical_line(game, prepare_vline(x, r));
 }
 
-// Original draw_line reduced to a thin orchestrator */
+/* Original draw_line reduced to a thin orchestrator */
 
 void	draw_line(t_player *player, t_game *game, float ray_angle, int x)
 {

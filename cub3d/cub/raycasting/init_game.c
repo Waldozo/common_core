@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 11:51:32 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/20 15:49:34 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:27:11 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@ void	load_all_textures(t_game *game, char **texture_paths)
 	}
 }
 
-// Read texture paths from config and load the 4 textures
 void	load_textures_from_config(t_game *game, char **files2)
 {
 	char	*texture_paths[4];
 
-	texture_paths[0] = get_texture_path_from_config(files2, "NO");
-	texture_paths[1] = get_texture_path_from_config(files2, "SO");
-	texture_paths[2] = get_texture_path_from_config(files2, "WE");
-	texture_paths[3] = get_texture_path_from_config(files2, "EA");
+	texture_paths[0] = get_texture_path_from_config(files2, "EA");
+	texture_paths[1] = get_texture_path_from_config(files2, "WE");
+	texture_paths[2] = get_texture_path_from_config(files2, "SO");
+	texture_paths[3] = get_texture_path_from_config(files2, "NO");
 	if (!texture_paths[0] || !texture_paths[1] || !texture_paths[2]
 		|| !texture_paths[3])
 	{
@@ -57,7 +56,6 @@ void	load_textures_from_config(t_game *game, char **files2)
 	load_all_textures(game, texture_paths);
 }
 
-// Read floor/ceiling colors, assign and show image */
 void	set_colors_and_render(t_game *game, char **files2)
 {
 	int	floor_color;

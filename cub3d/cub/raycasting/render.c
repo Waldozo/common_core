@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 19:03:53 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/14 18:15:57 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:17:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,6 @@ bool	touch(float px, float py, t_game *game)
 	return (false);
 }
 
-/*
-** Cette fonction initialise les propriétés du joueur :
-** - Position initiale dans la carte (x, y)
-** - Vecteur de direction (dir_x, dir_y) qui indique où le joueur regarde
-** - Plan de caméra (plane_x, plane_y) qui définit le champ de vision
-** - États des touches pour le contrôle du mouvement
-*/
 void	init_player(t_player *player)
 {
 	player->x = 22 * BLOCK;

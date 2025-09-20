@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 13:20:15 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/20 15:47:25 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:02:42 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,36 @@ void	init_ray(t_ray *ray, t_player *player, double camera_x)
 	ray->map_y = (int)ray->pos_y;
 	ray->delta_dist_x = fabs(1 / ray->dir_x);
 	ray->delta_dist_y = fabs(1 / ray->dir_y);
+}
+
+/*
+** Calcule la distance jusqu'au mur dans une direction donnée
+** Retourne la distance - marge de sécurité
+*/
+double	calculate_collision_distance(t_player *player, t_game *game,
+		double dir_x, double dir_y)
+{
+	t_ray	ray;
+	t_map	map;
+
+	map.data = game->data.map;
+	map.width = 100;
+	map.height = 100;
+	ray.pos_x = player->x / BLOCK;
+	ray.pos_y = player->y / BLOCK;
+	ray.dir_x = dir_x;
+	ray.dir_y = dir_y;
+	ray.map_x = (int)ray.pos_x;
+	ray.map_y = (int)ray.pos_y;
+	if (ray.dir_x == 0)
+		ray.delta_dist_x = 1e30;
+	else
+		ray.delta_dist_x = fabs(1 / ray.dir_x);
+	if (ray.dir_y == 0)
+		ray.delta_dist_y = 1e30;
+	else
+		ray.delta_dist_y = fabs(1 / ray.dir_y);
+	calculate_ray(&ray, &map);
+	perform_dda(&ray, &map);
+	return ((ray.perp_wall_dist * BLOCK) - 42.0);
 }

@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:39:24 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 18:47:16 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:55:45 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ int	map_error_sides(char **map)
 		if (start < len && end >= 0)
 		{
 			if (map[i][start] != '1' || map[i][end] != '1')
-				return (0);
+				return (printf("%s",
+						"Error\nMap has to be surrounded by walls\n"), 0);
 		}
 		i++;
 	}

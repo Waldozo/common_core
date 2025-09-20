@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbenkaci <fbenkaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:03:02 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/14 18:11:23 by fbenkaci         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:02:19 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,59 +22,59 @@
 
 static void	move_forward_backward(t_player *player, t_game *game, double speed)
 {
-	double	next_x;
-	double	next_y;
+	double	max_distance;
+	double	actual_speed;
 
 	if (player->key_up)
 	{
-		next_x = player->x + player->dir_x * speed;
-		next_y = player->y + player->dir_y * speed;
-		if (game->data.map[(int)(player->y / BLOCK)][(int)(next_x
-				/ BLOCK)] != '1')
-			player->x = next_x;
-		if (game->data.map[(int)(next_y / BLOCK)][(int)(player->x
-				/ BLOCK)] != '1')
-			player->y = next_y;
+		max_distance = calculate_collision_distance(player, game, player->dir_x,
+				player->dir_y);
+		actual_speed = fmin(speed, max_distance);
+		if (actual_speed > 0)
+		{
+			player->x += player->dir_x * actual_speed;
+			player->y += player->dir_y * actual_speed;
+		}
 	}
 	if (player->key_down)
 	{
-		next_x = player->x - player->dir_x * speed;
-		next_y = player->y - player->dir_y * speed;
-		if (game->data.map[(int)(player->y / BLOCK)][(int)(next_x
-				/ BLOCK)] != '1')
-			player->x = next_x;
-		if (game->data.map[(int)(next_y / BLOCK)][(int)(player->x
-				/ BLOCK)] != '1')
-			player->y = next_y;
+		max_distance = calculate_collision_distance(player, game,
+				-player->dir_x, -player->dir_y);
+		actual_speed = fmin(speed, max_distance);
+		if (actual_speed > 0)
+		{
+			player->x -= player->dir_x * actual_speed;
+			player->y -= player->dir_y * actual_speed;
+		}
 	}
 }
 
 static void	move_left_right(t_player *player, t_game *game, double speed)
 {
-	double	next_x;
-	double	next_y;
+	double	max_distance;
+	double	actual_speed;
 
 	if (player->key_right)
 	{
-		next_x = player->x + player->plane_x * speed;
-		next_y = player->y + player->plane_y * speed;
-		if (game->data.map[(int)(player->y / BLOCK)][(int)(next_x
-				/ BLOCK)] != '1')
-			player->x = next_x;
-		if (game->data.map[(int)(next_y / BLOCK)][(int)(player->x
-				/ BLOCK)] != '1')
-			player->y = next_y;
+		max_distance = calculate_collision_distance(player, game,
+				player->plane_x, player->plane_y);
+		actual_speed = fmin(speed, max_distance);
+		if (actual_speed > 0)
+		{
+			player->x += player->plane_x * actual_speed;
+			player->y += player->plane_y * actual_speed;
+		}
 	}
 	if (player->key_left)
 	{
-		next_x = player->x - player->plane_x * speed;
-		next_y = player->y - player->plane_y * speed;
-		if (game->data.map[(int)(player->y / BLOCK)][(int)(next_x
-				/ BLOCK)] != '1')
-			player->x = next_x;
-		if (game->data.map[(int)(next_y / BLOCK)][(int)(player->x
-				/ BLOCK)] != '1')
-			player->y = next_y;
+		max_distance = calculate_collision_distance(player, game,
+				-player->plane_x, -player->plane_y);
+		actual_speed = fmin(speed, max_distance);
+		if (actual_speed > 0)
+		{
+			player->x -= player->plane_x * actual_speed;
+			player->y -= player->plane_y * actual_speed;
+		}
 	}
 }
 

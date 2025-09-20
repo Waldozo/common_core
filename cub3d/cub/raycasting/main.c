@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:30:23 by fbenkaci          #+#    #+#             */
-/*   Updated: 2025/09/14 19:23:57 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:19:06 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ static int	handle_file_input(int argc, char **argv, t_data *data)
 	if (!file_content)
 	{
 		printf("Erreur : impossible de lire le fichier\n");
+		return (0);
+	}
+	if (!validate_file_format(file_content))
+	{
+		free(file_content);
 		return (0);
 	}
 	data->file = ft_split(file_content, '\n');

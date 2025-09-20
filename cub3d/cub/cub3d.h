@@ -6,7 +6,7 @@
 /*   By: wlarbi-a <wlarbi-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:27:43 by wlarbi-a          #+#    #+#             */
-/*   Updated: 2025/09/20 15:45:58 by wlarbi-a         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:28:00 by wlarbi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,9 @@ char						*gnl_img(char *str);
 int							ft_verif(t_data data);
 int							flood_fill(t_data *data, int x, int y,
 								char **copy_map);
+int							validate_map_with_flood_fill(t_data *data);
+int							get_map_height(char **map);
+char						**copy_map(char **original_map);
 void						coordinates(t_data *data, char **map);
 void						map(t_data *data);
 int							test_map(char **map);
@@ -199,6 +202,9 @@ char						get_first_non_space_char(char *line);
 int							map_things(t_data *data);
 int							map_count(t_data *data, char obj);
 int							file_things(t_data *data);
+int							check_texture_duplicates(t_data *data);
+void						count_texture_identifiers(t_data *data,
+								int *counts);
 char						*get_texture_path(char *line);
 int							file_exists(char *path);
 int							validate_texture_line(char *line);
@@ -218,5 +224,8 @@ void						free_split(char **split);
 int							is_valid_rgb_value(char *str);
 char						*trim_spaces(char *str);
 int							is_texture_char(char c);
+double						calculate_collision_distance(t_player *player,
+								t_game *game, double dir_x, double dir_y);
+int							verif_path2(char **map);
 
 #endif
