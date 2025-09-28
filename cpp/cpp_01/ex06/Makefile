@@ -1,6 +1,6 @@
-NAME = sed_is_for_losers
+NAME = harlFilter
 
-SOURCE = main.cpp
+SOURCE = main.cpp Harl.cpp
 
 OBJECT = $(SOURCE:.cpp=.o)
 

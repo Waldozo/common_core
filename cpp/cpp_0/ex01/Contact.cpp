@@ -5,11 +5,37 @@ bool isValidContact(const std::string &contact)
     return contact.length() > 0;
 }
 
+std::string cleanInput(const std::string &input)
+{
+    std::string cleaned;
+    for (size_t i = 0; i < input.length(); i++)
+    {
+        if (input[i] == '\033' && i + 2 < input.length() && input[i + 1] == '[')
+        {
+            i += 2;
+            while (i < input.length() && (input[i] < 'A' || input[i] > 'Z') && (input[i] < 'a' || input[i] > 'z'))
+                i++;
+            continue;
+        }
+        
+        if (input[i] >= 32 && input[i] <= 126)
+        {
+            cleaned += input[i];
+        }
+    }
+    return cleaned;
+}
+
 void Contact::setContact()
 {
     do{
         std::cout << "Enter your first name : ";
-        std::getline(std::cin, first_name);
+        if (!std::getline(std::cin, first_name))
+        {
+            std::cout << "\nEOF detected. Contact creation cancelled.\n";
+            return;
+        }
+        first_name = cleanInput(first_name);
         if(!isValidContact(first_name)){
             std::cout <<"This field can't be empty" <<std::endl; 
         }
@@ -17,7 +43,12 @@ void Contact::setContact()
 
     do{
     std::cout << "Enter your last name : ";
-    std::getline(std::cin, last_name);
+    if (!std::getline(std::cin, last_name))
+    {
+        std::cout << "\nEOF detected. Contact creation cancelled.\n";
+        return;
+    }
+    last_name = cleanInput(last_name);
            if(!isValidContact(last_name)){
             std::cout <<"This field can't be empty" <<std::endl; 
         }
@@ -25,7 +56,12 @@ void Contact::setContact()
 
     do{
     std::cout << "Enter your nickname : ";
-    std::getline(std::cin, nickname);
+    if (!std::getline(std::cin, nickname))
+    {
+        std::cout << "\nEOF detected. Contact creation cancelled.\n";
+        return;
+    }
+    nickname = cleanInput(nickname);
            if(!isValidContact(nickname)){
             std::cout <<"This field can't be empty" <<std::endl; 
         }
@@ -33,7 +69,12 @@ void Contact::setContact()
 
     do{
     std::cout << "Enter your phone_number : ";
-    std::getline(std::cin, phone_number);
+    if (!std::getline(std::cin, phone_number))
+    {
+        std::cout << "\nEOF detected. Contact creation cancelled.\n";
+        return;
+    }
+    phone_number = cleanInput(phone_number);
            if(!isValidContact(phone_number)){
             std::cout <<"This field can't be empty" <<std::endl; 
         }
@@ -41,7 +82,12 @@ void Contact::setContact()
 
     do{
     std::cout << "Enter your darkest_secret : ";
-    std::getline(std::cin, darkest_secret);
+    if (!std::getline(std::cin, darkest_secret))
+    {
+        std::cout << "\nEOF detected. Contact creation cancelled.\n";
+        return;
+    }
+    darkest_secret = cleanInput(darkest_secret);
            if(!isValidContact(darkest_secret)){
             std::cout <<"This field can't be empty" <<std::endl; 
         }

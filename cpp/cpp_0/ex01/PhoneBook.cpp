@@ -50,7 +50,20 @@ void PhoneBook::searchContact()
 
     std::cout << "Enter the index of the contact to display: ";
     std::string input;
-    std::getline(std::cin, input);
+    if (!std::getline(std::cin, input))
+    {
+        std::cout << "\nEOF detected. Search cancelled.\n";
+        return;
+    }
+    
+    // Clean the input (remove escape sequences)
+    std::string cleanedInput;
+    for (size_t i = 0; i < input.length(); i++)
+    {
+        if (input[i] >= 32 && input[i] <= 126)
+            cleanedInput += input[i];
+    }
+    input = cleanedInput;
 
     if (input.length() != 1 || !std::isdigit(input[0]))
     {
