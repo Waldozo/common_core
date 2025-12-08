@@ -16,7 +16,6 @@ int main()
             std::cout << "\nEOF detected. Exiting...\n";
             break;
         }
-        // Clean the command input (remove escape sequences)
         std::string cleanCommand;
         for (size_t i = 0; i < command.length(); i++)
         {

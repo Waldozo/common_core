@@ -45,14 +45,14 @@ void Account::displayStatus() const
 
 void Account::makeDeposit(int deposit)
 {
-    int p_amount = _amount; // 1. Sauvegarder l'ancien montant
+    int p_amount = _amount;
 
-    _amount += deposit;      // 2. Ajouter le dépôt au compte
-    _nbDeposits++;           // 3. Incrémenter les dépôts de ce compte
-    _totalAmount += deposit; // 4. Mettre à jour le total global
-    _totalNbDeposits++;      // 5. Incrémenter le total des dépôts
+    _amount += deposit;
+    _nbDeposits++;
+    _totalAmount += deposit;
+    _totalNbDeposits++;
 
-    _displayTimestamp(); // 6. Afficher le timestamp
+    _displayTimestamp();
     std::cout << " index:" << _accountIndex
               << ";p_amount:" << p_amount
               << ";deposit:" << deposit

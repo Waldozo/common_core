@@ -2,12 +2,12 @@
 
 
 HumanA::HumanA(const std::string& name, Weapon& weapon) 
-    : name(name), weapon(weapon) // ← Liste d'initialisation obligatoire !
+    : name(name), weapon(weapon) // initialisation de la liste
 {
 }
 
 HumanA::~HumanA() {
-    // Rien à faire (pas de mémoire dynamique)
+  // pas de memoire dynamique
 }
 
 void HumanA::attack(){

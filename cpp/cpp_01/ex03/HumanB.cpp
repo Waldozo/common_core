@@ -1,7 +1,7 @@
 #include "HumanB.hpp"
 
 HumanB::HumanB(const std::string& name) 
-    : name(name), weapon(NULL) // ← Initialiser le pointeur à NULL !
+    : name(name), weapon(NULL) // pointeur a NULL !
 {
 }
 
@@ -10,7 +10,7 @@ void HumanB::setWeapon(Weapon& weapon) {
 }
 
 HumanB::~HumanB() {
-    // Rien à faire (on ne possède pas le Weapon)
+    // Rien a faire (pas de Weapon)
 }
 
 
