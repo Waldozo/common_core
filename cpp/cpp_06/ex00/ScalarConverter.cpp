@@ -1,7 +1,6 @@
 #include "ScalarConverter.hpp"
 
 ScalarConverter::ScalarConverter(){
-    
 }
 
 ScalarConverter::ScalarConverter(const ScalarConverter &copy){
@@ -13,8 +12,7 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy){
     return *this;
 }
 
-ScalarConverter::~ScalarConverter(){
-    
+ScalarConverter::~ScalarConverter(){   
 }
 
 void ScalarConverter::printChar(char c)
@@ -59,7 +57,7 @@ void ScalarConverter::convert(const std::string str)
         return;
     }
 
-    if (isWord(str) && str != "nan" && str != "nanf" && str != "inf" && str != "inff" && str != "-inf" && str != "-inff") {
+    if (isWord(str) && str != "nan" && str != "nanf" && str != "+inf" && str != "+inff" && str != "-inf" && str != "-inff") {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
         std::cout << "float: impossible" << std::endl;
